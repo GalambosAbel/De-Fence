@@ -9,11 +9,31 @@ public class GenerateBoard : MonoBehaviour
     List<float> origoX = new List<float>();
     List<float> origoY = new List<float>();
     int a;
+    float magassag;
 
     void Start()
     {
         scale = 1;
-        Origo(0, 0);
+        for (int i = 0; i < 10; i++)
+        {
+            if(i == 0)
+            {
+                magassag = 0;
+            }
+            else if(i == 1)
+            {
+                magassag = 0.75f;
+            }
+            else if(i % 2 == 1)
+            {
+                magassag += 1;
+            }
+            else
+            {
+                magassag += 0.5f;
+            }
+            Origo(0, magassag);
+        }
     }
     void Origo(float x, float y)
     {
@@ -25,13 +45,14 @@ public class GenerateBoard : MonoBehaviour
         float newX = origoX[origoX.Count - 1] + difference.x;
         float newY = origoY[origoY.Count - 1] + difference.y;
         //if (!ContainsList(newX, newY))
-        if(a < 5)
+        if(a < 6)
         {
             a++;
             Origo(newX, newY);
         }
+        a = 0;
     }
-    bool ContainsList(float x, float y)
+    /*bool ContainsList(float x, float y)
     {
         for (int i = 0; i < origoX.Count; i++)
         {
@@ -39,5 +60,5 @@ public class GenerateBoard : MonoBehaviour
             { return false; }
         }
         return true;
-    }
+    }*/
 }

@@ -18,9 +18,11 @@ public class GenerateBoard : MonoBehaviour
     {
         origoX.Add(x);
         origoY.Add(y);
-        Instantiate(tile, new Vector3(x, y, 0), Quaternion.Euler(0, 0, 60 * (origoX.Count - 1)));
-        float newX = origoX[origoX.Count - 1] - scale * Mathf.Sqrt(3)/4;
-        float newY = origoY[origoY.Count - 1] + (0.25f * scale);
+        Instantiate(tile,new Vector3(x, y, 0), Quaternion.Euler(0, 0, 60 * (origoX.Count - 1)));
+        Vector2 difference = new Vector2(-scale * Mathf.Sqrt(3) / 4, 0.25f * scale);
+        difference = Quaternion.Euler(0, 0, 60 * origoX.Count) * difference;
+        float newX = origoX[origoX.Count - 1] + difference.x;
+        float newY = origoY[origoY.Count - 1] + difference.y;
         //if (!ContainsList(newX, newY))
         if(Mathf.Abs(x) < 60)
         {

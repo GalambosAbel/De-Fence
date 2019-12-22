@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tile: {fileID: 135440383190688763, guid: 9a0cf4ffb92f5974aae796e8bcd1d27b, type: 3}
+  radius: 3
 --- !u!4 &866319187
 Transform:
   m_ObjectHideFlags: 0

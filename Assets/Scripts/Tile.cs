@@ -76,8 +76,10 @@ public class TileData
 		distanceOffset = other.distanceOffset;
 		angleOffset = other.angleOffset;
 
-		verticies = new List<Vector3>(other.verticies);
-		connections = new List<List<int>>(other.connections);
+		verticies = null;
+		if (other.verticies != null) verticies = new List<Vector3>(other.verticies);
+		connections = null;
+		if (other.connections != null) connections = new List<List<int>>(other.connections);
 	}
 
 	public TileData(Vector3 position, float distanceOffset, float angleOffset, List<Vector3> verticies, List<List<int>> connections)

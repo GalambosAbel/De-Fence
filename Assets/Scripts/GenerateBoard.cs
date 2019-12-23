@@ -8,6 +8,8 @@ public class GenerateBoard : MonoBehaviour
 
 	List<Vector3> tilePositions = new List<Vector3>();
 	public int radius = 3;
+	public float startDistanceOffset;
+	public float startAngleOffset;
 
     int a = 1;
 
@@ -17,7 +19,7 @@ public class GenerateBoard : MonoBehaviour
 		Vector3 startPos = new Vector3(Mathf.Sqrt(3) / 4, 0.5f, 0f);
 		GameObject startTile = Instantiate(tile, startPos, Quaternion.identity);
 		tilePositions.Add(startPos);
-		startTile.GetComponent<Tile>().data = new TileData(startPos, 0.5f, 60f);
+		startTile.GetComponent<Tile>().data = new TileData(startPos, startDistanceOffset, startAngleOffset);
 		PlaceNextTile(startTile);
 	}
 

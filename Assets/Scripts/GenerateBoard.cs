@@ -8,6 +8,7 @@ public class GenerateBoard : MonoBehaviour
 
 	List<Vector3> tilePositions = new List<Vector3>();
 	public int radius = 3;
+	private int noOfTiles;
 	public float startDistanceOffset;
 	public float startAngleOffset;
 
@@ -15,7 +16,7 @@ public class GenerateBoard : MonoBehaviour
 
 	void Start()
 	{
-		radius = radius * radius * 6;
+		noOfTiles = radius * radius * 6;
 		Vector3 startPos = new Vector3(Mathf.Sqrt(3) / 4, 0.5f, 0f);
 		GameObject startTile = Instantiate(tile, startPos, Quaternion.identity);
 		tilePositions.Add(startPos);
@@ -28,7 +29,7 @@ public class GenerateBoard : MonoBehaviour
 		TileData previousData = previous.GetComponent<Tile>().data;
 		Vector3 newPos = Quaternion.Euler(0, 0, previousData.angleOffset + previous.transform.rotation.eulerAngles.z) * new Vector3(0, previousData.distanceOffset, 0);
 		newPos += previous.transform.position;
-		if (IsPositionFree(newPos) && a < radius)
+		if (IsPositionFree(newPos) && a < noOfTiles)
 		{
 			tilePositions.Add(newPos);
 			Vector3 newRot = previous.transform.rotation.eulerAngles;
@@ -45,7 +46,7 @@ public class GenerateBoard : MonoBehaviour
 		}
 		newPos = Quaternion.Euler(0, 0, -previousData.angleOffset + previous.transform.rotation.eulerAngles.z) * new Vector3(0, previousData.distanceOffset, 0);
 		newPos += previous.transform.position;
-		if (IsPositionFree(newPos) && a < radius)
+		if (IsPositionFree(newPos) && a < noOfTiles)
 		{
 			tilePositions.Add(newPos);
 			Vector3 newRot = previous.transform.rotation.eulerAngles;

@@ -5,6 +5,10 @@ using UnityEngine;
 public class GenerateBoard : MonoBehaviour
 {
     public GameObject tile;
+	public Transform tileParent;
+
+	public GameObject wall;
+	public Transform wallParent;
 
 	List<Vector3> tilePositions = new List<Vector3>();
 	public int radius = 3;
@@ -18,7 +22,7 @@ public class GenerateBoard : MonoBehaviour
 	{
 		noOfTiles = radius * radius * 6;
 		Vector3 startPos = new Vector3(Mathf.Sqrt(3) / 4, 0.5f, 0f);
-		GameObject startTile = Instantiate(tile, startPos, Quaternion.identity);
+		GameObject startTile = Instantiate(tile, startPos, Quaternion.identity, tileParent);
 		tilePositions.Add(startPos);
 		startTile.GetComponent<Tile>().data = new TileData(startPos, startDistanceOffset, startAngleOffset);
 		PlaceNextTile(startTile);
@@ -34,13 +38,20 @@ public class GenerateBoard : MonoBehaviour
 			tilePositions.Add(newPos);
 			Vector3 newRot = previous.transform.rotation.eulerAngles;
 			newRot.z += previousData.angleOffset;
-			GameObject placedTile = Instantiate(tile, newPos, Quaternion.Euler(newRot));
+			GameObject placedTile = Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent);
 
 			placedTile.GetComponent<Tile>().currentState = TileStates.red;
 
 			TileData newData = new TileData(previousData);
 			newData.position = placedTile.transform.position;
 			placedTile.GetComponent<Tile>().data = newData;
+
+			GameObject newWall = Instantiate(wall, wallParent);
+			newWall.GetComponent<Wall>().neighbour1 = previous;
+			newWall.GetComponent<Wall>().neighbour2 = placedTile;
+			newWall.GetComponent<Wall>().extraRot = previousData.angleOffset;
+			newWall.GetComponent<Wall>().Place();
+
 			a++;
 			PlaceNextTile(placedTile);
 		}
@@ -51,13 +62,20 @@ public class GenerateBoard : MonoBehaviour
 			tilePositions.Add(newPos);
 			Vector3 newRot = previous.transform.rotation.eulerAngles;
 			newRot.z -= previousData.angleOffset;
-			GameObject placedTile = Instantiate(tile, newPos, Quaternion.Euler(newRot));
+			GameObject placedTile = Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent);
 
 			placedTile.GetComponent<Tile>().currentState = TileStates.blue;
 
 			TileData newData = new TileData(previousData);
 			newData.position = placedTile.transform.position;
 			placedTile.GetComponent<Tile>().data = newData;
+
+			GameObject newWall = Instantiate(wall, wallParent);
+			newWall.GetComponent<Wall>().neighbour1 = previous;
+			newWall.GetComponent<Wall>().neighbour2 = placedTile;
+			newWall.GetComponent<Wall>().extraRot = -previousData.angleOffset;
+			newWall.GetComponent<Wall>().Place();
+
 			a++;
 			PlaceNextTile(placedTile);
 		}

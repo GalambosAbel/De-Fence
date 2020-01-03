@@ -56,18 +56,21 @@ public class TileState
 
 public class TileData
 {
+    public int ID;
 	public Vector3 position = Vector3.zero;
 	public float distanceOffset = 2f;
-	public float angleOffset = 60f;
+    public float angleOffset = 60f;
 
+    public List<int> neighbours = null;
 	public List<Vector3> verticies = null;
 	public List<List<int>> connections = null;
 
-	public TileData (Vector3 position,float distanceOffset, float angleOffset)
+	public TileData (Vector3 position,float distanceOffset, float angleOffset, int ID)
 	{
 		this.position = position;
 		this.distanceOffset = distanceOffset;
 		this.angleOffset = angleOffset;
+        this.ID = ID;
 	}
 
 	public TileData(TileData other)

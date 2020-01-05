@@ -17,7 +17,6 @@ public class GenerateBoard : MonoBehaviour
 	public float startAngleOffset;
 
     int a = 1;
-    int i = 0;
 
 	void Start()
 	{
@@ -25,7 +24,7 @@ public class GenerateBoard : MonoBehaviour
 		Vector3 startPos = new Vector3(Mathf.Sqrt(3) / 4, 0.5f, 0f);
 		GameObject startTile = Instantiate(tile, startPos, Quaternion.identity, tileParent);
         tilePositions.Add(startPos);
-        startTile.GetComponent<Tile>().data = new TileData(startPos, startDistanceOffset, startAngleOffset, i);
+        startTile.GetComponent<Tile>().data = new TileData(startPos, startDistanceOffset, startAngleOffset, 0);
 		PlaceNextTile(startTile);
 	}
 
@@ -45,7 +44,7 @@ public class GenerateBoard : MonoBehaviour
 
 			TileData newData = new TileData(previousData);
 			newData.position = placedTile.transform.position;
-            newData.ID = i-1;
+            newData.ID = tilePositions.IndexOf(newPos);
             newData.neighbours.Clear();
             newData.neighbours.Add(previousData.ID);
 			placedTile.GetComponent<Tile>().data = newData;
@@ -59,10 +58,7 @@ public class GenerateBoard : MonoBehaviour
 			a++;
 			PlaceNextTile(placedTile);
 		}
-        if(!previousData.neighbours.Contains(tilePositions.IndexOf(newPos)))
-        {
-            previous.GetComponent<Tile>().data.neighbours.Add(tilePositions.IndexOf(newPos));
-        }
+        previous.GetComponent<Tile>().data.neighbours.Add(tilePositions.IndexOf(newPos));
 		newPos = Quaternion.Euler(0, 0, -previousData.angleOffset + previous.transform.rotation.eulerAngles.z) * new Vector3(0, previousData.distanceOffset, 0);
 		newPos += previous.transform.position;
 		if (IsPositionFree(newPos) && a < noOfTiles)
@@ -76,7 +72,7 @@ public class GenerateBoard : MonoBehaviour
 
 			TileData newData = new TileData(previousData);
 			newData.position = placedTile.transform.position;
-            newData.ID = i-1;
+            newData.ID = tilePositions.IndexOf(newPos); ;
             newData.neighbours.Clear();
             newData.neighbours.Add(previousData.ID);
             placedTile.GetComponent<Tile>().data = newData;
@@ -90,10 +86,7 @@ public class GenerateBoard : MonoBehaviour
 			a++;
 			PlaceNextTile(placedTile);
 		}
-        if (!previousData.neighbours.Contains(tilePositions.IndexOf(newPos)))
-        {
-            previous.GetComponent<Tile>().data.neighbours.Add(tilePositions.IndexOf(newPos));
-        }
+        previous.GetComponent<Tile>().data.neighbours.Add(tilePositions.IndexOf(newPos));
     }
 
 	bool IsPositionFree (Vector3 newPos)

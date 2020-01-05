@@ -61,9 +61,7 @@ public class TileData
 	public float distanceOffset = 2f;
     public float angleOffset = 60f;
 
-    public List<int> neighbours = null;
-	public List<Vector3> verticies = null;
-	public List<List<int>> connections = null;
+    public List<int> neighbours = new List<int>();
 
 	public TileData (Vector3 position,float distanceOffset, float angleOffset, int ID)
 	{
@@ -78,20 +76,5 @@ public class TileData
 		position = other.position;
 		distanceOffset = other.distanceOffset;
 		angleOffset = other.angleOffset;
-
-		verticies = null;
-		if (other.verticies != null) verticies = new List<Vector3>(other.verticies);
-		connections = null;
-		if (other.connections != null) connections = new List<List<int>>(other.connections);
-	}
-
-	public TileData(Vector3 position, float distanceOffset, float angleOffset, List<Vector3> verticies, List<List<int>> connections)
-	{
-		this.position = position;
-		this.distanceOffset = distanceOffset;
-		this.angleOffset = angleOffset;
-
-		this.verticies = new List<Vector3>(verticies);
-		this.connections = new List<List<int>>(connections);
 	}
 }

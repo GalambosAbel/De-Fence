@@ -11,21 +11,25 @@ public class GenerateBoard : MonoBehaviour
 	public Transform wallParent;
 
 	List<Vector3> tilePositions = new List<Vector3>();
+    public List<GameObject> tiles = new List<GameObject>();
+    public List<GameObject> walls = new List<GameObject>();
 	public int radius = 3;
 	private int noOfTiles;
 	public float startDistanceOffset;
 	public float startAngleOffset;
 
     int a = 1;
+    int i = 0;
 
 	void Start()
 	{
 		noOfTiles = radius * radius * 6;
 		Vector3 startPos = new Vector3(Mathf.Sqrt(3) / 4, 0.5f, 0f);
-		GameObject startTile = Instantiate(tile, startPos, Quaternion.identity, tileParent);
+        tiles.Add(Instantiate(tile, startPos, Quaternion.identity, tileParent));
         tilePositions.Add(startPos);
-        startTile.GetComponent<Tile>().data = new TileData(startPos, startDistanceOffset, startAngleOffset, 0);
-		PlaceNextTile(startTile);
+        tiles[0].GetComponent<Tile>().data = new TileData(startPos, startDistanceOffset, startAngleOffset, 0);
+		PlaceNextTile(tiles[0]);
+        PlaceWalls();
 	}
 
 	void PlaceNextTile (GameObject previous)
@@ -38,27 +42,22 @@ public class GenerateBoard : MonoBehaviour
             tilePositions.Add(newPos);
             Vector3 newRot = previous.transform.rotation.eulerAngles;
 			newRot.z += previousData.angleOffset;
-			GameObject placedTile = Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent);
-
-			placedTile.GetComponent<Tile>().currentState = TileStates.red;
+			tiles.Add(Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent));
+            GameObject newTile = tiles[tiles.Count - 1];
+			tiles[tiles.Count-1].GetComponent<Tile>().currentState = TileStates.red;
 
 			TileData newData = new TileData(previousData);
-			newData.position = placedTile.transform.position;
+			newData.position = tiles[tiles.Count - 1].transform.position;
             newData.ID = tilePositions.IndexOf(newPos);
             newData.neighbours.Clear();
             newData.neighbours.Add(previousData.ID);
-			placedTile.GetComponent<Tile>().data = newData;
-
-			GameObject newWall = Instantiate(wall, wallParent);
-			newWall.GetComponent<Wall>().neighbour1 = previous;
-			newWall.GetComponent<Wall>().neighbour2 = placedTile;
-			newWall.GetComponent<Wall>().extraRot = previousData.angleOffset;
-			newWall.GetComponent<Wall>().Place();
+            tiles[tiles.Count - 1].GetComponent<Tile>().data = newData;
 
 			a++;
-			PlaceNextTile(placedTile);
-		}
-        previous.GetComponent<Tile>().data.neighbours.Add(tilePositions.IndexOf(newPos));
+            PlaceNextTile(tiles[tiles.Count - 1]);
+        }
+        
+        previous.GetComponent<Tile>().data.neighbours.Add(IdFromPos(newPos));
 		newPos = Quaternion.Euler(0, 0, -previousData.angleOffset + previous.transform.rotation.eulerAngles.z) * new Vector3(0, previousData.distanceOffset, 0);
 		newPos += previous.transform.position;
 		if (IsPositionFree(newPos) && a < noOfTiles)
@@ -66,27 +65,21 @@ public class GenerateBoard : MonoBehaviour
             tilePositions.Add(newPos);
 			Vector3 newRot = previous.transform.rotation.eulerAngles;
 			newRot.z -= previousData.angleOffset;
-			GameObject placedTile = Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent);
-
-			placedTile.GetComponent<Tile>().currentState = TileStates.blue;
+			tiles.Add(Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent));
+            GameObject newTile = tiles[tiles.Count - 1];
+            tiles[tiles.Count - 1].GetComponent<Tile>().currentState = TileStates.blue;
 
 			TileData newData = new TileData(previousData);
-			newData.position = placedTile.transform.position;
+			newData.position = tiles[tiles.Count - 1].transform.position;
             newData.ID = tilePositions.IndexOf(newPos); ;
             newData.neighbours.Clear();
             newData.neighbours.Add(previousData.ID);
-            placedTile.GetComponent<Tile>().data = newData;
-
-			GameObject newWall = Instantiate(wall, wallParent);
-			newWall.GetComponent<Wall>().neighbour1 = previous;
-			newWall.GetComponent<Wall>().neighbour2 = placedTile;
-			newWall.GetComponent<Wall>().extraRot = -previousData.angleOffset;
-			newWall.GetComponent<Wall>().Place();
+            tiles[tiles.Count - 1].GetComponent<Tile>().data = newData;
 
 			a++;
-			PlaceNextTile(placedTile);
+			PlaceNextTile(tiles[tiles.Count - 1]);
 		}
-        previous.GetComponent<Tile>().data.neighbours.Add(tilePositions.IndexOf(newPos));
+        previous.GetComponent<Tile>().data.neighbours.Add(IdFromPos(newPos));
     }
 
 	bool IsPositionFree (Vector3 newPos)
@@ -97,4 +90,50 @@ public class GenerateBoard : MonoBehaviour
         }
         return true;
 	}
+
+    int IdFromPos(Vector3 pos)
+    {
+        for (int i = 0; i < tilePositions.Count; i++)
+        {
+            if(tilePositions[i] == pos)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    void PlaceWalls()
+    {
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            TileData data = tiles[i].GetComponent<Tile>().data;
+            for (int j = 0; j < data.neighbours.Count; j++)
+            {
+                if(data.neighbours[j] >= 0)
+                {
+                    PlaceWall(data.neighbours[j], data.ID, data.angleOffset);
+                    i++;
+                    Debug.Log(i);
+                }
+            }
+        }
+    }
+
+    void PlaceWall(int _neighbour1, int _neighbour2, float _extraRot)
+    {
+        GameObject newWall = Instantiate(wall, wallParent);
+        if(_neighbour1 <= _neighbour2)
+        {
+            newWall.GetComponent<Wall>().neighbour1 = _neighbour1;
+            newWall.GetComponent<Wall>().neighbour2 = _neighbour2;
+        }
+        else
+        {
+            newWall.GetComponent<Wall>().neighbour1 = _neighbour2;
+            newWall.GetComponent<Wall>().neighbour2 = _neighbour1;
+        }
+        newWall.GetComponent<Wall>().extraRot = _extraRot;
+        newWall.GetComponent<Wall>().Place();
+    }
 }

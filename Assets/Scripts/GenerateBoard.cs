@@ -112,7 +112,9 @@ public class GenerateBoard : MonoBehaviour
 			{
 				if (tiles[i].GetComponent<Tile>().data.neighbours.Contains(j))
 				{
-					PlaceWall(j, i, (i % 3) * 60);
+					float extraRot = Mathf.Sign(tiles[i].transform.position.x - tiles[j].transform.position.x) * 60;
+
+					PlaceWall(j, i, extraRot);
 				}
 			}
 		}
@@ -122,16 +124,8 @@ public class GenerateBoard : MonoBehaviour
     {
         GameObject newWall = Instantiate(wall, wallParent);
 		walls.Add(newWall);
-        if(_neighbour1 <= _neighbour2)
-        {
-            newWall.GetComponent<Wall>().neighbour1 = _neighbour1;
-            newWall.GetComponent<Wall>().neighbour2 = _neighbour2;
-        }
-        else
-        {
-            newWall.GetComponent<Wall>().neighbour1 = _neighbour2;
-            newWall.GetComponent<Wall>().neighbour2 = _neighbour1;
-        }
+        newWall.GetComponent<Wall>().neighbour1 = _neighbour1;
+        newWall.GetComponent<Wall>().neighbour2 = _neighbour2;
         newWall.GetComponent<Wall>().extraRot = _extraRot;
         newWall.GetComponent<Wall>().Place();
     }

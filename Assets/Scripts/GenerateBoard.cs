@@ -19,7 +19,7 @@ public class GenerateBoard : MonoBehaviour
 	public float startAngleOffset;
 
     int a = 1;
-    int i = 0;
+    int n = 0;
 
 	void Start()
 	{
@@ -113,7 +113,7 @@ public class GenerateBoard : MonoBehaviour
                 if(data.neighbours[j] >= 0)
                 {
                     PlaceWall(data.neighbours[j], data.ID, data.angleOffset);
-                    i++;
+                    n++;
                     Debug.Log(i);
                 }
             }
@@ -133,7 +133,7 @@ public class GenerateBoard : MonoBehaviour
             newWall.GetComponent<Wall>().neighbour1 = _neighbour2;
             newWall.GetComponent<Wall>().neighbour2 = _neighbour1;
         }
-        newWall.GetComponent<Wall>().extraRot = _extraRot;
+        //newWall.GetComponent<Wall>().extraRot = _extraRot;
         newWall.GetComponent<Wall>().Place();
     }
 }

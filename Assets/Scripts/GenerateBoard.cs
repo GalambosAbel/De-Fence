@@ -30,6 +30,7 @@ public class GenerateBoard : MonoBehaviour
         tiles[0].GetComponent<Tile>().data = new TileData(startPos, startDistanceOffset, startAngleOffset, 0);
 		PlaceNextTile(tiles[0]);
         PlaceWalls();
+		Debug.Log("this is at the end of the start function, no of walls: " + walls.Count);
 	}
 
 	void PlaceNextTile (GameObject previous)
@@ -105,24 +106,22 @@ public class GenerateBoard : MonoBehaviour
 
     void PlaceWalls()
     {
-        for (int i = 0; i < tiles.Count; i++)
-        {
-            TileData data = tiles[i].GetComponent<Tile>().data;
-            for (int j = 0; j < data.neighbours.Count; j++)
-            {
-                if(data.neighbours[j] >= 0)
-                {
-                    PlaceWall(data.neighbours[j], data.ID, data.angleOffset);
-                    n++;
-                    Debug.Log(i);
-                }
-            }
-        }
+		for (int i = 1; i < noOfTiles; i++)
+		{
+			for (int j = 0; j < i; j++)
+			{
+				if (tiles[i].GetComponent<Tile>().data.neighbours.Contains(j))
+				{
+					PlaceWall(j, i, (i % 3) * 60);
+				}
+			}
+		}
     }
 
     void PlaceWall(int _neighbour1, int _neighbour2, float _extraRot)
     {
         GameObject newWall = Instantiate(wall, wallParent);
+		walls.Add(newWall);
         if(_neighbour1 <= _neighbour2)
         {
             newWall.GetComponent<Wall>().neighbour1 = _neighbour1;
@@ -133,7 +132,7 @@ public class GenerateBoard : MonoBehaviour
             newWall.GetComponent<Wall>().neighbour1 = _neighbour2;
             newWall.GetComponent<Wall>().neighbour2 = _neighbour1;
         }
-        //newWall.GetComponent<Wall>().extraRot = _extraRot;
+        newWall.GetComponent<Wall>().extraRot = _extraRot;
         newWall.GetComponent<Wall>().Place();
     }
 }

@@ -45,7 +45,7 @@ public class BoardSaver : MonoBehaviour
             outputFileName += nameFix.ToString();
         }
         File.WriteAllLines(outputFileName, output);
-        Debug.Log("saving complete");
+        Debug.Log("saving complete to file: " + outputFileName);
     }
 
     public void WriteTile(int i)

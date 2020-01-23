@@ -17,6 +17,11 @@ public class BoardLoader : MonoBehaviour
     public void LoadBoard(string inputFileName)
     {
         Debug.Log("Loading");
+        if (!File.Exists(inputFileName))
+        {
+            Debug.Log("Couldn't load file: " + inputFileName);
+            return;
+        }
 
         allLines = File.ReadAllLines(inputFileName);
         int tileAmount = ReadInt();
@@ -25,7 +30,7 @@ public class BoardLoader : MonoBehaviour
         LoadTiles(tileAmount);
         LoadWalls(wallAmount);
 
-        Debug.Log("Load complete");
+        Debug.Log("Loaded file: " + inputFileName);
     }
 
     void LoadTiles (int tileAmount)

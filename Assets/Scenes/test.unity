@@ -131,6 +131,9 @@ GameObject:
   m_Component:
   - component: {fileID: 866319187}
   - component: {fileID: 866319186}
+  - component: {fileID: 866319190}
+  - component: {fileID: 866319189}
+  - component: {fileID: 866319188}
   m_Layer: 0
   m_Name: Board generator
   m_TagString: Untagged
@@ -154,6 +157,8 @@ MonoBehaviour:
   tileParent: {fileID: 962648566}
   wall: {fileID: 2461504587492576799, guid: 2aa7277760fb996409436134aa432dc8, type: 3}
   wallParent: {fileID: 1259310547}
+  tiles: []
+  walls: []
   radius: 3
   startDistanceOffset: 0.5
   startAngleOffset: 60
@@ -171,6 +176,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &866319188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866319185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69d6d43cdec7c2342b62bea5f772bb16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadName: aaa
+  saveName: aaa
+--- !u!114 &866319189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866319185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a485b1b96fc88c744a0826fd3500d824, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tile: {fileID: 135440383190688763, guid: 9a0cf4ffb92f5974aae796e8bcd1d27b, type: 3}
+  wall: {fileID: 2461504587492576799, guid: 2aa7277760fb996409436134aa432dc8, type: 3}
+  tileParent: {fileID: 962648565}
+  wallParent: {fileID: 1259310546}
+--- !u!114 &866319190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866319185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f0a4634a204ef4b849f830be2096b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileParent: {fileID: 962648565}
+  wallParent: {fileID: 1259310546}
 --- !u!1 &962648565
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,24 +8,31 @@ public class BoardLoader : MonoBehaviour
     string[] allLines;
     int currentLineIndex = 0;
 
-    GameObject tile;
-    GameObject wall;
+    public GameObject tile;
+    public GameObject wall;
+
+    public GameObject tileParent;
+    public GameObject wallParent;
 
     public void LoadBoard(string inputFileName)
     {
+        Debug.Log("Loading");
+
         allLines = File.ReadAllLines(inputFileName);
         int tileAmount = ReadInt();
         int wallAmount = ReadInt();
 
         LoadTiles(tileAmount);
         LoadWalls(wallAmount);
+
+        Debug.Log("Load complete");
     }
 
     void LoadTiles (int tileAmount)
     {
         for (int i = 0; i < tileAmount; i++)
         {
-            LoadTile();
+            LoadTile(i);
         }
     }
 
@@ -33,32 +40,35 @@ public class BoardLoader : MonoBehaviour
     {
         for (int i = 0; i < wallAmount; i++)
         {
-            LoadWall();
+            LoadWall(i);
         }
     }
 
-    void LoadTile()
+    void LoadTile(int i)
     {
         float x = ReadFloat();
         float y = ReadFloat();
         float rotZ = ReadFloat();
         int neighbourAmount = ReadInt();
+        TileData data = new TileData();
 
-        TileData tmp = Instantiate(tile, new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotZ)).GetComponent<TileData>();
+        data.ID = i;
 
         for (int j = 0; j < neighbourAmount; j++)
         {
-            tmp.neighbours.Add(ReadInt());
+            data.neighbours.Add(ReadInt());
         }
+
+        Instantiate(tile, new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotZ), tileParent.transform).GetComponent<Tile>().data = data;
     }
 
-    void LoadWall()
+    void LoadWall(int i)
     {
         float x = ReadFloat();
         float y = ReadFloat();
         float rotZ = ReadFloat();
 
-        Wall tmp = Instantiate(wall, new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotZ)).GetComponent<Wall>();
+        Wall tmp = Instantiate(wall, new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotZ), wallParent.transform).GetComponent<Wall>();
 
         tmp.neighbour1 = ReadInt();
         tmp.neighbour2 = ReadInt();

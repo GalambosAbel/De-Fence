@@ -77,4 +77,10 @@ public class TileData
 		distanceOffset = other.distanceOffset;
 		angleOffset = other.angleOffset;
 	}
+
+    public TileData()
+    {
+        ID = 0;
+        neighbours = new List<int>();
+    }
 }

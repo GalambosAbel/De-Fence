@@ -188,10 +188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a485b1b96fc88c744a0826fd3500d824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 0}
-  wall: {fileID: 0}
-  tileParent: {fileID: 0}
-  wallParent: {fileID: 0}
+  tile: {fileID: 135440383190688763, guid: 9a0cf4ffb92f5974aae796e8bcd1d27b, type: 3}
+  wall: {fileID: 2461504587492576799, guid: 2aa7277760fb996409436134aa432dc8, type: 3}
+  tileParent: {fileID: 962648565}
+  wallParent: {fileID: 1259310546}
 --- !u!114 &866319189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,8 +216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69d6d43cdec7c2342b62bea5f772bb16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadName: 
-  saveName: 
+  loadName: aaa
+  saveName: aaa
 --- !u!1 &962648565
 GameObject:
   m_ObjectHideFlags: 0

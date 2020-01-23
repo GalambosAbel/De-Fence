@@ -114,18 +114,17 @@ public class GenerateBoard : MonoBehaviour
 				{
 					float extraRot = Mathf.Sign(tiles[i].transform.position.x - tiles[j].transform.position.x) * 60;
 
-					PlaceWall(j, i, extraRot);
+					PlaceWall(j, i);
 				}
 			}
 		}
     }
 
-    void PlaceWall(int _neighbour1, int _neighbour2, float _extraRot)
+    void PlaceWall(int _neighbour1, int _neighbour2)
     {
         GameObject newWall = Instantiate(wall, wallParent);
 		newWall.GetComponent<Wall>().neighbour1 = _neighbour1;
         newWall.GetComponent<Wall>().neighbour2 = _neighbour2;
-        newWall.GetComponent<Wall>().extraRot = _extraRot;
         newWall.GetComponent<Wall>().Place();
         walls.Add(newWall);
     }

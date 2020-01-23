@@ -8,7 +8,6 @@ public class Wall : MonoBehaviour
 
 	public int neighbour1;
 	public int neighbour2;
-	public float extraRot;
 
 	public void Place()
 	{
@@ -22,7 +21,6 @@ public class Wall : MonoBehaviour
 		Quaternion targetRot = Quaternion.Euler(0f, 0f, angle);
 
         transform.position = targetPos;
-
 		transform.rotation = targetRot;
 
 	}

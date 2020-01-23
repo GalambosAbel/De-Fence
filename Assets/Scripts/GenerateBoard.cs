@@ -45,7 +45,7 @@ public class GenerateBoard : MonoBehaviour
 			newRot.z += previousData.angleOffset;
 			tiles.Add(Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent));
             GameObject newTile = tiles[tiles.Count - 1];
-			tiles[tiles.Count-1].GetComponent<Tile>().currentState = TileStates.red;
+			//tiles[tiles.Count-1].GetComponent<Tile>().currentState = TileStates.red;
 
 			TileData newData = new TileData(previousData);
 			newData.position = tiles[tiles.Count - 1].transform.position;
@@ -68,7 +68,7 @@ public class GenerateBoard : MonoBehaviour
 			newRot.z -= previousData.angleOffset;
 			tiles.Add(Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent));
             GameObject newTile = tiles[tiles.Count - 1];
-            tiles[tiles.Count - 1].GetComponent<Tile>().currentState = TileStates.blue;
+            //tiles[tiles.Count - 1].GetComponent<Tile>().currentState = TileStates.blue;
 
 			TileData newData = new TileData(previousData);
 			newData.position = tiles[tiles.Count - 1].transform.position;

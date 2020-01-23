@@ -123,10 +123,10 @@ public class GenerateBoard : MonoBehaviour
     void PlaceWall(int _neighbour1, int _neighbour2, float _extraRot)
     {
         GameObject newWall = Instantiate(wall, wallParent);
-		walls.Add(newWall);
-        newWall.GetComponent<Wall>().neighbour1 = _neighbour1;
+		newWall.GetComponent<Wall>().neighbour1 = _neighbour1;
         newWall.GetComponent<Wall>().neighbour2 = _neighbour2;
         newWall.GetComponent<Wall>().extraRot = _extraRot;
         newWall.GetComponent<Wall>().Place();
+        walls.Add(newWall);
     }
 }

@@ -5,20 +5,17 @@ using UnityEngine;
 
 public class BoardLoader : MonoBehaviour
 {
-    public static string inputFileName;
-    int tileAmount;
-    int wallAmount;
-    int currentLineIndex = 0;
     string[] allLines;
+    int currentLineIndex = 0;
 
     GameObject tile;
     GameObject wall;
 
-    void Start()
+    public void LoadBoard(string inputFileName)
     {
         allLines = File.ReadAllLines(inputFileName);
-        tileAmount = ReadInt();
-        wallAmount = ReadInt();
+        int tileAmount = ReadInt();
+        int wallAmount = ReadInt();
 
         LoadTiles(tileAmount);
         LoadWalls(wallAmount);

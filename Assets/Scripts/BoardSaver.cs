@@ -5,18 +5,24 @@ using System.IO;
 
 public class BoardSaver : MonoBehaviour
 {
-    List<GameObject> tiles;
-    List<GameObject> walls;
+    List<GameObject> tiles = new List<GameObject>();
+    List<GameObject> walls = new List<GameObject>();
     List<string> output = new List<string>();
 
-    GameObject tileParent;
-    GameObject wallParent;
+    public GameObject tileParent;
+    public GameObject wallParent;
 
     public void Save(string outputFileName)
     {
         Debug.Log("Saving");
-        tiles = FindObjectOfType<GenerateBoard>().tiles;
-        walls = FindObjectOfType<GenerateBoard>().walls;
+        foreach (Transform child in tileParent.transform)
+        {
+            tiles.Add(child.gameObject);
+        }
+        foreach (Transform child in wallParent.transform)
+        {
+            walls.Add(child.gameObject);
+        }
 
         output.Add(tiles.Count.ToString());
         output.Add(walls.Count.ToString());
@@ -29,6 +35,15 @@ public class BoardSaver : MonoBehaviour
         {
             WriteWall(i);
         }
+        if (File.Exists(outputFileName))
+        {
+            int nameFix = 0;
+            while (File.Exists(outputFileName + nameFix.ToString()))
+            {
+                nameFix++;
+            }
+            outputFileName += nameFix.ToString();
+        }
         File.WriteAllLines(outputFileName, output);
         Debug.Log("saving complete");
     }
@@ -37,7 +52,7 @@ public class BoardSaver : MonoBehaviour
     {
         output.Add(tiles[i].transform.position.x.ToString());
         output.Add(tiles[i].transform.position.y.ToString());
-        output.Add(tiles[i].transform.rotation.z.ToString());
+        output.Add(tiles[i].transform.rotation.eulerAngles.z.ToString());
         output.Add(tiles[i].GetComponent<Tile>().data.neighbours.Count.ToString());
         for (int j = 0; j < tiles[i].GetComponent<Tile>().data.neighbours.Count; j++)
         {
@@ -49,7 +64,7 @@ public class BoardSaver : MonoBehaviour
     {
         output.Add(walls[i].transform.position.x.ToString());
         output.Add(walls[i].transform.position.y.ToString());
-        output.Add(walls[i].transform.rotation.z.ToString());
+        output.Add(walls[i].transform.rotation.eulerAngles.z.ToString());
         output.Add(walls[i].GetComponent<Wall>().neighbour1.ToString());
         output.Add(walls[i].GetComponent<Wall>().neighbour2.ToString());
     }

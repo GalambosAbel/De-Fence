@@ -204,6 +204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f0a4634a204ef4b849f830be2096b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileParent: {fileID: 962648565}
+  wallParent: {fileID: 1259310546}
 --- !u!114 &866319190
 MonoBehaviour:
   m_ObjectHideFlags: 0

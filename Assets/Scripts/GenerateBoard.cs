@@ -21,7 +21,7 @@ public class GenerateBoard : MonoBehaviour
     int a = 1;
     int n = 0;
 
-	void Start()
+	public void GenerateBoardFc()
 	{
 		noOfTiles = radius * radius * 6;
 		Vector3 startPos = new Vector3(Mathf.Sqrt(3) / 4, 0.5f, 0f);

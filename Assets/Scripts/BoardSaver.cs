@@ -5,13 +5,22 @@ using System.IO;
 
 public class BoardSaver : MonoBehaviour
 {
-    List<GameObject> tiles = FindObjectOfType<GenerateBoard>().tiles;
-    List<GameObject> walls = FindObjectOfType<GenerateBoard>().walls;
+    List<GameObject> tiles;
+    List<GameObject> walls;
     List<string> output = new List<string>();
-    string outputFileName;
 
-    public void Save()
+    GameObject tileParent;
+    GameObject wallParent;
+
+    public void Save(string outputFileName)
     {
+        Debug.Log("Saving");
+        tiles = FindObjectOfType<GenerateBoard>().tiles;
+        walls = FindObjectOfType<GenerateBoard>().walls;
+
+        output.Add(tiles.Count.ToString());
+        output.Add(walls.Count.ToString());
+
         for (int i = 0; i < tiles.Count; i++)
         {
             WriteTile(i);
@@ -21,6 +30,7 @@ public class BoardSaver : MonoBehaviour
             WriteWall(i);
         }
         File.WriteAllLines(outputFileName, output);
+        Debug.Log("saving complete");
     }
 
     public void WriteTile(int i)

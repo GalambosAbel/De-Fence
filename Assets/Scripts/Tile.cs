@@ -20,7 +20,7 @@ public class Tile : MonoBehaviour
 
 public enum TileStates
 {
-	empty, blue, red, blueFigure, redfigure 
+	empty, blue, red, blueFigure, redFigure 
 }
 
 public class TileState

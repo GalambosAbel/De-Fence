@@ -9,6 +9,8 @@ public class AbstractBoard
     public List<List<int>> graph;
     public List<List<int>> territories;
 
+	private List<bool> tilesChecked;
+
     public AbstractBoard()
     {
         tiles = new List<AbstractTile>();
@@ -33,12 +35,41 @@ public class AbstractBoard
             graph.Add(tmp);
         }
 
-        territories = new List<List<int>>();
-        for (int i = 0; i < tiles.Count; i++)
-        {
-            List<int> tmp = new List<int>();
-            tmp.Add(i);
-            territories.Add(tmp);
-        }
+		LoadTerritorries();
     }
+
+	public void LoadTerritorries ()
+	{
+		territories = new List<List<int>>();
+		tilesChecked = new List<bool>();
+		for (int i = 0; i < tiles.Count; i++)
+		{
+			tilesChecked.Add(false);
+		}
+
+		int territoyIndex = 0;
+		for (int i = 0; i < tilesChecked.Count; i++)
+		{
+			if (!tilesChecked[i])
+			{
+				territories.Add(new List<int>());
+				CheckTile(i, territoyIndex);
+				territoyIndex++;
+			}
+		}
+	}
+
+	public void CheckTile (int tileID, int territoryIndex)
+	{
+		territories[territoryIndex].Add(tileID);
+
+		tilesChecked[tileID] = true;
+		foreach (int[] neighbour in tiles[tileID].neighbours)
+		{
+			if (!walls[neighbour[1]].active && !tilesChecked[neighbour[0]])
+			{
+				CheckTile(neighbour[0], territoryIndex);
+			}
+		}
+	}
 }

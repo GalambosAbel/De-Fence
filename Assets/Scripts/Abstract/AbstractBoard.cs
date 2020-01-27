@@ -7,6 +7,7 @@ public class AbstractBoard
     public List<AbstractTile> tiles;
     public List<AbstractWall> walls;
     public List<List<int>> graph;
+    public List<List<int>> territories;
 
     public AbstractBoard()
     {
@@ -30,6 +31,14 @@ public class AbstractBoard
                 tmp.Add(tiles[i].neighbours[j][0]);
             }
             graph.Add(tmp);
+        }
+
+        territories = new List<List<int>>();
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            List<int> tmp = new List<int>();
+            tmp.Add(i);
+            territories.Add(tmp);
         }
     }
 }

@@ -19,7 +19,6 @@ public class GenerateBoard : MonoBehaviour
 	public float startAngleOffset;
 
     int a = 1;
-    int n = 0;
 
 	public void GenerateBoardFc()
 	{

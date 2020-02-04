@@ -14,4 +14,12 @@ public class AbstractTile
         state = 0;
     }
 
+	public AbstractTile(int _ID, List<int[]> _neighbours)
+	{
+		ID = _ID;
+		neighbours = new List<int[]>();
+		neighbours.AddRange(_neighbours);
+		state = 0;
+	}
+
 }

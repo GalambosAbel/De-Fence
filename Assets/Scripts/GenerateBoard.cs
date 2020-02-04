@@ -71,7 +71,7 @@ public class GenerateBoard : MonoBehaviour
 
 			TileData newData = new TileData(previousData);
 			newData.position = tiles[tiles.Count - 1].transform.position;
-            newData.ID = tilePositions.IndexOf(newPos); ;
+            newData.ID = tilePositions.IndexOf(newPos);
             newData.neighbours.Clear();
             newData.neighbours.Add(previousData.ID);
             tiles[tiles.Count - 1].GetComponent<Tile>().data = newData;
@@ -125,6 +125,7 @@ public class GenerateBoard : MonoBehaviour
 		newWall.GetComponent<Wall>().neighbour1 = _neighbour1;
         newWall.GetComponent<Wall>().neighbour2 = _neighbour2;
         newWall.GetComponent<Wall>().Place();
+		newWall.GetComponent<Wall>().ID = walls.Count;
         walls.Add(newWall);
     }
 }

@@ -6,6 +6,8 @@ public class Wall : MonoBehaviour
 {
 	public bool active = true;
 
+	public int ID;
+
 	public int neighbour1;
 	public int neighbour2;
 

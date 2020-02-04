@@ -1,0 +1,71 @@
+{
+    "name": "InputManager",
+    "maps": [
+        {
+            "name": "Menu",
+            "id": "87ca7107-d1af-4eae-aed3-0a288067a327",
+            "actions": [
+                {
+                    "name": "Save",
+                    "type": "Button",
+                    "id": "24117448-fe4a-4514-b1a5-a534dcd900b3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Load",
+                    "type": "Button",
+                    "id": "a94f8e29-0888-4749-aca7-bca509f2b293",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "GenerateBoard",
+                    "type": "Button",
+                    "id": "98d7f5e0-1424-44ac-a765-56850abed61b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b4380d1d-df56-46c0-bb00-00f40042307b",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Save",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fdf98908-470e-4aef-a0a0-1f967ab3d84b",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Load",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9cd03e36-129c-486b-8863-f4f3936c68e1",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GenerateBoard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

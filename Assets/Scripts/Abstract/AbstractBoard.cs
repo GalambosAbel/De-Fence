@@ -7,7 +7,6 @@ public class AbstractBoard
     public List<AbstractTile> tiles;
     public List<AbstractWall> walls;
     public List<List<int>> graph;
-    public List<List<int>> territories;
 
 	private List<bool> tilesChecked;
 
@@ -37,6 +36,9 @@ public class AbstractBoard
 
 		LoadTerritorries();
     }
+
+	#region territorries
+	public List<List<int>> territories;
 
 	public void LoadTerritorries ()
 	{
@@ -72,4 +74,5 @@ public class AbstractBoard
 			}
 		}
 	}
+	#endregion
 }

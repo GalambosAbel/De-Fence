@@ -12,7 +12,8 @@ public class AbstractTile
     {
         ID = _ID;
         state = 0;
-    }
+		neighbours = new List<int[]>();
+	}
 
 	public AbstractTile(int _ID, List<int[]> _neighbours)
 	{

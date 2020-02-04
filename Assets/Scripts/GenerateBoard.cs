@@ -18,17 +18,25 @@ public class GenerateBoard : MonoBehaviour
 	public float startDistanceOffset;
 	public float startAngleOffset;
 
+	List<AbstractTile> abstractTiles;
+	List<AbstractWall> abstractWalls;
+
     int a = 1;
 
 	public void GenerateBoardFc()
 	{
+		abstractTiles = new List<AbstractTile>();
+		abstractWalls = new List<AbstractWall>();
+
 		noOfTiles = radius * radius * 6;
 		Vector3 startPos = new Vector3(Mathf.Sqrt(3) / 4, 0.5f, 0f);
         tiles.Add(Instantiate(tile, startPos, Quaternion.identity, tileParent));
-        tilePositions.Add(startPos);
+		abstractTiles.Add(new AbstractTile(0));
+		tilePositions.Add(startPos);
         tiles[0].GetComponent<Tile>().data = new TileData(startPos, startDistanceOffset, startAngleOffset, 0);
 		PlaceNextTile(tiles[0]);
         PlaceWalls();
+		AbstarctManager.board = new AbstractBoard(abstractTiles, abstractWalls);
 		Debug.Log("this is at the end of the start function, no of walls: " + walls.Count);
 	}
 
@@ -43,6 +51,7 @@ public class GenerateBoard : MonoBehaviour
             Vector3 newRot = previous.transform.rotation.eulerAngles;
 			newRot.z += previousData.angleOffset;
 			tiles.Add(Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent));
+			abstractTiles.Add(new AbstractTile(tilePositions.IndexOf(newPos)));
             GameObject newTile = tiles[tiles.Count - 1];
 			//tiles[tiles.Count-1].GetComponent<Tile>().currentState = TileStates.red;
 
@@ -66,6 +75,7 @@ public class GenerateBoard : MonoBehaviour
 			Vector3 newRot = previous.transform.rotation.eulerAngles;
 			newRot.z -= previousData.angleOffset;
 			tiles.Add(Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent));
+			abstractTiles.Add(new AbstractTile(tilePositions.IndexOf(newPos)));
             GameObject newTile = tiles[tiles.Count - 1];
             //tiles[tiles.Count - 1].GetComponent<Tile>().currentState = TileStates.blue;
 
@@ -122,10 +132,11 @@ public class GenerateBoard : MonoBehaviour
     void PlaceWall(int _neighbour1, int _neighbour2)
     {
         GameObject newWall = Instantiate(wall, wallParent);
-		newWall.GetComponent<Wall>().neighbour1 = _neighbour1;
-        newWall.GetComponent<Wall>().neighbour2 = _neighbour2;
-        newWall.GetComponent<Wall>().Place();
+        newWall.GetComponent<Wall>().Place(_neighbour1, _neighbour2);
 		newWall.GetComponent<Wall>().ID = walls.Count;
-        walls.Add(newWall);
+		abstractWalls.Add(new AbstractWall(walls.Count));
+		abstractTiles[_neighbour1].neighbours.Add(new int[] { _neighbour2, walls.Count });
+		abstractTiles[_neighbour2].neighbours.Add(new int[] { _neighbour1, walls.Count });
+		walls.Add(newWall);
     }
 }

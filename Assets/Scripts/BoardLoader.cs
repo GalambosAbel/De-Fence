@@ -14,6 +14,9 @@ public class BoardLoader : MonoBehaviour
     public GameObject tileParent;
     public GameObject wallParent;
 
+	List<AbstractTile> abstractTiles;
+	List<AbstractWall> abstractWalls;
+
     public void LoadBoard(string inputFileName)
     {
         Debug.Log("Loading");
@@ -27,9 +30,13 @@ public class BoardLoader : MonoBehaviour
         int tileAmount = ReadInt();
         int wallAmount = ReadInt();
 
+		abstractTiles = new List<AbstractTile>();
+		abstractWalls = new List<AbstractWall>();
+
         LoadTiles(tileAmount);
         LoadWalls(wallAmount);
 
+		AbstarctManager.board = new AbstractBoard(abstractTiles, abstractWalls);
         Debug.Log("Loaded file: " + inputFileName);
     }
 
@@ -37,7 +44,7 @@ public class BoardLoader : MonoBehaviour
     {
         for (int i = 0; i < tileAmount; i++)
         {
-            LoadTile(i);
+            LoadTile();
         }
     }
 
@@ -45,38 +52,43 @@ public class BoardLoader : MonoBehaviour
     {
         for (int i = 0; i < wallAmount; i++)
         {
-            LoadWall(i);
+            LoadWall();
         }
     }
 
-    void LoadTile(int i)
-    {
+    void LoadTile()
+	{
+		int ID = ReadInt();
         float x = ReadFloat();
         float y = ReadFloat();
         float rotZ = ReadFloat();
         int neighbourAmount = ReadInt();
         TileData data = new TileData();
 
-        data.ID = i;
+        data.ID = ID;
 
-        for (int j = 0; j < neighbourAmount; j++)
+		List<int[]> ns = new List<int[]>();
+        for (int i = 0; i < neighbourAmount; i++)
         {
-            data.neighbours.Add(ReadInt());
+			int n = ReadInt();
+			int w = ReadInt();
+            data.neighbours.Add(n);
+			ns.Add(new int[] { n, w });
         }
 
+		abstractTiles.Add(new AbstractTile(ID, ns));
         Instantiate(tile, new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotZ), tileParent.transform).GetComponent<Tile>().data = data;
     }
 
-    void LoadWall(int i)
+    void LoadWall()
     {
+		int ID = ReadInt();
         float x = ReadFloat();
         float y = ReadFloat();
         float rotZ = ReadFloat();
 
-        Wall tmp = Instantiate(wall, new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotZ), wallParent.transform).GetComponent<Wall>();
-
-        tmp.neighbour1 = ReadInt();
-        tmp.neighbour2 = ReadInt();
+		Instantiate(wall, new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotZ), wallParent.transform).GetComponent<Wall>().ID = ID;
+		abstractWalls.Add(new AbstractWall(ID));
     }
 
     int ReadInt ()

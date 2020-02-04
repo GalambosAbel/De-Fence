@@ -8,10 +8,7 @@ public class Wall : MonoBehaviour
 
 	public int ID;
 
-	public int neighbour1;
-	public int neighbour2;
-
-	public void Place()
+	public void Place(int neighbour1, int neighbour2)
 	{
         Vector3 pos1 = FindObjectOfType<GenerateBoard>().tiles[neighbour1].transform.position;
         Vector3 pos2 = FindObjectOfType<GenerateBoard>().tiles[neighbour2].transform.position;

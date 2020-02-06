@@ -50,21 +50,22 @@ public class BoardSaver : MonoBehaviour
 
     public void WriteTile(int i)
     {
-		output.Add(AbstractManager.board.tiles[i].ID.ToString());
+		int id = tiles[i].GetComponent<Tile>().data.ID;
+		output.Add(id.ToString());
         output.Add(tiles[i].transform.position.x.ToString());
         output.Add(tiles[i].transform.position.y.ToString());
         output.Add(tiles[i].transform.rotation.eulerAngles.z.ToString());
-        output.Add(AbstractManager.board.tiles[i].neighbours.Count.ToString());
-        for (int j = 0; j < AbstractManager.board.tiles[i].neighbours.Count; j++)
+        output.Add(AbstractManager.board.tiles[id].neighbours.Count.ToString());
+        for (int j = 0; j < AbstractManager.board.tiles[id].neighbours.Count; j++)
         {
-			output.Add(AbstractManager.board.tiles[i].neighbours[j][0].ToString());
-			output.Add(AbstractManager.board.tiles[i].neighbours[j][1].ToString());
+			output.Add(AbstractManager.board.tiles[id].neighbours[j][0].ToString());
+			output.Add(AbstractManager.board.tiles[id].neighbours[j][1].ToString());
         }
 
     }
     public void WriteWall(int i)
     {
-		output.Add(AbstractManager.board.walls[i].ID.ToString());
+		output.Add(walls[i].GetComponent<Wall>().ID.ToString());
         output.Add(walls[i].transform.position.x.ToString());
         output.Add(walls[i].transform.position.y.ToString());
         output.Add(walls[i].transform.rotation.eulerAngles.z.ToString());

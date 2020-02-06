@@ -38,11 +38,11 @@ public class AbstractBoard
     }
 
 	#region territorries
-	public List<List<int>> territories;
+	public List<AbstractTerritory> territories;
 
 	public void LoadTerritorries ()
 	{
-		territories = new List<List<int>>();
+		territories = new List<AbstractTerritory>();
 		tilesChecked = new List<bool>();
 		for (int i = 0; i < tiles.Count; i++)
 		{
@@ -54,7 +54,7 @@ public class AbstractBoard
 		{
 			if (!tilesChecked[i])
 			{
-				territories.Add(new List<int>());
+				territories.Add(new AbstractTerritory());
 				CheckTile(i, territoyIndex);
 				territoyIndex++;
 			}
@@ -63,7 +63,7 @@ public class AbstractBoard
 
 	public void CheckTile (int tileID, int territoryIndex)
 	{
-		territories[territoryIndex].Add(tileID);
+        territories[territoryIndex].tiles.Add(tileID);
 
 		tilesChecked[tileID] = true;
 		foreach (int[] neighbour in tiles[tileID].neighbours)

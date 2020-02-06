@@ -31,7 +31,7 @@ public class InputReciever : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.G))
+		/*if (Input.GetKeyDown(KeyCode.G))
 		{
 			gameObject.GetComponent<GenerateBoard>().GenerateBoardFc();
 		}
@@ -42,6 +42,6 @@ public class InputReciever : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.L))
 		{
 			gameObject.GetComponent<BoardLoader>().LoadBoard(loadName);
-		}
+		}*/
 	}
 }

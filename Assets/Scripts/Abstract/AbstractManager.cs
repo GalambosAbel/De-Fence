@@ -5,5 +5,5 @@ using UnityEngine;
 public class AbstractManager : MonoBehaviour
 {
 	public static AbstractBoard board;
-    public static int playerAmount;
+    public static int playerAmount = 20;
 }

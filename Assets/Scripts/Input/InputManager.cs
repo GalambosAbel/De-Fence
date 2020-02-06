@@ -78,6 +78,33 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Tile"",
+            ""id"": ""653dde73-0d32-4499-8f1b-8f1ab7a04582"",
+            ""actions"": [
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""6f32ad53-b1db-4e10-8cc2-d206acf7d795"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""9524b064-b590-422f-8a74-302e3ad3ba41"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -87,6 +114,9 @@ public class @InputManager : IInputActionCollection, IDisposable
         m_Menu_Save = m_Menu.FindAction("Save", throwIfNotFound: true);
         m_Menu_Load = m_Menu.FindAction("Load", throwIfNotFound: true);
         m_Menu_GenerateBoard = m_Menu.FindAction("GenerateBoard", throwIfNotFound: true);
+        // Tile
+        m_Tile = asset.FindActionMap("Tile", throwIfNotFound: true);
+        m_Tile_Click = m_Tile.FindAction("Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -181,10 +211,47 @@ public class @InputManager : IInputActionCollection, IDisposable
         }
     }
     public MenuActions @Menu => new MenuActions(this);
+
+    // Tile
+    private readonly InputActionMap m_Tile;
+    private ITileActions m_TileActionsCallbackInterface;
+    private readonly InputAction m_Tile_Click;
+    public struct TileActions
+    {
+        private @InputManager m_Wrapper;
+        public TileActions(@InputManager wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Click => m_Wrapper.m_Tile_Click;
+        public InputActionMap Get() { return m_Wrapper.m_Tile; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TileActions set) { return set.Get(); }
+        public void SetCallbacks(ITileActions instance)
+        {
+            if (m_Wrapper.m_TileActionsCallbackInterface != null)
+            {
+                @Click.started -= m_Wrapper.m_TileActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_TileActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_TileActionsCallbackInterface.OnClick;
+            }
+            m_Wrapper.m_TileActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
+            }
+        }
+    }
+    public TileActions @Tile => new TileActions(this);
     public interface IMenuActions
     {
         void OnSave(InputAction.CallbackContext context);
         void OnLoad(InputAction.CallbackContext context);
         void OnGenerateBoard(InputAction.CallbackContext context);
+    }
+    public interface ITileActions
+    {
+        void OnClick(InputAction.CallbackContext context);
     }
 }

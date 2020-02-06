@@ -65,6 +65,33 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Tile",
+            "id": "653dde73-0d32-4499-8f1b-8f1ab7a04582",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "6f32ad53-b1db-4e10-8cc2-d206acf7d795",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9524b064-b590-422f-8a74-302e3ad3ba41",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

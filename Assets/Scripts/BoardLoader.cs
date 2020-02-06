@@ -63,21 +63,17 @@ public class BoardLoader : MonoBehaviour
         float y = ReadFloat();
         float rotZ = ReadFloat();
         int neighbourAmount = ReadInt();
-        TileData data = new TileData();
 
-        data.ID = ID;
-
-		List<int[]> ns = new List<int[]>();
+		List<int[]> neighbours = new List<int[]>();
         for (int i = 0; i < neighbourAmount; i++)
         {
-			int n = ReadInt();
-			int w = ReadInt();
-            data.neighbours.Add(n);
-			ns.Add(new int[] { n, w });
+			int neighbour = ReadInt();
+			int wall = ReadInt();
+			neighbours.Add(new int[] { neighbour, wall });
         }
 
-		abstractTiles.Add(new AbstractTile(ID, ns));
-        Instantiate(tile, new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotZ), tileParent.transform).GetComponent<Tile>().data = data;
+        Instantiate(tile, new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotZ), tileParent.transform).GetComponent<Tile>().ID = ID;
+		abstractTiles.Add(new AbstractTile(ID, neighbours));
     }
 
     void LoadWall()

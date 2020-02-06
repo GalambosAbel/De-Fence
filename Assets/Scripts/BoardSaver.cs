@@ -50,7 +50,7 @@ public class BoardSaver : MonoBehaviour
 
     public void WriteTile(int i)
     {
-		int id = tiles[i].GetComponent<Tile>().data.ID;
+		int id = tiles[i].GetComponent<Tile>().ID;
 		output.Add(id.ToString());
         output.Add(tiles[i].transform.position.x.ToString());
         output.Add(tiles[i].transform.position.y.ToString());

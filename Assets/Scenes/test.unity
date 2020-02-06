@@ -160,8 +160,8 @@ MonoBehaviour:
   tiles: []
   walls: []
   radius: 3
-  startDistanceOffset: 0.5
-  startAngleOffset: 60
+  distanceOffset: 0.5
+  angleOffset: 60
 --- !u!4 &866319187
 Transform:
   m_ObjectHideFlags: 0

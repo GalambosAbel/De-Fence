@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AbstarctManager : MonoBehaviour
+public class AbstractManager : MonoBehaviour
 {
 	public static AbstractBoard board;
+    public static int playerAmount;
 }

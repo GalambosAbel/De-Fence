@@ -36,7 +36,7 @@ public class GenerateBoard : MonoBehaviour
         tiles[0].GetComponent<Tile>().data = new TileData(startPos, startDistanceOffset, startAngleOffset, 0);
 		PlaceNextTile(tiles[0]);
         PlaceWalls();
-		AbstarctManager.board = new AbstractBoard(abstractTiles, abstractWalls);
+		AbstractManager.board = new AbstractBoard(abstractTiles, abstractWalls);
 		Debug.Log("this is at the end of the start function, no of walls: " + walls.Count);
 	}
 

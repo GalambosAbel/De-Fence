@@ -6,12 +6,14 @@ public class AbstractTile
 {
     public int ID;
     public List<int[]> neighbours; //1st element is neighbour ID, 2nd element is wall ID
-    public int state;
+    public int owner;
+    public bool hasFigure;
 
     public AbstractTile(int _ID)
     {
         ID = _ID;
-        state = 0;
+        owner = 0;
+        hasFigure = false;
 		neighbours = new List<int[]>();
 	}
 
@@ -20,7 +22,8 @@ public class AbstractTile
 		ID = _ID;
 		neighbours = new List<int[]>();
 		neighbours.AddRange(_neighbours);
-		state = 0;
-	}
+		owner = 0;
+        hasFigure = false;
+    }
 
 }

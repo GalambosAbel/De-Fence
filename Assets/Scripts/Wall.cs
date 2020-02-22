@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-	public bool active = true;
-
 	public int ID;
 
 	public void Place(int neighbour1, int neighbour2)
@@ -21,6 +19,10 @@ public class Wall : MonoBehaviour
 
         transform.position = targetPos;
 		transform.rotation = targetRot;
+	}
 
+	void Update()
+	{
+		GetComponent<SpriteRenderer>().enabled = AbstractManager.board.walls[ID].active;
 	}
 }

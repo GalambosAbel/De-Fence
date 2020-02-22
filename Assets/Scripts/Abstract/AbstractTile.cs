@@ -26,20 +26,6 @@ public class AbstractTile
         hasFigure = false;
     }
 
-	public void CycleState()
-	{
-		if (owner == 0) owner++;
-		else if (hasFigure)
-		{
-			owner = (owner + 1) % (AbstractManager.playerAmount + 1);
-			hasFigure = false;
-		}
-		else
-		{
-			hasFigure = true;
-		}
-	}
-
 	public void ClickedTile()
 	{
 		//lerakás

@@ -23,6 +23,8 @@ public class Wall : MonoBehaviour
 
 	void Update()
 	{
-		GetComponent<SpriteRenderer>().enabled = AbstractManager.board.walls[ID].active;
+		Color c = GetComponent<SpriteRenderer>().color;
+		c.a = AbstractManager.board.walls[ID].active ? 1f : 0.25f;
+		GetComponent<SpriteRenderer>().color = c;
 	}
 }

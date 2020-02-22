@@ -19,18 +19,8 @@ public class Tile : MonoBehaviour
 
 	void Update()
     {
-        gameObject.GetComponent<SpriteRenderer>().color = GetColor();
+        gameObject.GetComponent<SpriteRenderer>().color = AbstractManager.playerColors[AbstractManager.board.tiles[ID].owner];
 		transform.GetChild(0).gameObject.SetActive(AbstractManager.board.tiles[ID].hasFigure);
-    }
-
-    Color GetColor()
-    {
-        float x = AbstractManager.board.tiles[ID].owner;
-        if (x == 0) return Color.white;
-        if (x == 1) return Color.red;
-        if (x == 2) return Color.blue;
-        if (x == 3) return Color.green;
-        return Color.black;
     }
 
 	void OnMouseEnter()

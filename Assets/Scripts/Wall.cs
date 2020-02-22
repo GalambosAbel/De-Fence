@@ -24,7 +24,7 @@ public class Wall : MonoBehaviour
 	void Update()
 	{
 		Color c = GetComponent<SpriteRenderer>().color;
-		c.a = AbstractManager.board.walls[ID].active ? 1f : 0.25f;
+		c.a = AbstractManager.board.walls[ID].active ? 1f : 0.5f;
 		GetComponent<SpriteRenderer>().color = c;
 	}
 }

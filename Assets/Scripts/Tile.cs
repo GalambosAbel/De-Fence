@@ -19,7 +19,17 @@ public class Tile : MonoBehaviour
 
 	void Update()
     {
-        gameObject.GetComponent<SpriteRenderer>().color = AbstractManager.playerColors[AbstractManager.board.tiles[ID].owner];
+		Color c = AbstractManager.playerColors[AbstractManager.board.tiles[ID].owner];
+		if (AbstractManager.tilesClicked != null)
+		{
+			if (AbstractManager.tilesClicked.Contains(AbstractManager.board.tiles[ID]))
+			{
+				c.r /= 2;
+				c.g /= 2;
+				c.b /= 2;
+			}
+		}
+		gameObject.GetComponent<SpriteRenderer>().color = c;
 		transform.GetChild(0).gameObject.SetActive(AbstractManager.board.tiles[ID].hasFigure);
     }
 

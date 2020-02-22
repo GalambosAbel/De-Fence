@@ -26,16 +26,41 @@ public class AbstractTile
         hasFigure = false;
     }
 
-	public void ClickedTile() // figurokat még kell nézni
+	public void ClickedTile() 
 	{
-		//lerakás
-		if (owner == 0)  
+		// lerakás
+		if (owner == 0)
 		{
 			owner = AbstractManager.currentPlayer;
 			hasFigure = true;
 			AbstractManager.TookStep();
 			return;
 		}
+		AbstractManager.tilesClicked.Add(this);
+	}
+	
+	public bool IsNeighbourOf (int neighbourID)
+	{
+		foreach (int[] neighbour in neighbours)
+		{
+			if (neighbour[0] == neighbourID) return true;
+		}
+		return false;
+	}
+
+	public AbstractWall GetWallOfNeighbour (int neighbourID)
+	{
+		foreach (int[] neighbour in neighbours)
+		{
+			if (neighbour[0] == neighbourID) return AbstractManager.board.walls[neighbour[1]];
+		}
+		return null;
+	}
+}
+
+/*
+ //lerakás
+
 		//támadások első fele vagy összevonás
 		if (owner == AbstractManager.currentPlayer) 
 		{
@@ -104,23 +129,4 @@ public class AbstractTile
 				AbstractManager.TookStep();
 			}
 		}
-	}
-	
-	public bool IsNeighbourOf (int neighbourID)
-	{
-		foreach (int[] neighbour in neighbours)
-		{
-			if (neighbour[0] == neighbourID) return true;
-		}
-		return false;
-	}
-
-	public AbstractWall GetWallOfNeighbour (int neighbourID)
-	{
-		foreach (int[] neighbour in neighbours)
-		{
-			if (neighbour[0] == neighbourID) return AbstractManager.board.walls[neighbour[1]];
-		}
-		return null;
-	}
-}
+		*/

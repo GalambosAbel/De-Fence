@@ -89,7 +89,7 @@ public class AbstractTile
 	{
 		foreach (int[] neighbour in neighbours)
 		{
-			if (neighbour[0] == neighbourID) return AbstractManager.board.walls[neighbour[0]];
+			if (neighbour[0] == neighbourID) return AbstractManager.board.walls[neighbour[1]];
 		}
 		return null;
 	}

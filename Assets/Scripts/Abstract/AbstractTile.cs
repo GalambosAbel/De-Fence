@@ -26,7 +26,7 @@ public class AbstractTile
         hasFigure = false;
     }
 
-	public void ClickedTile()
+	public void ClickedTile() // figurokat még kell nézni
 	{
 		//lerakás
 		if (owner == 0)  
@@ -58,6 +58,12 @@ public class AbstractTile
 				// öszevonás 2.fele
 				else
 				{
+					if (!GetWallOfNeighbour(AbstractManager.tilesClicked[0].ID).active)
+					{
+						AbstractManager.tilesClicked = new List<AbstractTile>();
+						AbstractManager.tilesClicked.Add(this);
+						return;
+					}
 					GetWallOfNeighbour(AbstractManager.tilesClicked[0].ID).active = false;
 					AbstractManager.TookStep();
 					return;
@@ -68,10 +74,34 @@ public class AbstractTile
 		//támadások 2.fele
 		if (owner != AbstractManager.currentPlayer)
 		{
-			// invalid esetek
+			// invalid esetek (majd később)
 			if (AbstractManager.tilesClicked.Count < 1 || AbstractManager.tilesClicked.Count > neighbours.Count)
 			{
-				
+				AbstractManager.tilesClicked = new List<AbstractTile>();
+				AbstractManager.tilesClicked.Add(this);
+				return;
+			}
+			// invalid esetek 2.0
+			for (int i = 0; i < AbstractManager.tilesClicked.Count; i++)
+			{
+				if (!IsNeighbourOf(AbstractManager.tilesClicked[i].ID))
+				{
+					AbstractManager.tilesClicked = new List<AbstractTile>();
+					AbstractManager.tilesClicked.Add(this);
+					return;
+				}
+			}
+			//sima támadás (kell még az erő)
+			if(AbstractManager.tilesClicked.Count == 1)
+			{
+				foreach(int[] neighbour in neighbours)
+				{
+					AbstractManager.board.walls[neighbour[1]].active = true;
+				}
+				GetWallOfNeighbour(AbstractManager.tilesClicked[0].ID).active = false;
+				hasFigure = false;
+				owner = AbstractManager.currentPlayer;
+				AbstractManager.TookStep();
 			}
 		}
 	}

@@ -13,7 +13,7 @@ public class Tile : MonoBehaviour
 		inputs = new InputManager();
 		inputs.Disable();
 
-		inputs.Tile.Click.performed += ctx => AbstractManager.board.tiles[ID].CycleState();
+		inputs.Tile.Click.performed += ctx => AbstractManager.board.tiles[ID].ClickedTile();
 	}
 
 

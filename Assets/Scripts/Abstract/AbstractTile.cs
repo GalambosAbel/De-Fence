@@ -8,6 +8,13 @@ public class AbstractTile
     public List<int[]> neighbours; //1st element is neighbour ID, 2nd element is wall ID
     public int owner;
     public bool hasFigure;
+	public int Strength
+	{
+		get
+		{
+			return AbstractManager.board.GetTerritoryOfTile(ID).Strength;
+		}
+	}
 
     public AbstractTile(int _ID)
     {
@@ -74,6 +81,42 @@ public class AbstractTile
 				return;
 			}
 		}
+
+		if (moveType == 2)
+		{
+			if (!hasFigure) return;
+			if (AbstractManager.tilesClicked.Count == 0)
+			{
+				AbstractManager.tilesClicked.Add(this);
+			}
+			else if (AbstractManager.tilesClicked[0].owner != currP && owner != currP)
+			{
+				AbstractManager.tilesClicked = new List<AbstractTile>();
+				AbstractManager.tilesClicked.Add(this);
+			}
+			else if (AbstractManager.tilesClicked[0].owner == owner)
+			{
+				AbstractManager.tilesClicked = new List<AbstractTile>();
+				AbstractManager.tilesClicked.Add(this);
+			}
+			else if (IsNeighbourOf(AbstractManager.tilesClicked[0].ID))
+			{
+				AbstractTile enemy = owner == currP ? AbstractManager.tilesClicked[0] : this;
+				AbstractTile friend = owner != currP ? AbstractManager.tilesClicked[0] : this;
+
+				if (friend.Strength <= enemy.Strength) return;
+
+				foreach (int[] neighbour in enemy.neighbours)
+				{
+					AbstractManager.board.walls[neighbour[1]].active = true;
+				}
+				enemy.GetWallOfNeighbour(friend.ID).active = false;
+				enemy.hasFigure = false;
+				enemy.owner = currP;
+				AbstractManager.TookStep();
+			}
+			return;
+		}
 	}
 	
 	public bool IsNeighbourOf (int neighbourID)
@@ -94,74 +137,3 @@ public class AbstractTile
 		return null;
 	}
 }
-
-/*
-		//támadások első fele vagy összevonás
-		if (owner == AbstractManager.currentPlayer) 
-		{
-			// összevonás vagy támadások 1.fele
-			if (AbstractManager.tilesClicked.Count == 0) 
-			{
-				AbstractManager.tilesClicked.Add(this);
-				return;
-			}
-			//összevonás 2.fele (későb: ösz vont tám 1.5 fele)
-			if (AbstractManager.tilesClicked.Count == 1) 
-			{
-				//osszevont tamadashoz meg kell valtoztatni
-				if (!IsNeighbourOf(AbstractManager.tilesClicked[0].ID)) 
-				{
-					AbstractManager.tilesClicked = new List<AbstractTile>();
-					AbstractManager.tilesClicked.Add(this);
-					return;
-				}
-				// öszevonás 2.fele
-				else
-				{
-					if (!GetWallOfNeighbour(AbstractManager.tilesClicked[0].ID).active)
-					{
-						AbstractManager.tilesClicked = new List<AbstractTile>();
-						AbstractManager.tilesClicked.Add(this);
-						return;
-					}
-					GetWallOfNeighbour(AbstractManager.tilesClicked[0].ID).active = false;
-					AbstractManager.TookStep();
-					return;
-				}
-			}
-			//kell ha 3-as övt van
-		}
-		//támadások 2.fele
-		if (owner != AbstractManager.currentPlayer)
-		{
-			// invalid esetek (majd később)
-			if (AbstractManager.tilesClicked.Count < 1 || AbstractManager.tilesClicked.Count > neighbours.Count)
-			{
-				AbstractManager.tilesClicked = new List<AbstractTile>();
-				AbstractManager.tilesClicked.Add(this);
-				return;
-			}
-			// invalid esetek 2.0
-			for (int i = 0; i < AbstractManager.tilesClicked.Count; i++)
-			{
-				if (!IsNeighbourOf(AbstractManager.tilesClicked[i].ID))
-				{
-					AbstractManager.tilesClicked = new List<AbstractTile>();
-					AbstractManager.tilesClicked.Add(this);
-					return;
-				}
-			}
-			//sima támadás (kell még az erő)
-			if(AbstractManager.tilesClicked.Count == 1)
-			{
-				foreach(int[] neighbour in neighbours)
-				{
-					AbstractManager.board.walls[neighbour[1]].active = true;
-				}
-				GetWallOfNeighbour(AbstractManager.tilesClicked[0].ID).active = false;
-				hasFigure = false;
-				owner = AbstractManager.currentPlayer;
-				AbstractManager.TookStep();
-			}
-		}
-		*/

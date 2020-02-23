@@ -74,5 +74,17 @@ public class AbstractBoard
 			}
 		}
 	}
+
+	public AbstractTerritory GetTerritoryOfTile(int ID)
+	{
+		foreach(AbstractTerritory territory in territories)
+		{
+			foreach (int tile in territory.tiles)
+			{
+				if (tile == ID) return territory;
+			}
+		}
+		return null;
+	}
 	#endregion
 }

@@ -5,29 +5,30 @@ using UnityEngine;
 public class AbstractTerritory
 {
     public List<int> tiles;
-    public int owner;
-    public int strength;
 
     public AbstractTerritory()
     {
         tiles = new List<int>();
-        owner = 0;
-        strength = 0;
     }
 
-    int WhoIsOwner()
+    public int Owner
     {
-        if(tiles.Count != 0) return AbstractManager.board.tiles[tiles[0]].owner;
-        return 0;
+		get
+		{
+			return AbstractManager.board.tiles[tiles[0]].owner;
+		}
     }
 
-    int WhatIsStrength()
+    public int Strength
     {
-        int _strength = 0;
-        for (int i = 0; i < tiles.Count; i++)
-        {
-            if (AbstractManager.board.tiles[tiles[0]].hasFigure) _strength++;
-        }
-        return _strength;
+		get
+		{
+			int _strength = 0;
+			for (int i = 0; i < tiles.Count; i++)
+			{
+				if (AbstractManager.board.tiles[tiles[i]].hasFigure) _strength++;
+			}
+			return _strength;
+		}
     }
 }

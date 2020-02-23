@@ -120,11 +120,7 @@ public class AbstractTile
 
 		if (moveType == 3)
 		{
-			if (!hasFigure) return;
-			if (AbstractManager.tilesClicked.Count == 0)
-			{
-				AbstractManager.tilesClicked.Add(this);
-			}
+			Debug.LogError("EZ MÉG NINCS KÉSZ!!!!!!!!!!!");
 		}
 	}
 	

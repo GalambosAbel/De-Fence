@@ -28,15 +28,52 @@ public class AbstractTile
 
 	public void ClickedTile() 
 	{
-		// lerakás
-		if (owner == 0)
+		int moveType = AbstractManager.moveTypeSelector.value;
+		int currP = AbstractManager.currentPlayer;
+
+		if (moveType == 0) 
 		{
-			owner = AbstractManager.currentPlayer;
-			hasFigure = true;
-			AbstractManager.TookStep();
-			return;
+			if (owner == 0)
+			{
+				owner = currP;
+				hasFigure = true;
+				AbstractManager.TookStep();
+				return;
+			}
+			else
+			{
+				Debug.LogError("invalid move attempt");
+				return;
+			}
 		}
-		AbstractManager.tilesClicked.Add(this);
+
+		if (moveType == 1)
+		{
+			if (owner == currP)
+			{
+				if (!hasFigure) return;
+				if(AbstractManager.tilesClicked.Count == 0)
+				{
+					AbstractManager.tilesClicked.Add(this);
+				}
+				else if (!IsNeighbourOf(AbstractManager.tilesClicked[0].ID))
+				{
+					AbstractManager.tilesClicked = new List<AbstractTile>();
+					AbstractManager.tilesClicked.Add(this);
+				}
+				else if (GetWallOfNeighbour(AbstractManager.tilesClicked[0].ID).active)
+				{
+					GetWallOfNeighbour(AbstractManager.tilesClicked[0].ID).active = false;
+					AbstractManager.TookStep();
+				}
+				return;
+			}
+			else
+			{
+				Debug.LogError("invalid move attempt");
+				return;
+			}
+		}
 	}
 	
 	public bool IsNeighbourOf (int neighbourID)
@@ -59,8 +96,6 @@ public class AbstractTile
 }
 
 /*
- //lerakás
-
 		//támadások első fele vagy összevonás
 		if (owner == AbstractManager.currentPlayer) 
 		{

@@ -9,6 +9,12 @@ public class AbstractManager : MonoBehaviour
     public static int playerAmount = 2;
 	public static int currentPlayer = 1;
     public static Color[] playerColors = new Color[] { Color.white, Color.red, Color.blue, Color.green, Color.black };
+	public static Dropdown moveTypeSelector;
+
+	void Awake()
+	{
+		moveTypeSelector = FindObjectOfType<Dropdown>();
+	}
 
 	public static List<AbstractTile> tilesClicked;
 
@@ -24,4 +30,14 @@ public class AbstractManager : MonoBehaviour
     {
         TookStep();
     }
+
+	public void ResetTurnNonStatic()
+	{
+		ResetTurn();
+	}
+
+	public static void ResetTurn()
+	{
+		tilesClicked = new List<AbstractTile>();
+	}
 }

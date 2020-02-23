@@ -23,7 +23,7 @@ public class AbstractManager : MonoBehaviour
 		currentPlayer = currentPlayer % playerAmount + 1;
 		board.LoadTerritorries();
 		tilesClicked = new List<AbstractTile>();
-        FindObjectOfType<Canvas>().GetComponentInChildren<Image>().color = playerColors[currentPlayer];
+        GameObject.Find("PassButton").GetComponent<Image>().color = playerColors[currentPlayer];
 	}
 
     public void Pass()

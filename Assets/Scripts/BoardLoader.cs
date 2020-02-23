@@ -37,6 +37,7 @@ public class BoardLoader : MonoBehaviour
         LoadWalls(wallAmount);
 
 		AbstractManager.board = new AbstractBoard(abstractTiles, abstractWalls);
+		AbstractManager.board.LoadTerritorries();
         Debug.Log("Loaded file: " + inputFileName);
     }
 

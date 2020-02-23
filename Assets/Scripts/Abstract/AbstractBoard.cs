@@ -6,7 +6,6 @@ public class AbstractBoard
 {
     public List<AbstractTile> tiles;
     public List<AbstractWall> walls;
-    public List<List<int>> graph;
 
 	private List<bool> tilesChecked;
 
@@ -14,7 +13,6 @@ public class AbstractBoard
     {
         tiles = new List<AbstractTile>();
         walls = new List<AbstractWall>();
-        graph = new List<List<int>>();
     }
 
     //tiles must be ordered by the tile's ID in ascending order
@@ -22,7 +20,6 @@ public class AbstractBoard
     {
         tiles = _tiles;
         walls = _walls;
-        graph = new List<List<int>>();
 
         for (int i = 0; i < tiles.Count; i++)
         {
@@ -31,10 +28,7 @@ public class AbstractBoard
             {
                 tmp.Add(tiles[i].neighbours[j][0]);
             }
-            graph.Add(tmp);
         }
-
-		LoadTerritorries();
     }
 
 	#region territorries
@@ -58,6 +52,11 @@ public class AbstractBoard
 				CheckTile(i, territoyIndex);
 				territoyIndex++;
 			}
+		}
+
+		foreach (AbstractTerritory territory in territories)
+		{
+			territory.CleanUp();
 		}
 	}
 

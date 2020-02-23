@@ -24,9 +24,9 @@ public class AbstractTerritory
 		get
 		{
 			int _strength = 0;
-			for (int i = 0; i < tiles.Count; i++)
-			{
-				if (AbstractManager.board.tiles[tiles[i]].hasFigure) _strength++;
+			foreach (int tile in tiles)
+			{ 
+				if (AbstractManager.board.tiles[tile].hasFigure) _strength++;
 			}
 			return _strength;
 		}

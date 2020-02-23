@@ -117,6 +117,15 @@ public class AbstractTile
 			}
 			return;
 		}
+
+		if (moveType == 3)
+		{
+			if (!hasFigure) return;
+			if (AbstractManager.tilesClicked.Count == 0)
+			{
+				AbstractManager.tilesClicked.Add(this);
+			}
+		}
 	}
 	
 	public bool IsNeighbourOf (int neighbourID)

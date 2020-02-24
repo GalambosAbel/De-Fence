@@ -14,6 +14,7 @@ public class AbstractManager : MonoBehaviour
 	void Awake()
 	{
 		moveTypeSelector = FindObjectOfType<Dropdown>();
+		tilesClicked = new List<AbstractTile>();
 	}
 
 	public static List<AbstractTile> tilesClicked;

@@ -38,6 +38,15 @@ public class AbstractTile
 		int moveType = AbstractManager.moveTypeSelector.value;
 		int currP = AbstractManager.currentPlayer;
 
+		foreach (AbstractTile tile in AbstractManager.tilesClicked)
+		{
+			if (tile.ID == ID)
+			{
+				AbstractManager.tilesClicked.Remove(tile);
+				return;
+			}
+		}
+
 		if (moveType == 0) 
 		{
 			if (owner == 0)
@@ -120,7 +129,49 @@ public class AbstractTile
 
 		if (moveType == 3)
 		{
-			Debug.LogError("EZ MÉG NINCS KÉSZ!!!!!!!!!!!");
+			if (!hasFigure) return;
+
+			if (owner == currP)
+			{
+				foreach(AbstractTile tile in AbstractManager.tilesClicked)
+				{
+					if (AbstractManager.board.GetTerritoryOfTile(tile.ID).tiles.Contains(ID)) return;
+				}
+				AbstractManager.tilesClicked.Add(this);
+				return;
+			}
+			else
+			{
+				if (AbstractManager.tilesClicked.Count < 1) return;
+
+				int friendStrength = 0;
+				foreach (AbstractTile tile in AbstractManager.tilesClicked)
+				{
+					if (!IsNeighbourOf(tile.ID))
+					{
+						AbstractManager.tilesClicked = new List<AbstractTile>();
+						return;
+					}
+					friendStrength += tile.Strength;
+				}
+
+				if (friendStrength > Strength)
+				{
+					foreach (int[] neighbour in neighbours)
+					{
+						AbstractManager.board.walls[neighbour[1]].active = true;
+					}
+					foreach (AbstractTile tile in AbstractManager.tilesClicked)
+					{
+						GetWallOfNeighbour(tile.ID).active = false;
+					}
+					owner = currP;
+					hasFigure = false;
+					AbstractManager.TookStep();
+					return;
+				}
+			}
+			return;
 		}
 	}
 	

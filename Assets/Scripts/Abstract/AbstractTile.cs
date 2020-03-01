@@ -35,144 +35,23 @@ public class AbstractTile
 
 	public void ClickedTile() 
 	{
-		int moveType = AbstractManager.moveTypeSelector.value;
-		int currP = AbstractManager.currentPlayer;
-
 		foreach (AbstractTile tile in AbstractManager.tilesClicked)
 		{
 			if (tile.ID == ID)
 			{
 				AbstractManager.tilesClicked.Remove(tile);
+				AbstractManager.UpdateControlButton();
 				return;
 			}
 		}
 
-		if (moveType == 0) 
+		foreach (AbstractTile tile in AbstractManager.tilesClicked)
 		{
-			if (owner == 0)
-			{
-				owner = currP;
-				hasFigure = true;
-				AbstractManager.TookStep();
-				return;
-			}
-			else
-			{
-				Debug.LogError("invalid move attempt");
-				return;
-			}
+			if (AbstractManager.board.GetTerritoryOfTile(tile.ID).tiles.Contains(ID)) return;
 		}
 
-		if (moveType == 1)
-		{
-			if (owner == currP)
-			{
-				if (!hasFigure) return;
-				if(AbstractManager.tilesClicked.Count == 0)
-				{
-					AbstractManager.tilesClicked.Add(this);
-				}
-				else if (!IsNeighbourOf(AbstractManager.tilesClicked[0].ID))
-				{
-					AbstractManager.tilesClicked = new List<AbstractTile>();
-					AbstractManager.tilesClicked.Add(this);
-				}
-				else if (GetWallOfNeighbour(AbstractManager.tilesClicked[0].ID).active)
-				{
-					GetWallOfNeighbour(AbstractManager.tilesClicked[0].ID).active = false;
-					AbstractManager.TookStep();
-				}
-				return;
-			}
-			else
-			{
-				Debug.LogError("invalid move attempt");
-				return;
-			}
-		}
-
-		if (moveType == 2)
-		{
-			if (!hasFigure) return;
-			if (AbstractManager.tilesClicked.Count == 0)
-			{
-				AbstractManager.tilesClicked.Add(this);
-			}
-			else if (AbstractManager.tilesClicked[0].owner != currP && owner != currP)
-			{
-				AbstractManager.tilesClicked = new List<AbstractTile>();
-				AbstractManager.tilesClicked.Add(this);
-			}
-			else if (AbstractManager.tilesClicked[0].owner == owner)
-			{
-				AbstractManager.tilesClicked = new List<AbstractTile>();
-				AbstractManager.tilesClicked.Add(this);
-			}
-			else if (IsNeighbourOf(AbstractManager.tilesClicked[0].ID))
-			{
-				AbstractTile enemy = owner == currP ? AbstractManager.tilesClicked[0] : this;
-				AbstractTile friend = owner != currP ? AbstractManager.tilesClicked[0] : this;
-
-				if (friend.Strength <= enemy.Strength) return;
-
-				foreach (int[] neighbour in enemy.neighbours)
-				{
-					AbstractManager.board.walls[neighbour[1]].active = true;
-				}
-				enemy.GetWallOfNeighbour(friend.ID).active = false;
-				enemy.hasFigure = false;
-				enemy.owner = currP;
-				AbstractManager.TookStep();
-			}
-			return;
-		}
-
-		if (moveType == 3)
-		{
-			if (!hasFigure) return;
-
-			if (owner == currP)
-			{
-				foreach(AbstractTile tile in AbstractManager.tilesClicked)
-				{
-					if (AbstractManager.board.GetTerritoryOfTile(tile.ID).tiles.Contains(ID)) return;
-				}
-				AbstractManager.tilesClicked.Add(this);
-				return;
-			}
-			else
-			{
-				if (AbstractManager.tilesClicked.Count < 1) return;
-
-				int friendStrength = 0;
-				foreach (AbstractTile tile in AbstractManager.tilesClicked)
-				{
-					if (!IsNeighbourOf(tile.ID))
-					{
-						AbstractManager.tilesClicked = new List<AbstractTile>();
-						return;
-					}
-					friendStrength += tile.Strength;
-				}
-
-				if (friendStrength > Strength)
-				{
-					foreach (int[] neighbour in neighbours)
-					{
-						AbstractManager.board.walls[neighbour[1]].active = true;
-					}
-					foreach (AbstractTile tile in AbstractManager.tilesClicked)
-					{
-						GetWallOfNeighbour(tile.ID).active = false;
-					}
-					owner = currP;
-					hasFigure = false;
-					AbstractManager.TookStep();
-					return;
-				}
-			}
-			return;
-		}
+		AbstractManager.tilesClicked.Add(this);
+		AbstractManager.UpdateControlButton();
 	}
 	
 	public bool IsNeighbourOf (int neighbourID)

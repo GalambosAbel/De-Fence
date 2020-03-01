@@ -105,6 +105,44 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Gameplay"",
+            ""id"": ""8376d0a9-5049-432e-ad77-4723e3dcb1fb"",
+            ""actions"": [
+                {
+                    ""name"": ""Confirm Turn"",
+                    ""type"": ""Button"",
+                    ""id"": ""69b88014-4aab-4eea-86e6-cfc7873d4f16"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4bbdb1fe-68d8-4c69-be85-6035ca0d9a52"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Confirm Turn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00d81810-94fb-42fa-8d69-c55cc8c4dded"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Confirm Turn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -117,6 +155,9 @@ public class @InputManager : IInputActionCollection, IDisposable
         // Tile
         m_Tile = asset.FindActionMap("Tile", throwIfNotFound: true);
         m_Tile_Click = m_Tile.FindAction("Click", throwIfNotFound: true);
+        // Gameplay
+        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
+        m_Gameplay_ConfirmTurn = m_Gameplay.FindAction("Confirm Turn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -244,6 +285,39 @@ public class @InputManager : IInputActionCollection, IDisposable
         }
     }
     public TileActions @Tile => new TileActions(this);
+
+    // Gameplay
+    private readonly InputActionMap m_Gameplay;
+    private IGameplayActions m_GameplayActionsCallbackInterface;
+    private readonly InputAction m_Gameplay_ConfirmTurn;
+    public struct GameplayActions
+    {
+        private @InputManager m_Wrapper;
+        public GameplayActions(@InputManager wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ConfirmTurn => m_Wrapper.m_Gameplay_ConfirmTurn;
+        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
+        public void SetCallbacks(IGameplayActions instance)
+        {
+            if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
+            {
+                @ConfirmTurn.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnConfirmTurn;
+                @ConfirmTurn.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnConfirmTurn;
+                @ConfirmTurn.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnConfirmTurn;
+            }
+            m_Wrapper.m_GameplayActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ConfirmTurn.started += instance.OnConfirmTurn;
+                @ConfirmTurn.performed += instance.OnConfirmTurn;
+                @ConfirmTurn.canceled += instance.OnConfirmTurn;
+            }
+        }
+    }
+    public GameplayActions @Gameplay => new GameplayActions(this);
     public interface IMenuActions
     {
         void OnSave(InputAction.CallbackContext context);
@@ -253,5 +327,9 @@ public class @InputManager : IInputActionCollection, IDisposable
     public interface ITileActions
     {
         void OnClick(InputAction.CallbackContext context);
+    }
+    public interface IGameplayActions
+    {
+        void OnConfirmTurn(InputAction.CallbackContext context);
     }
 }

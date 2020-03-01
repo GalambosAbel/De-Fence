@@ -17,6 +17,7 @@ public class InputReciever : MonoBehaviour
 		inputs.Menu.Save.performed += ctx => gameObject.GetComponent<BoardSaver>().Save(saveName);
 		inputs.Menu.Load.performed += ctx => gameObject.GetComponent<BoardLoader>().LoadBoard(loadName);
 		inputs.Menu.GenerateBoard.performed += ctx => gameObject.GetComponent<GenerateBoard>().GenerateBoardFc();
+		inputs.Gameplay.ConfirmTurn.performed += ctx => AbstractManager.instance._controlButton.onClick.Invoke();
 	}
 
 	void OnEnable()

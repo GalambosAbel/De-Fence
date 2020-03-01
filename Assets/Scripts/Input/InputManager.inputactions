@@ -92,6 +92,44 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Gameplay",
+            "id": "8376d0a9-5049-432e-ad77-4723e3dcb1fb",
+            "actions": [
+                {
+                    "name": "Confirm Turn",
+                    "type": "Button",
+                    "id": "69b88014-4aab-4eea-86e6-cfc7873d4f16",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4bbdb1fe-68d8-4c69-be85-6035ca0d9a52",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Confirm Turn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00d81810-94fb-42fa-8d69-c55cc8c4dded",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Confirm Turn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

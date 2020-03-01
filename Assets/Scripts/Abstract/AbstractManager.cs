@@ -20,6 +20,7 @@ public class AbstractManager : MonoBehaviour
 		controlButton = _controlButton;
 		tilesClicked = new List<AbstractTile>();
 		instance = this;
+		controlButton.onClick.AddListener(instance.Pass);
 	}
 
 	public static List<AbstractTile> tilesClicked;

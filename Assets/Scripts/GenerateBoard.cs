@@ -28,6 +28,9 @@ public class GenerateBoard : MonoBehaviour
 		abstractTiles = new List<AbstractTile>();
 		abstractWalls = new List<AbstractWall>();
 		neighbourArray = new List<List<int>>();
+		tilePositions = new List<Vector3>();
+		tiles = new List<GameObject>();
+		walls = new List<GameObject>();
 
 		noOfTiles = radius * radius * 6;
 		Vector3 startPos = new Vector3(Mathf.Sqrt(3) / 4, 0.5f, 0f);
@@ -39,6 +42,7 @@ public class GenerateBoard : MonoBehaviour
 		PlaceNextTile(tiles[0]);
         PlaceWalls();
 		AbstractManager.board = new AbstractBoard(abstractTiles, abstractWalls);
+		AbstractManager.board.LoadTerritorries();
 		Debug.Log("this is at the end of the generate function, no of walls: " + walls.Count);
 	}
 

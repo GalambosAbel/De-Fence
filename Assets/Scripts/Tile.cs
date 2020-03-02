@@ -19,6 +19,7 @@ public class Tile : MonoBehaviour
 
 	void Update()
     {
+		if (AbstractManager.gameEnded) inputs.Disable();
 		Color c = AbstractManager.playerColors[AbstractManager.board.tiles[ID].owner];
 		if (AbstractManager.tilesClicked != null)
 		{
@@ -43,4 +44,3 @@ public class Tile : MonoBehaviour
 		inputs.Disable();
 	}
 }
-//distanceOffset = 2f  angleOffset = 60f

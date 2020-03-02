@@ -11,6 +11,7 @@ public class AbstractManager : MonoBehaviour
 	public static int currentPlayer = 1;
     public static Color[] playerColors = new Color[] { Color.white, Color.red, Color.blue, Color.green, Color.black };
 	public static bool lastPassed = false;
+	public static bool gameEnded = false;
 	public static Button controlButton;
 	public Button _controlButton;
 
@@ -21,6 +22,10 @@ public class AbstractManager : MonoBehaviour
 		tilesClicked = new List<AbstractTile>();
 		instance = this;
 		controlButton.onClick.AddListener(instance.Pass);
+
+		lastPassed = false;
+		currentPlayer = 1;
+		gameEnded = false;
 	}
 
 	public static List<AbstractTile> tilesClicked;
@@ -64,11 +69,6 @@ public class AbstractManager : MonoBehaviour
         controlButton.GetComponent<Image>().color = playerColors[currentPlayer];
 		lastPassed = false;
 		UpdateControlButton();
-	}
-
-	public static void EndGame()
-	{
-		Debug.LogError("Game ended!");
 	}
 
 	// can do step functions
@@ -176,7 +176,8 @@ public class AbstractManager : MonoBehaviour
 	{
 		if (lastPassed)
 		{
-			EndGame();
+			gameEnded = true;
+			GameObject.Find("BoardGenerator").GetComponent<InputReciever>().GameEnded();
 			return;
 		}
 
@@ -188,5 +189,41 @@ public class AbstractManager : MonoBehaviour
 	{
 		tilesClicked = new List<AbstractTile>();
 		UpdateControlButton();
+	}
+
+	// scoring functions
+
+	public static int[] LeadingPlayer
+	{
+		get
+		{
+			List<int> leaders = new List<int>();
+			int maxSoFar = 0;
+			for (int i = 1; i <= playerAmount; i++)
+			{
+				if (GetPlayerScore(i) > maxSoFar)
+				{
+					leaders = new List<int>();
+					leaders.Add(i);
+					maxSoFar = GetPlayerScore(i);
+				}
+				else if(GetPlayerScore(i) == maxSoFar)
+				{
+					leaders.Add(i);
+				}
+			}
+				return leaders.ToArray();
+		}
+	}
+
+	public static int GetPlayerScore(int player)
+	{
+		if (player < 1 || player > playerAmount) return 0;
+		int score = 0;
+		foreach (AbstractTerritory territory in board.territories)
+		{
+			if (territory.Owner == player) score++;
+		}
+		return score;
 	}
 }

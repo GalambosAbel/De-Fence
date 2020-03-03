@@ -77,6 +77,11 @@ public class InputReciever : MonoBehaviour
 		SceneManager.LoadScene("MenuScene");
 	}
 
+	public void QuitGame()
+	{
+		Application.Quit();
+	}
+
 	public void NewGame()
 	{
 		loadMode = 0;

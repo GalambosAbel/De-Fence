@@ -34,6 +34,8 @@ public class InputReciever : MonoBehaviour
 		inputs.Menu.Load.performed += ctx => gameObject.GetComponent<BoardLoader>().LoadBoard(loadName);
 		inputs.Menu.GenerateBoard.performed += ctx => gameObject.GetComponent<GenerateBoard>().GenerateBoardFc();*/
 
+		SceneManager.sceneLoaded += LoadedScene;
+
 		DontDestroyOnLoad(gameObject);
 	}
 
@@ -72,19 +74,20 @@ public class InputReciever : MonoBehaviour
 
 	public void ReturnToMenu()
 	{
-		StartCoroutine(LoadScene("MenuScene"));
+		SceneManager.LoadScene("MenuScene");
 	}
 
 	public void NewGame()
 	{
 		loadMode = 0;
-		StartCoroutine(LoadScene("GameScene"));
+		SceneManager.LoadScene("GameScene");
 	}
 
-	public void LoadedScene(string sceneName)
+	public void LoadedScene(Scene scene, LoadSceneMode mode)
 	{
+		if (this == null) return;
 		gameEndPanel.SetActive(false);
-		if (sceneName != "GameScene") return;
+		if (scene.name != "GameScene") return;
 
 		inputs.Menu.Disable();
 		inputs.Gameplay.Enable();
@@ -108,18 +111,5 @@ public class InputReciever : MonoBehaviour
 		{
 			gameObject.GetComponent<BoardLoader>().LoadBoard(loadName);
 		}
-	}
-
-	IEnumerator LoadScene(string name)
-	{
-		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(name);
-
-		// Wait until the asynchronous scene fully loads
-		while (!asyncLoad.isDone)
-		{
-			yield return null;
-		}
-
-		LoadedScene(name);
 	}
 }

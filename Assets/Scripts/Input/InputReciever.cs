@@ -88,6 +88,11 @@ public class InputReciever : MonoBehaviour
 		SceneManager.LoadScene("GameScene");
 	}
 
+    public void Tutorial()
+    {
+        SceneManager.LoadScene("TutorialScene");
+    }
+
 	public void LoadedScene(Scene scene, LoadSceneMode mode)
 	{
 		if (this == null) return;

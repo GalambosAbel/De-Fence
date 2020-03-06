@@ -23,8 +23,7 @@ public class Wall : MonoBehaviour
 
 	void Update()
 	{
-		Color c = GetComponent<SpriteRenderer>().color;
-		c.a = AbstractManager.board.walls[ID].active ? 1f : 0.5f;
-		GetComponent<SpriteRenderer>().color = c;
-	}
+        transform.localScale = new Vector3(0.85f / (AbstractManager.board.walls[ID].active ? 1f : 3f), 0.05f, 1f);
+
+    }
 }

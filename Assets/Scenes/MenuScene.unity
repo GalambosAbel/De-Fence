@@ -1366,17 +1366,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf7141ebcbe65749bfbc82f22ca2ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  texturesFolder: f
-  texturePackName: g
+  texturesFolder: textures
+  texturePackName: default
   tileNames:
-  - bcd
-  - a
-  - b
-  - c
-  - d
+  - empty_tile
+  - p1_empty
+  - p1_figure
+  - p2_empty
+  - p2_figure
   wallNames:
-  - k
-  - j
+  - wall_off
+  - wall_on
 --- !u!1 &1734880077
 GameObject:
   m_ObjectHideFlags: 0

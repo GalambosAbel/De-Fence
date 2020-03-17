@@ -39,22 +39,22 @@ public class InputReciever : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 	}
 
-	public void GameEnded()
+	public void GameEnded(int[] winners)
 	{
 		gameEndPanel.SetActive(true);
 
 		inputs.Menu.Enable();
 		inputs.Gameplay.Disable();
 
-		if (AbstractManager.LeadingPlayer.Length == 1)
+		if (winners.Length == 1)
 		{
-			int winner = AbstractManager.LeadingPlayer[0];
+            int winner = winners[0];
 			GameObject.Find("VictoryText").GetComponent<Text>().text = "Player " + winner + " won!";
 			GameObject.Find("VictoryText").GetComponent<Text>().color = AbstractManager.playerColors[winner];
 		}
 		else
 		{
-			GameObject.Find("VictoryText").GetComponent<Text>().text = "Players " + ArrToString(AbstractManager.LeadingPlayer) + " have tied.";
+			GameObject.Find("VictoryText").GetComponent<Text>().text = "Players " + ArrToString(winners) + " have tied.";
 			GameObject.Find("VictoryText").GetComponent<Text>().color = Color.black;
 		}
 	}

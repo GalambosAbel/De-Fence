@@ -208,6 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 380513645}
   - component: {fileID: 380513646}
+  - component: {fileID: 380513647}
   m_Layer: 0
   m_Name: ChessClock
   m_TagString: Untagged
@@ -248,6 +249,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &380513647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380513644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef3661d4f00f104ba7cce9f05903940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingTime: 18000
+  timeLeft: 0000000000000000
+  texts:
+  - {fileID: 35449221}
+  - {fileID: 797083609}
+  timeToAdd: 8000
 --- !u!1 &535730855
 GameObject:
   m_ObjectHideFlags: 0

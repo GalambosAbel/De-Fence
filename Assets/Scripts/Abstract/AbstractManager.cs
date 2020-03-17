@@ -63,6 +63,7 @@ public class AbstractManager : MonoBehaviour
 
 	public static void TookStep()
 	{
+        GameObject.Find("ChessClock").GetComponent<ChessClock>().AddTime(currentPlayer);
 		currentPlayer = currentPlayer % playerAmount + 1;
 		board.LoadTerritorries();
 		tilesClicked = new List<AbstractTile>();
@@ -177,7 +178,7 @@ public class AbstractManager : MonoBehaviour
 		if (lastPassed)
 		{
 			gameEnded = true;
-			GameObject.Find("BoardGenerator").GetComponent<InputReciever>().GameEnded();
+			GameObject.Find("BoardGenerator").GetComponent<InputReciever>().GameEnded(LeadingPlayer);
 			return;
 		}
 

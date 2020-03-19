@@ -1,0 +1,8 @@
+C:\Users\Marci\Documents\NeatLibrary\NeatLibrary\bin\Debug\netstandard2.0\NeatLibrary.deps.json
+C:\Users\Marci\Documents\NeatLibrary\NeatLibrary\bin\Debug\netstandard2.0\NeatLibrary.dll
+C:\Users\Marci\Documents\NeatLibrary\NeatLibrary\bin\Debug\netstandard2.0\NeatLibrary.pdb
+C:\Users\Marci\Documents\NeatLibrary\NeatLibrary\obj\Debug\netstandard2.0\NeatLibrary.csprojAssemblyReference.cache
+C:\Users\Marci\Documents\NeatLibrary\NeatLibrary\obj\Debug\netstandard2.0\NeatLibrary.AssemblyInfoInputs.cache
+C:\Users\Marci\Documents\NeatLibrary\NeatLibrary\obj\Debug\netstandard2.0\NeatLibrary.AssemblyInfo.cs
+C:\Users\Marci\Documents\NeatLibrary\NeatLibrary\obj\Debug\netstandard2.0\NeatLibrary.dll
+C:\Users\Marci\Documents\NeatLibrary\NeatLibrary\obj\Debug\netstandard2.0\NeatLibrary.pdb

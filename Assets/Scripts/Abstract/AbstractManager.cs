@@ -184,6 +184,8 @@ public class AbstractManager : MonoBehaviour
 
 		TookStep();
 		lastPassed = true;
+
+		JsonManager.SaveState("a");
 	}
 
 	public void ResetTurn()

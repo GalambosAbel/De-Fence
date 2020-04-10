@@ -50,7 +50,6 @@ public class ChessClock : MonoBehaviour
     public void AddTime(int player)
     {
         player--;
-        Debug.Log("asd");
         timeLeft[player] += timeToAdd;
         texts[player].text = ConvertTime(timeLeft[player]);
     }

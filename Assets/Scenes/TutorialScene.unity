@@ -2519,7 +2519,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You can attack an enemy territory if yours strength is bigger than your
+  m_Text: You can attack an enemy territory if your strength is bigger than your
     enemys, and it has a cell which is neighbour with one of your cells
 --- !u!222 &772543082
 CanvasRenderer:
@@ -2986,7 +2986,7 @@ MonoBehaviour:
   m_Text: 'You can also attack with two cells, if they are both the neighbours of
     the cell, which you want to attack.
 
-    This waz your territories will also
+    This way your territories will also
     merge into one.'
 --- !u!222 &1033197805
 CanvasRenderer:
@@ -3435,7 +3435,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Each set of cells, whom there is no walls between is called a territory
+  m_Text: Each set of cells with no walls between is called a territory
 --- !u!222 &1251260552
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5293,7 +5293,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: then the place button the place down a figure.
+  m_Text: then the place button to place down a figure.
 --- !u!222 &1958809294
 CanvasRenderer:
   m_ObjectHideFlags: 0

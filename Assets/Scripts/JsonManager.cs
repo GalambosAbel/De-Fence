@@ -19,6 +19,8 @@ public class JsonManager : MonoBehaviour
 			outputFileName += nameFix.ToString();
 		}
 
+		if (!File.Exists(GameMaster.currentMap)) SaveMap();
+
 		State currentState = new State(GameMaster.am);
 
 		string json = JsonUtility.ToJson(currentState);

@@ -30,8 +30,11 @@ public class InputReciever : MonoBehaviour
 
 		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.controlButton.onClick.Invoke();
 
-		/*inputs.Menu.Save.performed += ctx => gameObject.GetComponent<BoardSaver>().Save(saveName);
-		inputs.Menu.Load.performed += ctx => gameObject.GetComponent<BoardLoader>().LoadBoard(loadName);
+		inputs.Gameplay.temp.performed += ctx => JsonManager.SaveState(saveName);
+		inputs.Gameplay.templ.performed += ctx => JsonManager.LoadState(loadName);
+
+		inputs.Menu.Save.performed += ctx => JsonManager.SaveState(saveName);
+		/*inputs.Menu.Load.performed += ctx => gameObject.GetComponent<BoardLoader>().LoadBoard(loadName);
 		inputs.Menu.GenerateBoard.performed += ctx => gameObject.GetComponent<GenerateBoard>().GenerateBoardFc();*/
 
 		SceneManager.sceneLoaded += LoadedScene;

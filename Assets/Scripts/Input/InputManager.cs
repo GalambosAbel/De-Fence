@@ -128,6 +128,22 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""temp"",
+                    ""type"": ""Button"",
+                    ""id"": ""a77123fd-5912-444b-acfe-006057fec668"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""templ"",
+                    ""type"": ""Button"",
+                    ""id"": ""88a2b2df-5a09-4e98-be05-0e00d6b7c70e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -152,6 +168,28 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""action"": ""Confirm Turn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c231e055-425f-480b-ade8-479c6c037af9"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""temp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2163545-d247-428a-a357-fe937cddf04d"",
+                    ""path"": ""<Keyboard>/n"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""templ"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -169,6 +207,8 @@ public class @InputManager : IInputActionCollection, IDisposable
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_ConfirmTurn = m_Gameplay.FindAction("Confirm Turn", throwIfNotFound: true);
+        m_Gameplay_temp = m_Gameplay.FindAction("temp", throwIfNotFound: true);
+        m_Gameplay_templ = m_Gameplay.FindAction("templ", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -301,11 +341,15 @@ public class @InputManager : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_ConfirmTurn;
+    private readonly InputAction m_Gameplay_temp;
+    private readonly InputAction m_Gameplay_templ;
     public struct GameplayActions
     {
         private @InputManager m_Wrapper;
         public GameplayActions(@InputManager wrapper) { m_Wrapper = wrapper; }
         public InputAction @ConfirmTurn => m_Wrapper.m_Gameplay_ConfirmTurn;
+        public InputAction @temp => m_Wrapper.m_Gameplay_temp;
+        public InputAction @templ => m_Wrapper.m_Gameplay_templ;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -318,6 +362,12 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @ConfirmTurn.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnConfirmTurn;
                 @ConfirmTurn.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnConfirmTurn;
                 @ConfirmTurn.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnConfirmTurn;
+                @temp.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTemp;
+                @temp.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTemp;
+                @temp.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTemp;
+                @templ.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTempl;
+                @templ.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTempl;
+                @templ.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTempl;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -325,6 +375,12 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @ConfirmTurn.started += instance.OnConfirmTurn;
                 @ConfirmTurn.performed += instance.OnConfirmTurn;
                 @ConfirmTurn.canceled += instance.OnConfirmTurn;
+                @temp.started += instance.OnTemp;
+                @temp.performed += instance.OnTemp;
+                @temp.canceled += instance.OnTemp;
+                @templ.started += instance.OnTempl;
+                @templ.performed += instance.OnTempl;
+                @templ.canceled += instance.OnTempl;
             }
         }
     }
@@ -342,5 +398,7 @@ public class @InputManager : IInputActionCollection, IDisposable
     public interface IGameplayActions
     {
         void OnConfirmTurn(InputAction.CallbackContext context);
+        void OnTemp(InputAction.CallbackContext context);
+        void OnTempl(InputAction.CallbackContext context);
     }
 }

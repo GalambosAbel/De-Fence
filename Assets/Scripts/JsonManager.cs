@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using DeFenceAbstract;
+using UnityEngine.WSA;
 
 public class JsonManager : MonoBehaviour
 {
@@ -25,19 +26,6 @@ public class JsonManager : MonoBehaviour
 		string json = JsonUtility.ToJson(currentState);
 		File.WriteAllText(outputFileName, json);
 		Debug.Log("Saved!");
-	}
-
-	public static void SaveMap(string outputFileName)
-	{
-		if (File.Exists(outputFileName))
-		{
-			int nameFix = 0;
-			while (File.Exists(outputFileName + nameFix.ToString()))
-			{
-				nameFix++;
-			}
-			outputFileName += nameFix.ToString();
-		}
 	}
 
 	public static void LoadState(string inputFileName)
@@ -68,6 +56,27 @@ public class JsonManager : MonoBehaviour
 		GameMaster.am.board.LoadTerritorries();
 	}
 
+	public static void SaveMap(string outputFileName)
+	{
+		if (File.Exists(outputFileName))
+		{
+			int nameFix = 0;
+			while (File.Exists(outputFileName + nameFix.ToString()))
+			{
+				nameFix++;
+			}
+			outputFileName += nameFix.ToString();
+		}
+
+		GenerateBoard GB = GameObject.Find("BoardGenerator").GetComponent<GenerateBoard>();
+
+		Map map = new Map(GameMaster.am.board, GB.tiles, GB.walls);
+
+		string json = JsonUtility.ToJson(map);
+
+		File.WriteAllText(outputFileName, json);
+	}
+
 	public static void LoadMap(string inputFileName)
 	{
 		Debug.Log("Loading");
@@ -78,6 +87,8 @@ public class JsonManager : MonoBehaviour
 		}
 	}
 }
+
+
 
 [Serializable]
 public struct State
@@ -104,7 +115,26 @@ public struct State
 	}
 }
 
+[Serializable]
+public struct Map
+{
+	public List<MapTile> tiles;
+	public List<MapWall> walls;
 
+	public Map(AbstractBoard board, List<GameObject> _tiles, List<GameObject> _walls)
+	{
+		tiles = new List<MapTile>();
+		for (int i = 0; i < tiles.Count; i++)
+		{
+			tiles.Add(new MapTile(board.tiles[i], _tiles[i].GetComponent<Tile>()));
+		}
+		walls = new List<MapWall>();
+		for (int i = 0; i < tiles.Count; i++)
+		{
+			walls.Add(new MapWall(_walls[i].GetComponent<Wall>()));
+		}
+	}
+}
 
 
 [Serializable]
@@ -140,8 +170,18 @@ public struct MapTile
 {
 	public int ID;
 	public ObjPos position;
-	public int neighbourAmount;
-	public Neighbour[] neighbours;
+	public List<Neighbour> neighbours;
+
+	public MapTile(AbstractTile at, Tile t)
+	{
+		ID = t.ID;
+		position = new ObjPos(t.transform);
+		neighbours = new List<Neighbour>();
+		foreach (int[] n in at.neighbours)
+		{
+			neighbours.Add(new Neighbour(n));
+		}
+	}
 }
 
 [Serializable]
@@ -149,6 +189,12 @@ public struct MapWall
 {
 	public int ID;
 	public ObjPos position;
+
+	public MapWall(Wall w)
+	{
+		ID = w.ID;
+		position = new ObjPos(w.transform);
+	}
 }
 
 [Serializable]
@@ -157,6 +203,12 @@ public struct ObjPos
 	public float x;
 	public float y;
 	public float rotation;
+	public ObjPos (Transform t)
+	{
+		x = t.position.x;
+		y = t.position.y;
+		rotation = t.rotation.eulerAngles.z;
+	}
 }
 
 [Serializable]
@@ -164,4 +216,10 @@ public struct Neighbour
 {
 	public int tile;
 	public int wall;
+
+	public Neighbour (int[] n)
+	{
+		tile = n[0];
+		wall = n[1];
+	}
 }

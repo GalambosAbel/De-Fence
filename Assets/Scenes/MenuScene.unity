@@ -1314,8 +1314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69d6d43cdec7c2342b62bea5f772bb16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadName: aaa
-  saveName: aaa
+  loadName: bbb
+  saveName: bbb
   gameEndPanel: {fileID: 1345049866}
 --- !u!114 &1557362390
 MonoBehaviour:

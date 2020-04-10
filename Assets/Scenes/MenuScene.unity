@@ -1263,7 +1263,6 @@ GameObject:
   - component: {fileID: 1557362391}
   - component: {fileID: 1557362390}
   - component: {fileID: 1557362389}
-  - component: {fileID: 1557362388}
   - component: {fileID: 1557362387}
   m_Layer: 0
   m_Name: BoardGenerator
@@ -1281,27 +1280,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1557362386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a485b1b96fc88c744a0826fd3500d824, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ccae36d4e2d95b47b83142dc948b5f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 135440383190688763, guid: 9a0cf4ffb92f5974aae796e8bcd1d27b, type: 3}
-  wall: {fileID: 2461504587492576799, guid: 2aa7277760fb996409436134aa432dc8, type: 3}
-  tileParent: {fileID: 0}
-  wallParent: {fileID: 0}
---- !u!114 &1557362388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1557362386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26f0a4634a204ef4b849f830be2096b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileParent: {fileID: 0}
-  wallParent: {fileID: 0}
+  _controlButton: {fileID: 0}
+  _tilePrefab: {fileID: 0}
+  _wallPrefab: {fileID: 0}
+  _tileParent: {fileID: 0}
+  _wallParent: {fileID: 0}
 --- !u!114 &1557362389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1329,9 +1315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c139dbeb5e9fb343a3ce1dd933f3739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tile: {fileID: 135440383190688763, guid: 9a0cf4ffb92f5974aae796e8bcd1d27b, type: 3}
   tileParent: {fileID: 0}
-  wall: {fileID: 2461504587492576799, guid: 2aa7277760fb996409436134aa432dc8, type: 3}
   wallParent: {fileID: 0}
   tiles: []
   walls: []

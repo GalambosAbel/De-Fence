@@ -8,8 +8,8 @@ public class Wall : MonoBehaviour
 
 	public void Place(int neighbour1, int neighbour2)
 	{
-        Vector3 pos1 = FindObjectOfType<GenerateBoard>().tiles[neighbour1].transform.position;
-        Vector3 pos2 = FindObjectOfType<GenerateBoard>().tiles[neighbour2].transform.position;
+        Vector3 pos1 = GameMaster.tiles[neighbour1].transform.position;
+        Vector3 pos2 = GameMaster.tiles[neighbour2].transform.position;
 
         Vector3 targetPos = (pos1 + pos2) / 2;
         Vector3 vector1 = (pos2 - pos1);

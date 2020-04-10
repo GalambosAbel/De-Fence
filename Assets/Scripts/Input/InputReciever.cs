@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class InputReciever : MonoBehaviour
 {
-    public string loadName;
-    public string saveName;
+    public string stateName;
+    public string mapName;
 
 	int loadMode = 0;
 	public GameObject gameEndPanel;
@@ -30,10 +30,10 @@ public class InputReciever : MonoBehaviour
 
 		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.controlButton.onClick.Invoke();
 
-		inputs.Gameplay.temp.performed += ctx => JsonManager.SaveState(saveName);
-		inputs.Gameplay.templ.performed += ctx => JsonManager.LoadState(loadName);
+		inputs.Gameplay.temp.performed += ctx => JsonManager.SaveMap(stateName);
+		inputs.Gameplay.templ.performed += ctx => JsonManager.LoadState(stateName);
 
-		inputs.Menu.Save.performed += ctx => JsonManager.SaveState(saveName);
+		inputs.Menu.Save.performed += ctx => JsonManager.SaveState(stateName);
 		/*inputs.Menu.Load.performed += ctx => gameObject.GetComponent<BoardLoader>().LoadBoard(loadName);
 		inputs.Menu.GenerateBoard.performed += ctx => gameObject.GetComponent<GenerateBoard>().GenerateBoardFc();*/
 
@@ -106,14 +106,13 @@ public class InputReciever : MonoBehaviour
 		inputs.Gameplay.Enable();
 
 		// assigning lost references
-		GameObject tP = GameObject.Find("Tiles");
-		GameObject wP = GameObject.Find("Walls");
-		gameObject.GetComponent<BoardSaver>().tileParent = tP;
-		gameObject.GetComponent<BoardLoader>().tileParent = tP;
-		gameObject.GetComponent<GenerateBoard>().tileParent = tP.transform;
-		gameObject.GetComponent<BoardSaver>().wallParent = wP;
-		gameObject.GetComponent<BoardLoader>().wallParent = wP;
-		gameObject.GetComponent<GenerateBoard>().wallParent = wP.transform;
+		GameMaster.controlButton = GameObject.Find("ControlButton").GetComponent<Button>();
+		GameMaster.controlButton.onClick.AddListener(GameMaster.am.TakeStep);
+		GameMaster.controlButton.onClick.AddListener(GameMaster.UpdateControlButton);
+		GameMaster.UpdateControlButton();
+
+		GameMaster.tileParent = GameObject.Find("Tiles").transform;
+		GameMaster.wallParent = GameObject.Find("Walls").transform;
 
 		//what to load
 		if(loadMode == 0)
@@ -122,7 +121,8 @@ public class InputReciever : MonoBehaviour
 		}
 		else if(loadMode == 1)
 		{
-			gameObject.GetComponent<BoardLoader>().LoadBoard(loadName);
+			JsonManager.LoadMap(mapName);
+			JsonManager.LoadState(stateName);
 		}
 	}
 }

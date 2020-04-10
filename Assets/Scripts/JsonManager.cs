@@ -4,7 +4,6 @@ using UnityEngine;
 using System.IO;
 using System;
 using DeFenceAbstract;
-using UnityEngine.WSA;
 
 public class JsonManager : MonoBehaviour
 {
@@ -38,26 +37,32 @@ public class JsonManager : MonoBehaviour
 		}
 
 		string json = File.ReadAllText(inputFileName);
-		State stateToLoad = JsonUtility.FromJson<State>(json);
+		State state = JsonUtility.FromJson<State>(json);
 
-		GameMaster.am.playerAmount = stateToLoad.playerAmount;
-		GameMaster.am.currentPlayer = stateToLoad.currentPlayer;
-
-		for (int i = 0; i < stateToLoad.tiles.Count; i++)
+		if (state.mapName != GameMaster.currentMap)
 		{
-			GameMaster.am.board.tiles[i].owner = stateToLoad.tiles[i].owner;
-			GameMaster.am.board.tiles[i].hasFigure = stateToLoad.tiles[i].hasFigure;
+			LoadMap(state.mapName);
 		}
-		for (int i = 0; i < stateToLoad.walls.Count; i++)
+
+		GameMaster.am.playerAmount = state.playerAmount;
+		GameMaster.am.currentPlayer = state.currentPlayer;
+
+		for (int i = 0; i < state.tiles.Count; i++)
 		{
-			GameMaster.am.board.walls[i].active = stateToLoad.walls[i].active;
+			GameMaster.am.board.tiles[i].owner = state.tiles[i].owner;
+			GameMaster.am.board.tiles[i].hasFigure = state.tiles[i].hasFigure;
+		}
+		for (int i = 0; i < state.walls.Count; i++)
+		{
+			GameMaster.am.board.walls[i].active = state.walls[i].active;
 		}
 		GameMaster.UpdateControlButton();
 		GameMaster.am.board.LoadTerritorries();
 	}
 
-	public static void SaveMap(string outputFileName)
+	public static void SaveMap()
 	{
+		string outputFileName = GameMaster.currentMap;
 		if (File.Exists(outputFileName))
 		{
 			int nameFix = 0;
@@ -68,9 +73,7 @@ public class JsonManager : MonoBehaviour
 			outputFileName += nameFix.ToString();
 		}
 
-		GenerateBoard GB = GameObject.Find("BoardGenerator").GetComponent<GenerateBoard>();
-
-		Map map = new Map(GameMaster.am.board, GB.tiles, GB.walls);
+		Map map = new Map(GameMaster.am.board, GameMaster.tiles, GameMaster.walls);
 
 		string json = JsonUtility.ToJson(map);
 
@@ -85,6 +88,39 @@ public class JsonManager : MonoBehaviour
 			Debug.Log("Couldn't load file: " + inputFileName);
 			return;
 		}
+
+		string json = File.ReadAllText(inputFileName);
+
+		Map map = JsonUtility.FromJson<Map>(json);
+
+		GameMaster.am.board.tiles = new List<AbstractTile>();
+		GameMaster.tiles = new List<GameObject>();
+		foreach (MapTile t in map.tiles)
+		{
+			Vector3 pos = new Vector3(t.position.x, t.position.y, 0);
+			GameObject tile = Instantiate(GameMaster.tilePrefab, pos, Quaternion.Euler(0, 0, t.position.rotation), GameMaster.tileParent);
+			tile.GetComponent<Tile>().ID = t.ID;
+			GameMaster.tiles.Add(tile);
+
+			AbstractTile aTile = new AbstractTile(t.ID, GameMaster.am);
+			foreach (Neighbour n in t.neighbours)
+			{
+				aTile.neighbours.Add(new int[] { n.tile, n.wall });
+			}
+			GameMaster.am.board.tiles.Add(aTile);
+		}
+		GameMaster.am.board.walls = new List<AbstractWall>();
+		GameMaster.walls = new List<GameObject>();
+		foreach (MapWall w in map.walls)
+		{
+			Vector3 pos = new Vector3(w.position.x, w.position.y, 0);
+			GameObject wall = Instantiate(GameMaster.wallPrefab, pos, Quaternion.Euler(0, 0, w.position.rotation), GameMaster.wallParent);
+			wall.GetComponent<Tile>().ID = w.ID;
+			GameMaster.tiles.Add(wall);
+
+			GameMaster.am.board.walls.Add(new AbstractWall(w.ID));
+		}
+		GameMaster.currentMap = inputFileName;
 	}
 }
 
@@ -93,6 +129,7 @@ public class JsonManager : MonoBehaviour
 [Serializable]
 public struct State
 {
+	public string mapName;
 	public int playerAmount;
 	public int currentPlayer;
 	public List<StateTile> tiles;
@@ -100,6 +137,7 @@ public struct State
 
 	public State (AbstractManager am)
 	{
+		mapName = GameMaster.currentMap;
 		playerAmount = am.playerAmount;
 		currentPlayer = am.currentPlayer;
 		tiles = new List<StateTile>();
@@ -124,12 +162,12 @@ public struct Map
 	public Map(AbstractBoard board, List<GameObject> _tiles, List<GameObject> _walls)
 	{
 		tiles = new List<MapTile>();
-		for (int i = 0; i < tiles.Count; i++)
+		for (int i = 0; i < _tiles.Count; i++)
 		{
 			tiles.Add(new MapTile(board.tiles[i], _tiles[i].GetComponent<Tile>()));
 		}
 		walls = new List<MapWall>();
-		for (int i = 0; i < tiles.Count; i++)
+		for (int i = 0; i < _walls.Count; i++)
 		{
 			walls.Add(new MapWall(_walls[i].GetComponent<Wall>()));
 		}

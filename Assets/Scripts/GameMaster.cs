@@ -8,22 +8,33 @@ public class GameMaster : MonoBehaviour
 {
     public static AbstractManager am;
 
+	public static string currentMap;
+
 	public static Color[] playerColors = new Color[] { Color.white, Color.red, Color.blue, Color.green, Color.black };
 	public static bool gameEnded;
 
 	public static Button controlButton;
-	public Button _controlButton;
 
+	public GameObject _tilePrefab;
+	public GameObject _wallPrefab;
+
+	public static GameObject tilePrefab;
+	public static GameObject wallPrefab;
+
+	public static List<GameObject> tiles;
+	public static List<GameObject> walls;
+
+	public static Transform tileParent;
+	public static Transform wallParent;
 
 	void Awake()
 	{
 		am = new AbstractManager(GameEnded);
-		controlButton = _controlButton;
-		controlButton.onClick.AddListener(am.TakeStep);
-		controlButton.onClick.AddListener(UpdateControlButton);
+
+		tilePrefab = _tilePrefab;
+		wallPrefab = _wallPrefab;
 
 		gameEnded = false;
-		UpdateControlButton();
 	}
 
 	public static void UpdateControlButton()

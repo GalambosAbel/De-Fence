@@ -5,15 +5,9 @@ using DeFenceAbstract;
 
 public class GenerateBoard : MonoBehaviour
 {
-    public GameObject tile;
-	public Transform tileParent;
-
-	public GameObject wall;
-	public Transform wallParent;
-
 	List<Vector3> tilePositions = new List<Vector3>();
-    public List<GameObject> tiles = new List<GameObject>();
-    public List<GameObject> walls = new List<GameObject>();
+    List<GameObject> tiles = new List<GameObject>();
+    List<GameObject> walls = new List<GameObject>();
 	public int radius = 3;
 	private int noOfTiles;
 	public float distanceOffset;
@@ -30,12 +24,12 @@ public class GenerateBoard : MonoBehaviour
 		abstractWalls = new List<AbstractWall>();
 		neighbourArray = new List<List<int>>();
 		tilePositions = new List<Vector3>();
-		tiles = new List<GameObject>();
-		walls = new List<GameObject>();
+		tiles = GameMaster.tiles = new List<GameObject>();
+		walls = GameMaster.walls = new List<GameObject>();
 
 		noOfTiles = radius * radius * 6;
 		Vector3 startPos = new Vector3(Mathf.Sqrt(3) / 4, 0.5f, 0f);
-        tiles.Add(Instantiate(tile, startPos, Quaternion.identity, tileParent));
+        tiles.Add(Instantiate(GameMaster.tilePrefab, startPos, Quaternion.identity, GameMaster.tileParent));
 		abstractTiles.Add(new AbstractTile(0, GameMaster.am));
 		neighbourArray.Add(new List<int>());
 		tiles[0].GetComponent<Tile>().ID = 0;
@@ -44,6 +38,10 @@ public class GenerateBoard : MonoBehaviour
         PlaceWalls();
 		GameMaster.am.board = new AbstractBoard(abstractTiles, abstractWalls, GameMaster.am);
 		GameMaster.am.board.LoadTerritorries();
+		GameMaster.tiles = tiles;
+		GameMaster.walls = walls;
+		GameMaster.currentMap = "Default";
+
 		Debug.Log("this is at the end of the generate function, no of walls: " + walls.Count);
 	}
 
@@ -56,7 +54,7 @@ public class GenerateBoard : MonoBehaviour
             tilePositions.Add(newPos);
             Vector3 newRot = previous.transform.rotation.eulerAngles;
 			newRot.z += angleOffset;
-			tiles.Add(Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent));
+			tiles.Add(Instantiate(GameMaster.tilePrefab, newPos, Quaternion.Euler(newRot), GameMaster.tileParent));
 
 			abstractTiles.Add(new AbstractTile(tiles.Count - 1, GameMaster.am));
 			neighbourArray.Add(new List<int>());
@@ -74,7 +72,7 @@ public class GenerateBoard : MonoBehaviour
             tilePositions.Add(newPos);
 			Vector3 newRot = previous.transform.rotation.eulerAngles;
 			newRot.z -= angleOffset;
-			tiles.Add(Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent));
+			tiles.Add(Instantiate(GameMaster.tilePrefab, newPos, Quaternion.Euler(newRot), GameMaster.tileParent));
 
 			abstractTiles.Add(new AbstractTile(tiles.Count - 1, GameMaster.am));
 			neighbourArray.Add(new List<int>());
@@ -125,7 +123,7 @@ public class GenerateBoard : MonoBehaviour
 
     void PlaceWall(int _neighbour1, int _neighbour2)
     {
-        GameObject newWall = Instantiate(wall, wallParent);
+        GameObject newWall = Instantiate(GameMaster.wallPrefab, GameMaster.wallParent);
         newWall.GetComponent<Wall>().Place(_neighbour1, _neighbour2);
 		newWall.GetComponent<Wall>().ID = walls.Count;
 		abstractWalls.Add(new AbstractWall(walls.Count));

@@ -1283,11 +1283,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ccae36d4e2d95b47b83142dc948b5f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _controlButton: {fileID: 0}
-  _tilePrefab: {fileID: 0}
-  _wallPrefab: {fileID: 0}
-  _tileParent: {fileID: 0}
-  _wallParent: {fileID: 0}
+  _tilePrefab: {fileID: 135440383190688763, guid: 9a0cf4ffb92f5974aae796e8bcd1d27b,
+    type: 3}
+  _wallPrefab: {fileID: 2461504587492576799, guid: 2aa7277760fb996409436134aa432dc8,
+    type: 3}
 --- !u!114 &1557362389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1300,8 +1299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69d6d43cdec7c2342b62bea5f772bb16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadName: bbb
-  saveName: bbb
+  stateName: 
+  mapName: 
   gameEndPanel: {fileID: 1345049866}
 --- !u!114 &1557362390
 MonoBehaviour:
@@ -1315,10 +1314,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c139dbeb5e9fb343a3ce1dd933f3739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileParent: {fileID: 0}
-  wallParent: {fileID: 0}
-  tiles: []
-  walls: []
   radius: 3
   distanceOffset: 0.5
   angleOffset: 60

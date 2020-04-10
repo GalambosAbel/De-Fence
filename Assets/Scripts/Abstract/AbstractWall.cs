@@ -1,15 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class AbstractWall
+namespace DeFenceAbstract
 {
-    public int ID;
-    public bool active;
+	public class AbstractWall
+	{
+		internal int ID;
+		internal bool active;
 
-    public AbstractWall(int _ID)
-    {
-        ID = _ID;
-        active = true;
-    }
+		// ------------------------------------------ functions to use for interaction ------------------------------------------
+
+		public AbstractWall(int _ID)
+		{
+			ID = _ID;
+			active = true;
+		}
+	}
 }

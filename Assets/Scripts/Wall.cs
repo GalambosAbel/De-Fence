@@ -23,7 +23,6 @@ public class Wall : MonoBehaviour
 
 	void Update()
 	{
-        transform.localScale = new Vector3(0.85f / (AbstractManager.board.walls[ID].active ? 1f : 3f), 0.05f, 1f);
-
+        transform.localScale = new Vector3(0.85f / (GameMaster.am.board.walls[ID].active ? 1f : 3f), 0.05f, 1f);
     }
 }

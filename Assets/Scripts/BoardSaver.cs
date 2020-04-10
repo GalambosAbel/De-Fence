@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using DeFenceAbstract;
 
 public class BoardSaver : MonoBehaviour
 {
@@ -55,11 +56,11 @@ public class BoardSaver : MonoBehaviour
         output.Add(tiles[i].transform.position.x.ToString());
         output.Add(tiles[i].transform.position.y.ToString());
         output.Add(tiles[i].transform.rotation.eulerAngles.z.ToString());
-        output.Add(AbstractManager.board.tiles[id].neighbours.Count.ToString());
-        for (int j = 0; j < AbstractManager.board.tiles[id].neighbours.Count; j++)
+        output.Add(GameMaster.am.board.tiles[id].neighbours.Count.ToString());
+        for (int j = 0; j < GameMaster.am.board.tiles[id].neighbours.Count; j++)
         {
-			output.Add(AbstractManager.board.tiles[id].neighbours[j][0].ToString());
-			output.Add(AbstractManager.board.tiles[id].neighbours[j][1].ToString());
+			output.Add(GameMaster.am.board.tiles[id].neighbours[j][0].ToString());
+			output.Add(GameMaster.am.board.tiles[id].neighbours[j][1].ToString());
         }
 
     }

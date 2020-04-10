@@ -1,63 +1,67 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class AbstractTerritory
+namespace DeFenceAbstract
 {
-    public List<int> tiles;
+	public class AbstractTerritory
+	{
+		private AbstractManager abstractManager;
 
-    public AbstractTerritory()
-    {
-        tiles = new List<int>();
-    }
+		internal List<int> tiles;
 
-    public int Owner
-    {
-		get
+		internal AbstractTerritory(AbstractManager _abstractManager)
 		{
-			return AbstractManager.board.tiles[tiles[0]].owner;
+			abstractManager = _abstractManager;
+			tiles = new List<int>();
 		}
-    }
 
-    public int Strength
-    {
-		get
+		internal int Owner
 		{
-			int _strength = 0;
-			foreach (int tile in tiles)
-			{ 
-				if (AbstractManager.board.tiles[tile].hasFigure) _strength++;
+			get
+			{
+				return abstractManager.board.tiles[tiles[0]].owner;
 			}
-			return _strength;
 		}
-    }
 
+		internal int Strength
+		{
+			get
+			{
+				int _strength = 0;
+				foreach (int tile in tiles)
+				{
+					if (abstractManager.board.tiles[tile].hasFigure) _strength++;
+				}
+				return _strength;
+			}
+		}
 
-    public void CleanUp()
-    {
-        if(Strength == 0)
-        {
-            foreach(int tile in tiles)
-            {
-                AbstractManager.board.tiles[tile].owner = 0;
-                foreach (int[] neighbour in AbstractManager.board.tiles[tile].neighbours)
-                {
-                    AbstractManager.board.walls[neighbour[1]].active = true;
-                }
-            }
-        }
-        else
-        {
-            for (int i = 1; i < tiles.Count; i++)
-            {
-                for (int j = 0; j < i; j++)
-                {
-                    if (AbstractManager.board.tiles[tiles[i]].IsNeighbourOf(tiles[j]))
-                    {
-                        AbstractManager.board.tiles[tiles[i]].GetWallOfNeighbour(tiles[j]).active = false;
-                    }
-                }
-            }
-        }
-    }
+		internal void CleanUp()
+		{
+			if (Strength == 0)
+			{
+				foreach (int tile in tiles)
+				{
+					abstractManager.board.tiles[tile].owner = 0;
+					foreach (int[] neighbour in abstractManager.board.tiles[tile].neighbours)
+					{
+						abstractManager.board.walls[neighbour[1]].active = true;
+					}
+				}
+			}
+			else
+			{
+				for (int i = 1; i < tiles.Count; i++)
+				{
+					for (int j = 0; j < i; j++)
+					{
+						if (abstractManager.board.tiles[tiles[i]].IsNeighbourOf(tiles[j]))
+						{
+							abstractManager.board.tiles[tiles[i]].GetWallOfNeighbour(tiles[j]).active = false;
+						}
+					}
+				}
+			}
+		}
+	}
 }

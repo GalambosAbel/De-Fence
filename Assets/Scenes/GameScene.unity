@@ -791,8 +791,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1075327426}
-  - component: {fileID: 1075327427}
   - component: {fileID: 1075327428}
+  - component: {fileID: 1075327427}
   m_Layer: 0
   m_Name: AbstractManager
   m_TagString: Untagged
@@ -823,7 +823,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1075327425}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e5d6e26ee192934d8997a04e05c55f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ccae36d4e2d95b47b83142dc948b5f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _controlButton: {fileID: 936809926}

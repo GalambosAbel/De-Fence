@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using DeFenceAbstract;
 
 public class BoardLoader : MonoBehaviour
 {
@@ -36,8 +37,8 @@ public class BoardLoader : MonoBehaviour
         LoadTiles(tileAmount);
         LoadWalls(wallAmount);
 
-		AbstractManager.board = new AbstractBoard(abstractTiles, abstractWalls);
-		AbstractManager.board.LoadTerritorries();
+        GameMaster.am.board = new AbstractBoard(abstractTiles, abstractWalls, GameMaster.am);
+        GameMaster.am.board.LoadTerritorries();
         Debug.Log("Loaded file: " + inputFileName);
     }
 
@@ -74,7 +75,7 @@ public class BoardLoader : MonoBehaviour
         }
 
         Instantiate(tile, new Vector3(x, y, 0), Quaternion.Euler(0, 0, rotZ), tileParent.transform).GetComponent<Tile>().ID = ID;
-		abstractTiles.Add(new AbstractTile(ID, neighbours));
+		abstractTiles.Add(new AbstractTile(ID, neighbours, GameMaster.am));
     }
 
     void LoadWall()

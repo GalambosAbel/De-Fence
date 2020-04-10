@@ -6,13 +6,13 @@ using UnityEngine.UI;
 public class ChessClock : MonoBehaviour
 {
     public int startingTime = 50;
-    public int[] timeLeft = new int[AbstractManager.playerAmount];
-    public Text[] texts = new Text[AbstractManager.playerAmount];
+    public int[] timeLeft;
+    public Text[] texts;
     public int timeToAdd = 8000;
 
     void Start()
     {
-        int curPlayer = AbstractManager.currentPlayer - 1;
+        int curPlayer = GameMaster.am.currentPlayer - 1;
         for (int i = 0; i < timeLeft.Length; i++)
         {
             timeLeft[i] = startingTime;
@@ -22,14 +22,14 @@ public class ChessClock : MonoBehaviour
 
     void Update()
     {
-        int curPlayer = AbstractManager.currentPlayer-1;
+        int curPlayer = GameMaster.am.currentPlayer-1;
         timeLeft[curPlayer] -= (int)(Time.deltaTime*1000);
         texts[curPlayer].text = ConvertTime(timeLeft[curPlayer]);
 
         if(timeLeft[curPlayer] < 0)
         {
             List<int> winners = new List<int>();
-            for (int i = 0; i < AbstractManager.playerAmount; i++)
+            for (int i = 0; i < GameMaster.am.playerAmount; i++)
             {
                 winners.Add(i+1);
             }

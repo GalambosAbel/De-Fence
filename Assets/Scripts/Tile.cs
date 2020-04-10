@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DeFenceAbstract;
 
 public class Tile : MonoBehaviour
 {
@@ -13,17 +14,18 @@ public class Tile : MonoBehaviour
 		inputs = new InputManager();
 		inputs.Disable();
 
-		inputs.Tile.Click.performed += ctx => AbstractManager.board.tiles[ID].ClickedTile();
+		inputs.Tile.Click.performed += ctx => GameMaster.am.ClickTile(ID);
+		inputs.Tile.Click.performed += ctx => GameMaster.UpdateControlButton();
 	}
 
 
 	void Update()
     {
-		if (AbstractManager.gameEnded) inputs.Disable();
-		Color c = AbstractManager.playerColors[AbstractManager.board.tiles[ID].owner];
-		if (AbstractManager.tilesClicked != null)
+		if (GameMaster.gameEnded) inputs.Disable();
+		Color c = GameMaster.playerColors[GameMaster.am.board.tiles[ID].owner];
+		if (GameMaster.am.tilesClicked != null)
 		{
-			if (AbstractManager.tilesClicked.Contains(AbstractManager.board.tiles[ID]))
+			if (GameMaster.am.tilesClicked.Contains(GameMaster.am.board.tiles[ID]))
 			{
 				c.r /= 2;
 				c.g /= 2;
@@ -31,7 +33,7 @@ public class Tile : MonoBehaviour
 			}
 		}
 		gameObject.GetComponent<SpriteRenderer>().color = c;
-		transform.GetChild(0).gameObject.SetActive(AbstractManager.board.tiles[ID].hasFigure);
+		transform.GetChild(0).gameObject.SetActive(GameMaster.am.board.tiles[ID].hasFigure);
     }
 
 	void OnMouseEnter()

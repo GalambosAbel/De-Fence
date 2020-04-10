@@ -9,17 +9,17 @@ public class ScoreDisplayer : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < AbstractManager.playerAmount; i++)
+        for (int i = 0; i < GameMaster.am.playerAmount; i++)
         {
-            playerScores[i].color = AbstractManager.playerColors[i + 1];
+            playerScores[i].color = GameMaster.playerColors[i + 1];
         }
     }
 
     void Update()
     {
-        for (int i = 0; i < AbstractManager.playerAmount; i++)
+        for (int i = 0; i < GameMaster.am.playerAmount; i++)
         {
-            playerScores[i].text = AbstractManager.GetPlayerScore(i + 1).ToString();
+            playerScores[i].text = GameMaster.am.GetPlayerScore(i + 1).ToString();
         }
     }
 }

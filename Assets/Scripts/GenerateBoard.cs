@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DeFenceAbstract;
 
 public class GenerateBoard : MonoBehaviour
 {
@@ -35,14 +36,14 @@ public class GenerateBoard : MonoBehaviour
 		noOfTiles = radius * radius * 6;
 		Vector3 startPos = new Vector3(Mathf.Sqrt(3) / 4, 0.5f, 0f);
         tiles.Add(Instantiate(tile, startPos, Quaternion.identity, tileParent));
-		abstractTiles.Add(new AbstractTile(0));
+		abstractTiles.Add(new AbstractTile(0, GameMaster.am));
 		neighbourArray.Add(new List<int>());
 		tiles[0].GetComponent<Tile>().ID = 0;
 		tilePositions.Add(startPos);
 		PlaceNextTile(tiles[0]);
         PlaceWalls();
-		AbstractManager.board = new AbstractBoard(abstractTiles, abstractWalls);
-		AbstractManager.board.LoadTerritorries();
+		GameMaster.am.board = new AbstractBoard(abstractTiles, abstractWalls, GameMaster.am);
+		GameMaster.am.board.LoadTerritorries();
 		Debug.Log("this is at the end of the generate function, no of walls: " + walls.Count);
 	}
 
@@ -57,7 +58,7 @@ public class GenerateBoard : MonoBehaviour
 			newRot.z += angleOffset;
 			tiles.Add(Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent));
 
-			abstractTiles.Add(new AbstractTile(tiles.Count - 1));
+			abstractTiles.Add(new AbstractTile(tiles.Count - 1, GameMaster.am));
 			neighbourArray.Add(new List<int>());
 			neighbourArray[tiles.Count - 1].Add(previous.GetComponent<Tile>().ID);
             tiles[tiles.Count - 1].GetComponent<Tile>().ID = tiles.Count - 1;
@@ -75,7 +76,7 @@ public class GenerateBoard : MonoBehaviour
 			newRot.z -= angleOffset;
 			tiles.Add(Instantiate(tile, newPos, Quaternion.Euler(newRot), tileParent));
 
-			abstractTiles.Add(new AbstractTile(tiles.Count - 1));
+			abstractTiles.Add(new AbstractTile(tiles.Count - 1, GameMaster.am));
 			neighbourArray.Add(new List<int>());
 			neighbourArray[tiles.Count - 1].Add(previous.GetComponent<Tile>().ID);
 			tiles[tiles.Count - 1].GetComponent<Tile>().ID = tiles.Count - 1;

@@ -28,7 +28,7 @@ public class InputReciever : MonoBehaviour
 		inputs.Menu.Enable();
 		inputs.Gameplay.Disable();
 
-		inputs.Gameplay.ConfirmTurn.performed += ctx => AbstractManager.instance._controlButton.onClick.Invoke();
+		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.controlButton.onClick.Invoke();
 
 		/*inputs.Menu.Save.performed += ctx => gameObject.GetComponent<BoardSaver>().Save(saveName);
 		inputs.Menu.Load.performed += ctx => gameObject.GetComponent<BoardLoader>().LoadBoard(loadName);
@@ -50,7 +50,7 @@ public class InputReciever : MonoBehaviour
 		{
             int winner = winners[0];
 			GameObject.Find("VictoryText").GetComponent<Text>().text = "Player " + winner + " won!";
-			GameObject.Find("VictoryText").GetComponent<Text>().color = AbstractManager.playerColors[winner];
+			GameObject.Find("VictoryText").GetComponent<Text>().color = GameMaster.playerColors[winner];
 		}
 		else
 		{

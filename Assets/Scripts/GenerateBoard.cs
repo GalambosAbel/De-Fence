@@ -41,8 +41,6 @@ public class GenerateBoard : MonoBehaviour
 		GameMaster.tiles = tiles;
 		GameMaster.walls = walls;
 		GameMaster.currentMap = "Default";
-
-		Debug.Log("this is at the end of the generate function, no of walls: " + walls.Count);
 	}
 
 	void PlaceNextTile (GameObject previous)

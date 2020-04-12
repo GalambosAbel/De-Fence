@@ -19,16 +19,22 @@ public class InputReciever : MonoBehaviour
 	void Awake()
 	{
 		if (instance == null) instance = this;
-		else
+		else if (instance != this)
 		{
 			Destroy(instance.gameObject);
 			instance = this;
+			inputs.Dispose();
+			DontDestroyOnLoad(gameObject);
+			Debug.Log("aa");
 		}
+		else return;
+
 		inputs = new InputManager();
 		inputs.Menu.Enable();
 		inputs.Gameplay.Disable();
 
-		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.controlButton.onClick.Invoke();
+		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.am.TakeStep();
+		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.UpdateControlButton();
 
 		inputs.Gameplay.temp.performed += ctx => JsonManager.SaveState(stateName);
 		inputs.Gameplay.templ.performed += ctx => JsonManager.LoadState(stateName);
@@ -105,17 +111,16 @@ public class InputReciever : MonoBehaviour
 		inputs.Menu.Disable();
 		inputs.Gameplay.Enable();
 
-		// assigning lost references
-		GameMaster.controlButton = GameObject.Find("ControlButton").GetComponent<Button>();
-		GameMaster.controlButton.onClick.AddListener(GameMaster.am.TakeStep);
-		GameMaster.controlButton.onClick.AddListener(GameMaster.UpdateControlButton);
-		GameMaster.UpdateControlButton();
-
+		// assigning lost references 1
 		GameMaster.tileParent = GameObject.Find("Tiles").transform;
 		GameMaster.wallParent = GameObject.Find("Walls").transform;
+		GameMaster.controlButton = GameObject.Find("ControlButton").GetComponent<Button>();
+		GameMaster.controlButton.onClick.RemoveAllListeners();
+		GameMaster.controlButton.onClick.AddListener(GameMaster.am.TakeStep);
+		GameMaster.controlButton.onClick.AddListener(GameMaster.UpdateControlButton);
 
 		//what to load
-		if(loadMode == 0)
+		if (loadMode == 0)
 		{
 			gameObject.GetComponent<GenerateBoard>().GenerateBoardFc();
 		}
@@ -124,5 +129,7 @@ public class InputReciever : MonoBehaviour
 			JsonManager.LoadMap(mapName);
 			JsonManager.LoadState(stateName);
 		}
+
+		GameMaster.UpdateControlButton();
 	}
 }

@@ -30,7 +30,7 @@ public class InputReciever : MonoBehaviour
 
 		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.controlButton.onClick.Invoke();
 
-		inputs.Gameplay.temp.performed += ctx => JsonManager.SaveMap();
+		inputs.Gameplay.temp.performed += ctx => JsonManager.SaveState(stateName);
 		inputs.Gameplay.templ.performed += ctx => JsonManager.LoadState(stateName);
 
 		inputs.Menu.Save.performed += ctx => JsonManager.SaveState(stateName);

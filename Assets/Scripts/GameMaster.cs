@@ -35,6 +35,7 @@ public class GameMaster : MonoBehaviour
 		wallPrefab = _wallPrefab;
 
 		gameEnded = false;
+		SaveFileManager.Setup();
 	}
 
 	public static void UpdateControlButton()

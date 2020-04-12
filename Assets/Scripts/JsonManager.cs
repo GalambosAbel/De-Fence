@@ -9,6 +9,7 @@ public class JsonManager : MonoBehaviour
     public static void SaveState(string outputFileName)
 	{
 		Debug.Log("Saving!");
+		outputFileName = SaveFileManager.SaveStatefolder + outputFileName;
 		if (File.Exists(outputFileName))
 		{
 			int nameFix = 0;
@@ -19,7 +20,7 @@ public class JsonManager : MonoBehaviour
 			outputFileName += nameFix.ToString();
 		}
 
-		if (!File.Exists(GameMaster.currentMap)) SaveMap();
+		if (!File.Exists(SaveFileManager.SaveMapfolder + GameMaster.currentMap)) SaveMap();
 
 		State currentState = new State(GameMaster.am);
 
@@ -31,6 +32,7 @@ public class JsonManager : MonoBehaviour
 	public static void LoadState(string inputFileName)
 	{
 		Debug.Log("Loading");
+		inputFileName = SaveFileManager.SaveStatefolder + inputFileName;
 		if (!File.Exists(inputFileName))
 		{
 			Debug.Log("Couldn't load file: " + inputFileName);
@@ -63,7 +65,7 @@ public class JsonManager : MonoBehaviour
 
 	public static void SaveMap()
 	{
-		string outputFileName = GameMaster.currentMap;
+		string outputFileName = SaveFileManager.SaveMapfolder + GameMaster.currentMap;
 		if (File.Exists(outputFileName))
 		{
 			int nameFix = 0;
@@ -84,6 +86,7 @@ public class JsonManager : MonoBehaviour
 	public static void LoadMap(string inputFileName)
 	{
 		Debug.Log("Loading");
+		inputFileName = SaveFileManager.SaveMapfolder + inputFileName;
 		if (!File.Exists(inputFileName))
 		{
 			Debug.Log("Couldn't load file: " + inputFileName);

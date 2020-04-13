@@ -39,6 +39,14 @@ public class JsonManager : MonoBehaviour
 
 		string json = File.ReadAllText(inputFileName);
 		State state = JsonUtility.FromJson<State>(json);
+		
+		if (StateUpgrader.CanUpgrade(state))
+		{
+			state = StateUpgrader.Upgrade(state);
+			File.Delete(inputFileName);
+			string saveString = JsonUtility.ToJson(state);
+			File.WriteAllText(inputFileName, saveString);
+		}
 
 		if (state.mapName != GameMaster.currentMap)
 		{
@@ -105,6 +113,14 @@ public class JsonManager : MonoBehaviour
 
 		Map map = JsonUtility.FromJson<Map>(json);
 
+		if (MapUpgrader.CanUpgrade(map))
+		{
+			map = MapUpgrader.Upgrade(map);
+			File.Delete(SaveFileManager.SaveMapfolder + inputFileName);
+			string saveString = JsonUtility.ToJson(map);
+			File.WriteAllText(SaveFileManager.SaveMapfolder + inputFileName, saveString);
+		}
+
 		List<AbstractTile> aTiles = new List<AbstractTile>();
 		GameMaster.tiles = new List<GameObject>();
 		foreach (MapTile t in map.tiles)
@@ -144,6 +160,7 @@ public class JsonManager : MonoBehaviour
 [Serializable]
 public struct State
 {
+	public int version;
 	public string mapName;
 	public int playerAmount;
 	public int currentPlayer;
@@ -154,6 +171,7 @@ public struct State
 
 	public State (AbstractManager am, int[] tl)
 	{
+		version = StateUpgrader.Version;
 		mapName = GameMaster.currentMap;
 		playerAmount = am.playerAmount;
 		currentPlayer = am.currentPlayer;
@@ -175,11 +193,13 @@ public struct State
 [Serializable]
 public struct Map
 {
+	public int version;
 	public List<MapTile> tiles;
 	public List<MapWall> walls;
 
 	public Map(AbstractBoard board, List<GameObject> _tiles, List<GameObject> _walls)
 	{
+		version = MapUpgrader.Version;
 		tiles = new List<MapTile>();
 		for (int i = 0; i < _tiles.Count; i++)
 		{

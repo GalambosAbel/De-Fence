@@ -31,9 +31,12 @@ public class ChessClock : MonoBehaviour
         if (GameMaster.paused) return;
         int curPlayer = GameMaster.am.currentPlayer-1;
         timeLeft[curPlayer] -= (int)(Time.deltaTime*1000);
-        texts[curPlayer].text = ConvertTime(timeLeft[curPlayer]);
+        for (int i = 0; i < timeLeft.Length; i++)
+        {
+            texts[i].text = ConvertTime(timeLeft[i]);
+        }
 
-        if(timeLeft[curPlayer] < 0)
+        if (timeLeft[curPlayer] < 0)
         {
             List<int> winners = new List<int>();
             for (int i = 0; i < GameMaster.am.playerAmount; i++)

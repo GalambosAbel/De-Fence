@@ -150,7 +150,7 @@ public class InputReciever : MonoBehaviour
 
 		// assigning lost references
 		pauseMenu = GameObject.Find("PauseMenu");
-		ChessClock clock = GameObject.Find("ChessClock").GetComponent<ChessClock>();
+		GameMaster.clock = GameObject.Find("ChessClock").GetComponent<ChessClock>();
 
 		GameObject.Find("ResumeButton").GetComponent<Button>().onClick.AddListener(Resume);
 		GameObject.Find("PauseButton").GetComponent<Button>().onClick.AddListener(Pause);
@@ -163,7 +163,9 @@ public class InputReciever : MonoBehaviour
 		GameMaster.controlButton.onClick.RemoveAllListeners();
 		GameMaster.controlButton.onClick.AddListener(GameMaster.am.TakeStep);
 		GameMaster.controlButton.onClick.AddListener(GameMaster.UpdateControlButton);
-		GameMaster.controlButton.onClick.AddListener(clock.AddTime);
+		GameMaster.controlButton.onClick.AddListener(GameMaster.clock.AddTime);
+
+		GameMaster.clock.StartStop(true);
 
 		if (!JsonManager.LoadState(stateName))
 		{
@@ -171,7 +173,6 @@ public class InputReciever : MonoBehaviour
 			JsonManager.SaveState("Starting_Default");
 		}
 
-		clock.StartStop(true);
 		PauseResume(false);
 		GameMaster.gameEnded = false;
 

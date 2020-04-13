@@ -15,6 +15,7 @@ public class GameMaster : MonoBehaviour
 	public static bool paused;
 
 	public static Button controlButton;
+	public static ChessClock clock;
 
 	public GameObject _tilePrefab;
 	public GameObject _wallPrefab;

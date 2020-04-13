@@ -3,6 +3,7 @@ using UnityEngine;
 using System.IO;
 using System;
 using DeFenceAbstract;
+using System.Linq;
 
 public class JsonManager : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class JsonManager : MonoBehaviour
 
 		if (!File.Exists(SaveFileManager.SaveMapfolder + GameMaster.currentMap)) SaveMap();
 
-		State currentState = new State(GameMaster.am);
+		State currentState = new State(GameMaster.am, GameMaster.clock.timeLeft);
 
 		string json = JsonUtility.ToJson(currentState);
 		File.WriteAllText(outputFileName, json);
@@ -47,6 +48,7 @@ public class JsonManager : MonoBehaviour
 		GameMaster.am.playerAmount = state.playerAmount;
 		GameMaster.am.currentPlayer = state.currentPlayer;
 		GameMaster.am.lastPassed = state.lastPassed;
+		GameMaster.clock.timeLeft = state.timesLeft.ToArray();
 
 		for (int i = 0; i < state.tiles.Count; i++)
 		{
@@ -146,15 +148,17 @@ public struct State
 	public int playerAmount;
 	public int currentPlayer;
 	public bool lastPassed;
+	public List<int> timesLeft;
 	public List<StateTile> tiles;
 	public List<StateWall> walls;
 
-	public State (AbstractManager am)
+	public State (AbstractManager am, int[] tl)
 	{
 		mapName = GameMaster.currentMap;
 		playerAmount = am.playerAmount;
 		currentPlayer = am.currentPlayer;
 		lastPassed = am.lastPassed;
+		timesLeft = tl.ToList();
 		tiles = new List<StateTile>();
 		foreach (AbstractTile t in am.board.tiles)
 		{

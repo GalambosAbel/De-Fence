@@ -32,7 +32,7 @@ public class InputReciever : MonoBehaviour
 		inputs.Gameplay.Disable();
 
 		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.controlButton.onClick.Invoke();
-		inputs.Gameplay.QuickSave.performed += ctx => JsonManager.SaveState("Quciksave");
+		inputs.Gameplay.QuickSave.performed += ctx => JsonManager.SaveState("Quicksave");
 		inputs.Gameplay.Pause.performed += ctx => PauseResume(true);
 
 		inputs.Menu.Resume.performed += ctx => PauseResume(false);
@@ -42,10 +42,22 @@ public class InputReciever : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 	}
 
+	void Pause()
+	{
+		PauseResume(true);
+	}
+	void Resume()
+	{
+		PauseResume(false);
+	}
+
 	public void PauseResume(bool pause)
 	{
 		GameMaster.paused = pause;
+		GameObject temp = GameObject.Find("SavePanel");
+		if (temp != null) temp.SetActive(false);
 		pauseMenu.SetActive(pause);
+		GameObject.Find("PauseButton").GetComponent<Button>().interactable = !pause;
 		if (pause)
 		{
 			inputs.Gameplay.Disable();
@@ -112,6 +124,15 @@ public class InputReciever : MonoBehaviour
 		NewGame("Starting_" + GameMaster.currentMap);
 	}
 
+	public void SaveAs()
+	{
+		string saveName = GameObject.Find("SaveName").GetComponent<InputField>().text;
+		if (saveName == "") saveName = "Quicksave";
+		if (saveName == "Starting_Default") saveName += ".Nice_Try";
+		JsonManager.SaveState(saveName);
+		GameObject.Find("SavePanel").SetActive(false);
+	}
+
     public void Tutorial()
     {
         SceneManager.LoadScene("TutorialScene");
@@ -130,7 +151,12 @@ public class InputReciever : MonoBehaviour
 		// assigning lost references
 		pauseMenu = GameObject.Find("PauseMenu");
 		ChessClock clock = GameObject.Find("ChessClock").GetComponent<ChessClock>();
-		
+
+		GameObject.Find("ResumeButton").GetComponent<Button>().onClick.AddListener(Resume);
+		GameObject.Find("PauseButton").GetComponent<Button>().onClick.AddListener(Pause);
+		GameObject.Find("MenuButton").GetComponent<Button>().onClick.AddListener(ReturnToMenu);
+		GameObject.Find("SaveButton").GetComponent<Button>().onClick.AddListener(SaveAs);
+
 		GameMaster.tileParent = GameObject.Find("Tiles").transform;
 		GameMaster.wallParent = GameObject.Find("Walls").transform;
 		GameMaster.controlButton = GameObject.Find("ControlButton").GetComponent<Button>();
@@ -148,7 +174,6 @@ public class InputReciever : MonoBehaviour
 		clock.StartStop(true);
 		PauseResume(false);
 		GameMaster.gameEnded = false;
-		GameMaster.am.lastPassed = false;
 
 		GameMaster.UpdateControlButton();
 	}

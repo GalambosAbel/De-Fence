@@ -46,6 +46,7 @@ public class JsonManager : MonoBehaviour
 
 		GameMaster.am.playerAmount = state.playerAmount;
 		GameMaster.am.currentPlayer = state.currentPlayer;
+		GameMaster.am.lastPassed = state.lastPassed;
 
 		for (int i = 0; i < state.tiles.Count; i++)
 		{
@@ -144,6 +145,7 @@ public struct State
 	public string mapName;
 	public int playerAmount;
 	public int currentPlayer;
+	public bool lastPassed;
 	public List<StateTile> tiles;
 	public List<StateWall> walls;
 
@@ -152,6 +154,7 @@ public struct State
 		mapName = GameMaster.currentMap;
 		playerAmount = am.playerAmount;
 		currentPlayer = am.currentPlayer;
+		lastPassed = am.lastPassed;
 		tiles = new List<StateTile>();
 		foreach (AbstractTile t in am.board.tiles)
 		{

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
 public class SaveFileManager : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class SaveFileManager : MonoBehaviour
         }
     }
 
-    public static void Setup()
+    public static void Setup(GameObject contentBox, GameObject displayerPrefab)
     {
         if (!Directory.Exists(SaveStatefolder))
         {
@@ -30,6 +31,14 @@ public class SaveFileManager : MonoBehaviour
         {
             Directory.CreateDirectory(SaveMapfolder);
         }
+
+        foreach (string n in Directory.GetFiles(SaveStatefolder))
+        {
+            if (n == SaveStatefolder + "Starting_Default") continue;
+            DateTime d = File.GetCreationTime(n);
+            Instantiate(displayerPrefab, contentBox.transform).GetComponent<SaveFileDisplayer>().Create(Path.GetFileName(n), d);
+        }
+
     }
 
     public static void LogAllSaves()

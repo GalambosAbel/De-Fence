@@ -7,9 +7,7 @@ using UnityEngine.SceneManagement;
 public class InputReciever : MonoBehaviour
 {
     public string stateName;
-    public string mapName;
 
-	int loadMode = 0;
 	public GameObject gameEndPanel;
 	GameObject pauseMenu;
 
@@ -34,7 +32,7 @@ public class InputReciever : MonoBehaviour
 		inputs.Gameplay.Disable();
 
 		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.controlButton.onClick.Invoke();
-		inputs.Gameplay.QuickSave.performed += ctx => JsonManager.SaveState(stateName);
+		inputs.Gameplay.QuickSave.performed += ctx => JsonManager.SaveState("Quciksave");
 		inputs.Gameplay.Pause.performed += ctx => PauseResume(true);
 
 		inputs.Menu.Resume.performed += ctx => PauseResume(false);
@@ -103,10 +101,15 @@ public class InputReciever : MonoBehaviour
 		Application.Quit();
 	}
 
-	public void NewGame()
+	public void NewGame(string _stateName)
 	{
-		loadMode = 0;
+		stateName = _stateName;
 		SceneManager.LoadScene("GameScene");
+	}
+
+	public void Rematch()
+	{
+		NewGame("Starting_" + GameMaster.currentMap);
 	}
 
     public void Tutorial()
@@ -136,19 +139,10 @@ public class InputReciever : MonoBehaviour
 		GameMaster.controlButton.onClick.AddListener(GameMaster.UpdateControlButton);
 		GameMaster.controlButton.onClick.AddListener(clock.AddTime);
 
-		//what to load
-		if (loadMode == 0)
+		if (!JsonManager.LoadState(stateName))
 		{
-			if (!JsonManager.LoadState("Starting_Default"))
-			{
-				gameObject.GetComponent<GenerateBoard>().GenerateBoardFc();
-				JsonManager.SaveState("Starting_Default");
-			}
-		}
-		else if(loadMode == 1)
-		{
-			JsonManager.LoadMap(mapName);
-			JsonManager.LoadState(stateName);
+			gameObject.GetComponent<GenerateBoard>().GenerateBoardFc();
+			JsonManager.SaveState("Starting_Default");
 		}
 
 		clock.StartStop(true);

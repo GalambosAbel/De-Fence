@@ -28,6 +28,9 @@ public class GameMaster : MonoBehaviour
 	public static Transform tileParent;
 	public static Transform wallParent;
 
+	public GameObject contentBox;
+	public GameObject displayerPrefab;
+
 	void Awake()
 	{
 		am = new AbstractManager(GameEnded);
@@ -36,7 +39,7 @@ public class GameMaster : MonoBehaviour
 		wallPrefab = _wallPrefab;
 
 		gameEnded = false;
-		SaveFileManager.Setup();
+		SaveFileManager.Setup(contentBox, displayerPrefab);
 	}
 
 	public static void UpdateControlButton()

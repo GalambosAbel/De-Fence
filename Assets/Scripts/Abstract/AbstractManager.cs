@@ -10,7 +10,7 @@ namespace DeFenceAbstract
 		internal AbstractBoard board;
 		internal int playerAmount;
 		internal int currentPlayer;
-		private bool lastPassed;
+		internal bool lastPassed;
 
 		internal List<AbstractTile> tilesClicked;
 

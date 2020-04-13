@@ -11,6 +11,7 @@ public class InputReciever : MonoBehaviour
 
 	int loadMode = 0;
 	public GameObject gameEndPanel;
+	GameObject pauseMenu;
 
 	InputManager inputs;
 
@@ -21,31 +22,42 @@ public class InputReciever : MonoBehaviour
 		if (instance == null) instance = this;
 		else if (instance != this)
 		{
+			instance.inputs.Dispose();
 			Destroy(instance.gameObject);
 			instance = this;
-			inputs.Dispose();
 			DontDestroyOnLoad(gameObject);
-			Debug.Log("aa");
 		}
 		else return;
 
 		inputs = new InputManager();
-		inputs.Menu.Enable();
+		inputs.Menu.Disable();
 		inputs.Gameplay.Disable();
 
-		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.am.TakeStep();
-		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.UpdateControlButton();
+		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.controlButton.onClick.Invoke();
+		inputs.Gameplay.QuickSave.performed += ctx => JsonManager.SaveState(stateName);
+		inputs.Gameplay.Pause.performed += ctx => PauseResume(true);
 
-		inputs.Gameplay.temp.performed += ctx => JsonManager.SaveState(stateName);
-		inputs.Gameplay.templ.performed += ctx => JsonManager.LoadState(stateName);
-
-		inputs.Menu.Save.performed += ctx => JsonManager.SaveState(stateName);
-		/*inputs.Menu.Load.performed += ctx => gameObject.GetComponent<BoardLoader>().LoadBoard(loadName);
-		inputs.Menu.GenerateBoard.performed += ctx => gameObject.GetComponent<GenerateBoard>().GenerateBoardFc();*/
+		inputs.Menu.Resume.performed += ctx => PauseResume(false);
 
 		SceneManager.sceneLoaded += LoadedScene;
 
 		DontDestroyOnLoad(gameObject);
+	}
+
+	public void PauseResume(bool pause)
+	{
+		GameMaster.paused = pause;
+		pauseMenu.SetActive(pause);
+		if (pause)
+		{
+			inputs.Gameplay.Disable();
+			inputs.Menu.Enable();
+		}
+		else
+		{
+			inputs.Gameplay.Enable();
+			inputs.Menu.Disable();
+		}
 	}
 
 	public void GameEnded(int[] winners)
@@ -110,25 +122,39 @@ public class InputReciever : MonoBehaviour
 
 		inputs.Menu.Disable();
 		inputs.Gameplay.Enable();
+		GameMaster.currentMap = "";
 
-		// assigning lost references 1
+		// assigning lost references
+		pauseMenu = GameObject.Find("PauseMenu");
+		ChessClock clock = GameObject.Find("ChessClock").GetComponent<ChessClock>();
+		
 		GameMaster.tileParent = GameObject.Find("Tiles").transform;
 		GameMaster.wallParent = GameObject.Find("Walls").transform;
 		GameMaster.controlButton = GameObject.Find("ControlButton").GetComponent<Button>();
 		GameMaster.controlButton.onClick.RemoveAllListeners();
 		GameMaster.controlButton.onClick.AddListener(GameMaster.am.TakeStep);
 		GameMaster.controlButton.onClick.AddListener(GameMaster.UpdateControlButton);
+		GameMaster.controlButton.onClick.AddListener(clock.AddTime);
 
 		//what to load
 		if (loadMode == 0)
 		{
-			gameObject.GetComponent<GenerateBoard>().GenerateBoardFc();
+			if (!JsonManager.LoadState("Starting_Default"))
+			{
+				gameObject.GetComponent<GenerateBoard>().GenerateBoardFc();
+				JsonManager.SaveState("Starting_Default");
+			}
 		}
 		else if(loadMode == 1)
 		{
 			JsonManager.LoadMap(mapName);
 			JsonManager.LoadState(stateName);
 		}
+
+		clock.StartStop(true);
+		PauseResume(false);
+		GameMaster.gameEnded = false;
+		GameMaster.am.lastPassed = false;
 
 		GameMaster.UpdateControlButton();
 	}

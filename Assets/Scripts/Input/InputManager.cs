@@ -19,26 +19,10 @@ public class @InputManager : IInputActionCollection, IDisposable
             ""id"": ""87ca7107-d1af-4eae-aed3-0a288067a327"",
             ""actions"": [
                 {
-                    ""name"": ""Save"",
+                    ""name"": ""Resume"",
                     ""type"": ""Button"",
-                    ""id"": ""24117448-fe4a-4514-b1a5-a534dcd900b3"",
+                    ""id"": ""26d8b26e-93a0-428f-8c23-f606a6b8e305"",
                     ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Load"",
-                    ""type"": ""Button"",
-                    ""id"": ""a94f8e29-0888-4749-aca7-bca509f2b293"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""GenerateBoard"",
-                    ""type"": ""Button"",
-                    ""id"": ""98d7f5e0-1424-44ac-a765-56850abed61b"",
-                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -46,34 +30,12 @@ public class @InputManager : IInputActionCollection, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""b4380d1d-df56-46c0-bb00-00f40042307b"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""id"": ""53c084f0-94ab-40cc-a534-313430683ff0"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Save"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fdf98908-470e-4aef-a0a0-1f967ab3d84b"",
-                    ""path"": ""<Keyboard>/l"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Load"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9cd03e36-129c-486b-8863-f4f3936c68e1"",
-                    ""path"": ""<Keyboard>/g"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""GenerateBoard"",
+                    ""action"": ""Resume"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -130,17 +92,17 @@ public class @InputManager : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""temp"",
+                    ""name"": ""Pause"",
                     ""type"": ""Button"",
-                    ""id"": ""a77123fd-5912-444b-acfe-006057fec668"",
+                    ""id"": ""9994e53f-435f-44d7-bef1-b075828e7e4e"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""templ"",
+                    ""name"": ""QuickSave"",
                     ""type"": ""Button"",
-                    ""id"": ""88a2b2df-5a09-4e98-be05-0e00d6b7c70e"",
+                    ""id"": ""334d9584-d9bd-41f9-b9d2-e5c8030a9815"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
@@ -171,23 +133,23 @@ public class @InputManager : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c231e055-425f-480b-ade8-479c6c037af9"",
-                    ""path"": ""<Keyboard>/m"",
+                    ""id"": ""820addd8-3236-4765-b5ab-392b6938ce6d"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""temp"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c2163545-d247-428a-a357-fe937cddf04d"",
-                    ""path"": ""<Keyboard>/n"",
+                    ""id"": ""1c947662-63c8-4cb2-a30d-df5b069362db"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""templ"",
+                    ""action"": ""QuickSave"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -198,17 +160,15 @@ public class @InputManager : IInputActionCollection, IDisposable
 }");
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
-        m_Menu_Save = m_Menu.FindAction("Save", throwIfNotFound: true);
-        m_Menu_Load = m_Menu.FindAction("Load", throwIfNotFound: true);
-        m_Menu_GenerateBoard = m_Menu.FindAction("GenerateBoard", throwIfNotFound: true);
+        m_Menu_Resume = m_Menu.FindAction("Resume", throwIfNotFound: true);
         // Tile
         m_Tile = asset.FindActionMap("Tile", throwIfNotFound: true);
         m_Tile_Click = m_Tile.FindAction("Click", throwIfNotFound: true);
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_ConfirmTurn = m_Gameplay.FindAction("Confirm Turn", throwIfNotFound: true);
-        m_Gameplay_temp = m_Gameplay.FindAction("temp", throwIfNotFound: true);
-        m_Gameplay_templ = m_Gameplay.FindAction("templ", throwIfNotFound: true);
+        m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
+        m_Gameplay_QuickSave = m_Gameplay.FindAction("QuickSave", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -258,16 +218,12 @@ public class @InputManager : IInputActionCollection, IDisposable
     // Menu
     private readonly InputActionMap m_Menu;
     private IMenuActions m_MenuActionsCallbackInterface;
-    private readonly InputAction m_Menu_Save;
-    private readonly InputAction m_Menu_Load;
-    private readonly InputAction m_Menu_GenerateBoard;
+    private readonly InputAction m_Menu_Resume;
     public struct MenuActions
     {
         private @InputManager m_Wrapper;
         public MenuActions(@InputManager wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Save => m_Wrapper.m_Menu_Save;
-        public InputAction @Load => m_Wrapper.m_Menu_Load;
-        public InputAction @GenerateBoard => m_Wrapper.m_Menu_GenerateBoard;
+        public InputAction @Resume => m_Wrapper.m_Menu_Resume;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -277,28 +233,16 @@ public class @InputManager : IInputActionCollection, IDisposable
         {
             if (m_Wrapper.m_MenuActionsCallbackInterface != null)
             {
-                @Save.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnSave;
-                @Save.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnSave;
-                @Save.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnSave;
-                @Load.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnLoad;
-                @Load.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnLoad;
-                @Load.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnLoad;
-                @GenerateBoard.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnGenerateBoard;
-                @GenerateBoard.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnGenerateBoard;
-                @GenerateBoard.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnGenerateBoard;
+                @Resume.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnResume;
+                @Resume.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnResume;
+                @Resume.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnResume;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Save.started += instance.OnSave;
-                @Save.performed += instance.OnSave;
-                @Save.canceled += instance.OnSave;
-                @Load.started += instance.OnLoad;
-                @Load.performed += instance.OnLoad;
-                @Load.canceled += instance.OnLoad;
-                @GenerateBoard.started += instance.OnGenerateBoard;
-                @GenerateBoard.performed += instance.OnGenerateBoard;
-                @GenerateBoard.canceled += instance.OnGenerateBoard;
+                @Resume.started += instance.OnResume;
+                @Resume.performed += instance.OnResume;
+                @Resume.canceled += instance.OnResume;
             }
         }
     }
@@ -341,15 +285,15 @@ public class @InputManager : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_ConfirmTurn;
-    private readonly InputAction m_Gameplay_temp;
-    private readonly InputAction m_Gameplay_templ;
+    private readonly InputAction m_Gameplay_Pause;
+    private readonly InputAction m_Gameplay_QuickSave;
     public struct GameplayActions
     {
         private @InputManager m_Wrapper;
         public GameplayActions(@InputManager wrapper) { m_Wrapper = wrapper; }
         public InputAction @ConfirmTurn => m_Wrapper.m_Gameplay_ConfirmTurn;
-        public InputAction @temp => m_Wrapper.m_Gameplay_temp;
-        public InputAction @templ => m_Wrapper.m_Gameplay_templ;
+        public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
+        public InputAction @QuickSave => m_Wrapper.m_Gameplay_QuickSave;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -362,12 +306,12 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @ConfirmTurn.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnConfirmTurn;
                 @ConfirmTurn.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnConfirmTurn;
                 @ConfirmTurn.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnConfirmTurn;
-                @temp.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTemp;
-                @temp.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTemp;
-                @temp.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTemp;
-                @templ.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTempl;
-                @templ.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTempl;
-                @templ.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTempl;
+                @Pause.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                @QuickSave.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnQuickSave;
+                @QuickSave.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnQuickSave;
+                @QuickSave.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnQuickSave;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -375,21 +319,19 @@ public class @InputManager : IInputActionCollection, IDisposable
                 @ConfirmTurn.started += instance.OnConfirmTurn;
                 @ConfirmTurn.performed += instance.OnConfirmTurn;
                 @ConfirmTurn.canceled += instance.OnConfirmTurn;
-                @temp.started += instance.OnTemp;
-                @temp.performed += instance.OnTemp;
-                @temp.canceled += instance.OnTemp;
-                @templ.started += instance.OnTempl;
-                @templ.performed += instance.OnTempl;
-                @templ.canceled += instance.OnTempl;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+                @QuickSave.started += instance.OnQuickSave;
+                @QuickSave.performed += instance.OnQuickSave;
+                @QuickSave.canceled += instance.OnQuickSave;
             }
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
     public interface IMenuActions
     {
-        void OnSave(InputAction.CallbackContext context);
-        void OnLoad(InputAction.CallbackContext context);
-        void OnGenerateBoard(InputAction.CallbackContext context);
+        void OnResume(InputAction.CallbackContext context);
     }
     public interface ITileActions
     {
@@ -398,7 +340,7 @@ public class @InputManager : IInputActionCollection, IDisposable
     public interface IGameplayActions
     {
         void OnConfirmTurn(InputAction.CallbackContext context);
-        void OnTemp(InputAction.CallbackContext context);
-        void OnTempl(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnQuickSave(InputAction.CallbackContext context);
     }
 }

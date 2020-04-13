@@ -5,23 +5,30 @@ using UnityEngine.UI;
 
 public class ChessClock : MonoBehaviour
 {
+    public bool isActive = true;
     public int startingTime = 50;
     public int[] timeLeft;
     public Text[] texts;
     public int timeToAdd = 8000;
 
-    void Start()
+    public void StartStop(bool start)
     {
-        int curPlayer = GameMaster.am.currentPlayer - 1;
-        for (int i = 0; i < timeLeft.Length; i++)
+        gameObject.SetActive(start);
+        isActive = start;
+        if (start) 
         {
-            timeLeft[i] = startingTime;
-            texts[i].text = ConvertTime(timeLeft[i]);
+            for (int i = 0; i < timeLeft.Length; i++)
+            {
+                timeLeft[i] = startingTime;
+                texts[i].text = ConvertTime(timeLeft[i]);
+            }
         }
     }
 
     void Update()
     {
+        if (!isActive) return;
+        if (GameMaster.paused) return;
         int curPlayer = GameMaster.am.currentPlayer-1;
         timeLeft[curPlayer] -= (int)(Time.deltaTime*1000);
         texts[curPlayer].text = ConvertTime(timeLeft[curPlayer]);
@@ -47,9 +54,9 @@ public class ChessClock : MonoBehaviour
        else return min + " : 0" + sec;
     }
 
-    public void AddTime(int player)
+    public void AddTime()
     {
-        player--;
+        int player = GameMaster.am.currentPlayer - 1;
         timeLeft[player] += timeToAdd;
         texts[player].text = ConvertTime(timeLeft[player]);
     }

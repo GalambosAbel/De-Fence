@@ -8,7 +8,6 @@ public class JsonManager : MonoBehaviour
 {
     public static void SaveState(string outputFileName)
 	{
-		Debug.Log("Saving!");
 		outputFileName = SaveFileManager.SaveStatefolder + outputFileName;
 		if (File.Exists(outputFileName))
 		{
@@ -26,17 +25,15 @@ public class JsonManager : MonoBehaviour
 
 		string json = JsonUtility.ToJson(currentState);
 		File.WriteAllText(outputFileName, json);
-		Debug.Log("Saved!");
 	}
 
-	public static void LoadState(string inputFileName)
+	public static bool LoadState(string inputFileName)
 	{
-		Debug.Log("Loading");
 		inputFileName = SaveFileManager.SaveStatefolder + inputFileName;
 		if (!File.Exists(inputFileName))
 		{
 			Debug.Log("Couldn't load file: " + inputFileName);
-			return;
+			return false;
 		}
 
 		string json = File.ReadAllText(inputFileName);
@@ -44,7 +41,7 @@ public class JsonManager : MonoBehaviour
 
 		if (state.mapName != GameMaster.currentMap)
 		{
-			LoadMap(state.mapName);
+			if (!LoadMap(state.mapName)) return false;
 		}
 
 		GameMaster.am.playerAmount = state.playerAmount;
@@ -61,6 +58,7 @@ public class JsonManager : MonoBehaviour
 		}
 		GameMaster.UpdateControlButton();
 		GameMaster.am.board.LoadTerritorries();
+		return true;
 	}
 
 	public static void SaveMap()
@@ -83,21 +81,28 @@ public class JsonManager : MonoBehaviour
 		File.WriteAllText(outputFileName, json);
 	}
 
-	public static void LoadMap(string inputFileName)
+	public static bool LoadMap(string inputFileName)
 	{
-		Debug.Log("Loading");
-		inputFileName = SaveFileManager.SaveMapfolder + inputFileName;
-		if (!File.Exists(inputFileName))
+		if (!File.Exists(SaveFileManager.SaveMapfolder + inputFileName))
 		{
-			Debug.Log("Couldn't load file: " + inputFileName);
-			return;
+			Debug.Log("Couldn't load file: " + SaveFileManager.SaveMapfolder + inputFileName);
+			return false;
 		}
 
-		string json = File.ReadAllText(inputFileName);
+		foreach (Transform child in GameMaster.tileParent.transform)
+		{
+			Destroy(child.gameObject);
+		}
+		foreach (Transform child in GameMaster.wallParent.transform)
+		{
+			Destroy(child.gameObject);
+		}
+
+		string json = File.ReadAllText(SaveFileManager.SaveMapfolder + inputFileName);
 
 		Map map = JsonUtility.FromJson<Map>(json);
 
-		GameMaster.am.board.tiles = new List<AbstractTile>();
+		List<AbstractTile> aTiles = new List<AbstractTile>();
 		GameMaster.tiles = new List<GameObject>();
 		foreach (MapTile t in map.tiles)
 		{
@@ -111,20 +116,23 @@ public class JsonManager : MonoBehaviour
 			{
 				aTile.neighbours.Add(new int[] { n.tile, n.wall });
 			}
-			GameMaster.am.board.tiles.Add(aTile);
+			aTiles.Add(aTile);
 		}
-		GameMaster.am.board.walls = new List<AbstractWall>();
+
+		List<AbstractWall> aWalls = new List<AbstractWall>();
 		GameMaster.walls = new List<GameObject>();
 		foreach (MapWall w in map.walls)
 		{
 			Vector3 pos = new Vector3(w.position.x, w.position.y, 0);
 			GameObject wall = Instantiate(GameMaster.wallPrefab, pos, Quaternion.Euler(0, 0, w.position.rotation), GameMaster.wallParent);
-			wall.GetComponent<Tile>().ID = w.ID;
-			GameMaster.tiles.Add(wall);
+			wall.GetComponent<Wall>().ID = w.ID;
+			GameMaster.walls.Add(wall);
 
-			GameMaster.am.board.walls.Add(new AbstractWall(w.ID));
+			aWalls.Add(new AbstractWall(w.ID));
 		}
+		GameMaster.am.board = new AbstractBoard(aTiles, aWalls, GameMaster.am);
 		GameMaster.currentMap = inputFileName;
+		return true;
 	}
 }
 

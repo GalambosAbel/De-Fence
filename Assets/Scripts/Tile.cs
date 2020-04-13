@@ -21,7 +21,7 @@ public class Tile : MonoBehaviour
 
 	void Update()
     {
-		if (GameMaster.gameEnded) inputs.Disable();
+		if (GameMaster.gameEnded || GameMaster.paused) inputs.Disable();
 		Color c = GameMaster.playerColors[GameMaster.am.board.tiles[ID].owner];
 		if (GameMaster.am.tilesClicked != null)
 		{

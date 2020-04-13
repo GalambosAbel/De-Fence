@@ -59,7 +59,7 @@ public class ChessClock : MonoBehaviour
 
     public void AddTime()
     {
-        int player = GameMaster.am.currentPlayer - 1;
+        int player = GameMaster.am.currentPlayer % GameMaster.am.playerAmount;
         timeLeft[player] += timeToAdd;
         texts[player].text = ConvertTime(timeLeft[player]);
     }

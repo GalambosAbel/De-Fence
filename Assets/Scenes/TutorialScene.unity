@@ -155,10 +155,10 @@ RectTransform:
   m_Father: {fileID: 597651159}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.024, y: 0.19764964}
-  m_AnchorMax: {x: 0.26000002, y: 0.72300005}
-  m_AnchoredPosition: {x: -0.049987793, y: 0.3999939}
-  m_SizeDelta: {x: 3, y: 9.799988}
+  m_AnchorMin: {x: 0.043501504, y: 0.21229926}
+  m_AnchorMax: {x: 0.284, y: 0.75417525}
+  m_AnchoredPosition: {x: 1.5, y: -0.7579956}
+  m_SizeDelta: {x: 0, y: 0.7999878}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7493417
 MonoBehaviour:
@@ -185,7 +185,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 60
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -5812,8 +5812,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1000725978}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 527941107}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -5824,8 +5824,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2020682560}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1007493774}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:

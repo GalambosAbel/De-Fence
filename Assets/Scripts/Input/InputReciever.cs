@@ -33,22 +33,13 @@ public class InputReciever : MonoBehaviour
 
 		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.controlButton.onClick.Invoke();
 		inputs.Gameplay.QuickSave.performed += ctx => JsonManager.SaveState("Quicksave");
-		inputs.Gameplay.Pause.performed += ctx => PauseResume(true);
+		inputs.Gameplay.Pause.performed += ctx => OnlineManager.instance.Pause();
 
-		inputs.Menu.Resume.performed += ctx => PauseResume(false);
+		inputs.Menu.Resume.performed += ctx => OnlineManager.instance.Resume();
 
 		SceneManager.sceneLoaded += LoadedScene;
 
 		DontDestroyOnLoad(gameObject);
-	}
-
-	void Pause()
-	{
-		PauseResume(true);
-	}
-	void Resume()
-	{
-		PauseResume(false);
 	}
 
 	public void PauseResume(bool pause)
@@ -152,8 +143,8 @@ public class InputReciever : MonoBehaviour
 		pauseMenu = GameObject.Find("PauseMenu");
 		GameMaster.clock = GameObject.Find("ChessClock").GetComponent<ChessClock>();
 
-		GameObject.Find("ResumeButton").GetComponent<Button>().onClick.AddListener(Resume);
-		GameObject.Find("PauseButton").GetComponent<Button>().onClick.AddListener(Pause);
+		GameObject.Find("ResumeButton").GetComponent<Button>().onClick.AddListener(OnlineManager.instance.Resume);
+		GameObject.Find("PauseButton").GetComponent<Button>().onClick.AddListener(OnlineManager.instance.Pause);
 		GameObject.Find("MenuButton").GetComponent<Button>().onClick.AddListener(ReturnToMenu);
 		GameObject.Find("SaveButton").GetComponent<Button>().onClick.AddListener(SaveAs);
 
@@ -161,9 +152,7 @@ public class InputReciever : MonoBehaviour
 		GameMaster.wallParent = GameObject.Find("Walls").transform;
 		GameMaster.controlButton = GameObject.Find("ControlButton").GetComponent<Button>();
 		GameMaster.controlButton.onClick.RemoveAllListeners();
-		GameMaster.controlButton.onClick.AddListener(GameMaster.am.TakeStep);
-		GameMaster.controlButton.onClick.AddListener(GameMaster.UpdateControlButton);
-		GameMaster.controlButton.onClick.AddListener(GameMaster.clock.AddTime);
+		GameMaster.controlButton.onClick.AddListener(OnlineManager.instance.CtrlButton);
 
 		GameMaster.clock.StartStop(true);
 

@@ -14,8 +14,7 @@ public class Tile : MonoBehaviour
 		inputs = new InputManager();
 		inputs.Disable();
 
-		inputs.Tile.Click.performed += ctx => GameMaster.am.ClickTile(ID);
-		inputs.Tile.Click.performed += ctx => GameMaster.UpdateControlButton();
+		inputs.Tile.Click.performed += ctx => OnlineManager.instance.InputRecived(PlayerAction.TileClicked, ID);
 	}
 
 

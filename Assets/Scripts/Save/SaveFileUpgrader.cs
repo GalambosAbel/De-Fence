@@ -49,7 +49,7 @@ public class MapUpgrader
         UpgradeTo0,
         UpgradeTo1
     };
-    public static int Version { get; } = 1;
+    public static int Version { get; } = StateUpgrader.Version;
 
     public static bool CanUpgrade(Map map)
     {

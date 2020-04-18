@@ -71,6 +71,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 		{
 			GetComponent<InputReciever>().NewGame("Starting_Default");
 		}
+		Debug.Log("Haliiiiiiiii");
 	}
 
 	public void Cancel()

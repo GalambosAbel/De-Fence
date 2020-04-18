@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class InputReciever : MonoBehaviour
 {
     public string stateName;
+	public bool nameIsJson;
 
 	public GameObject gameEndPanel;
 	GameObject pauseMenu;
@@ -111,9 +112,10 @@ public class InputReciever : MonoBehaviour
 		Application.Quit();
 	}
 
-	public void NewGame(string _stateName)
+	public void NewGame(string _stateName, bool isJson = false)
 	{
 		stateName = _stateName;
+		nameIsJson = isJson;
 		SceneManager.LoadScene("GameScene");
 	}
 
@@ -168,7 +170,7 @@ public class InputReciever : MonoBehaviour
 		GameMaster.clock.StartStop(GameMaster.clockEnabled);
 
 
-		if (!JsonManager.LoadState(stateName))
+		if (!JsonManager.LoadState(stateName, nameIsJson))
 		{
 			gameObject.GetComponent<GenerateBoard>().GenerateBoardFc();
 			JsonManager.SaveState("Starting_Default");

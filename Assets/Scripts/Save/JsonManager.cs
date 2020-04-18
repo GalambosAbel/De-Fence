@@ -37,16 +37,20 @@ public class JsonManager : MonoBehaviour
 		File.WriteAllText(outputFileName, json);
 	}
 
-	public static bool LoadState(string inputFileName)
+	public static bool LoadState(string inputFileName, bool isJson)
 	{
-		inputFileName = SaveFileManager.SaveStatefolder + inputFileName;
-		if (!File.Exists(inputFileName))
+		string json = inputFileName;
+		if (!isJson)
 		{
-			Debug.Log("Couldn't load file: " + inputFileName);
-			return false;
-		}
+			inputFileName = SaveFileManager.SaveStatefolder + inputFileName;
+			if (!File.Exists(inputFileName))
+			{
+				Debug.Log("Couldn't load file: " + inputFileName);
+				return false;
+			}
 
-		string json = File.ReadAllText(inputFileName);
+			json = File.ReadAllText(inputFileName);
+		}
 		State state = JsonUtility.FromJson<State>(json);
 		
 		if (StateUpgrader.CanUpgrade(state))

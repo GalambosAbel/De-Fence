@@ -7,7 +7,16 @@ using System.Linq;
 
 public class JsonManager : MonoBehaviour
 {
-    public static void SaveState(string outputFileName)
+	private static List<string> protectedStates = new List<string>
+	{
+		"Starting_Default"
+	};
+	private static List<string> protectedMaps = new List<string>
+	{
+		"Default"
+	};
+
+	public static void SaveState(string outputFileName)
 	{
 		outputFileName = SaveFileManager.SaveStatefolder + outputFileName;
 		if (File.Exists(outputFileName))
@@ -22,7 +31,7 @@ public class JsonManager : MonoBehaviour
 
 		if (!File.Exists(SaveFileManager.SaveMapfolder + GameMaster.currentMap)) SaveMap();
 
-		State currentState = new State(GameMaster.am, GameMaster.clock.timeLeft);
+		State currentState = new State(GameMaster.am, GameMaster.clock);
 
 		string json = JsonUtility.ToJson(currentState);
 		File.WriteAllText(outputFileName, json);
@@ -56,6 +65,7 @@ public class JsonManager : MonoBehaviour
 		GameMaster.am.playerAmount = state.playerAmount;
 		GameMaster.am.currentPlayer = state.currentPlayer;
 		GameMaster.am.lastPassed = state.lastPassed;
+		if (!protectedStates.Contains(Path.GetFileName(inputFileName))) GameMaster.clock.StartStop(state.clockEnabled);
 		GameMaster.clock.timeLeft = state.timesLeft.ToArray();
 
 		for (int i = 0; i < state.tiles.Count; i++)
@@ -165,18 +175,21 @@ public struct State
 	public int playerAmount;
 	public int currentPlayer;
 	public bool lastPassed;
+	public bool clockEnabled;
 	public List<int> timesLeft;
 	public List<StateTile> tiles;
 	public List<StateWall> walls;
 
-	public State (AbstractManager am, int[] tl)
+	public State (AbstractManager am, ChessClock clock)
 	{
 		version = StateUpgrader.Version;
 		mapName = GameMaster.currentMap;
 		playerAmount = am.playerAmount;
 		currentPlayer = am.currentPlayer;
 		lastPassed = am.lastPassed;
-		timesLeft = tl.ToList();
+
+		clockEnabled = clock.isActive;
+		timesLeft = clock.timeLeft.ToList();
 		tiles = new List<StateTile>();
 		foreach (AbstractTile t in am.board.tiles)
 		{

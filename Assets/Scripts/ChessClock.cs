@@ -15,6 +15,7 @@ public class ChessClock : MonoBehaviour
     {
         gameObject.SetActive(start);
         isActive = start;
+        GameMaster.clockEnabled = start;
         if (start) 
         {
             for (int i = 0; i < timeLeft.Length; i++)

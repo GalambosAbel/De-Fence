@@ -9,9 +9,10 @@ public class StateUpgrader
     private static List<UpgradeFunc> upgradeFuncs = new List<UpgradeFunc>()
     {
         UpgradeTo0,
-        UpgradeTo1
+        UpgradeTo1,
+        UpgradeTo2
     };
-    public static int Version { get; } = 1;
+    public static int Version { get; } = 2;
 
 
     public static bool CanUpgrade(State state)
@@ -27,12 +28,20 @@ public class StateUpgrader
 
     private static State UpgradeTo0(State state)
     {
+        state.version = 0;
         return state;
     }
 
     private static State UpgradeTo1(State state)
     {
         state.version = 1;
+        return state;
+    }
+
+    private static State UpgradeTo2(State state)
+    {
+        state.clockEnabled = true;
+        state.version = 2;
         return state;
     }
 
@@ -49,7 +58,7 @@ public class MapUpgrader
         UpgradeTo0,
         UpgradeTo1
     };
-    public static int Version { get; } = StateUpgrader.Version;
+    public static int Version { get; } = 1;
 
     public static bool CanUpgrade(Map map)
     {
@@ -64,6 +73,7 @@ public class MapUpgrader
 
     private static Map UpgradeTo0(Map map)
     {
+        map.version = 0;
         return map;
     }
 

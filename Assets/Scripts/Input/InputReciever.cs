@@ -124,6 +124,11 @@ public class InputReciever : MonoBehaviour
 		GameObject.Find("SavePanel").SetActive(false);
 	}
 
+	public void SetChessClockEnabled(bool chessClockenabled)
+	{
+		GameMaster.clockEnabled = chessClockenabled;
+	}
+
     public void Tutorial()
     {
         SceneManager.LoadScene("TutorialScene");
@@ -154,7 +159,7 @@ public class InputReciever : MonoBehaviour
 		GameMaster.controlButton.onClick.RemoveAllListeners();
 		GameMaster.controlButton.onClick.AddListener(OnlineManager.instance.CtrlButton);
 
-		GameMaster.clock.StartStop(true);
+		GameMaster.clock.StartStop(GameMaster.clockEnabled);
 
 		if (!JsonManager.LoadState(stateName))
 		{

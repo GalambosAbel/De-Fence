@@ -13,6 +13,7 @@ public class GameMaster : MonoBehaviour
 	public static Color[] playerColors = new Color[] { Color.white, Color.red, Color.blue, Color.green, Color.black };
 	public static bool gameEnded;
 	public static bool paused;
+	public static bool clockEnabled = true;
 
 	public static Button controlButton;
 	public static ChessClock clock;

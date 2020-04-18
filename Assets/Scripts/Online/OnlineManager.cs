@@ -33,7 +33,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	public void ConnectToInternet()
 	{
 		GameObject.Find("StatusText").GetComponent<Text>().text = "Connecting to internet";
-		PhotonNetwork.GameVersion = StateUpgrader.Version.ToString();
+		PhotonNetwork.GameVersion = Application.version;
 		PhotonNetwork.ConnectUsingSettings();
 	}
 

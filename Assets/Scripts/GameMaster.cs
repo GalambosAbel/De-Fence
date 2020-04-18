@@ -43,6 +43,7 @@ public class GameMaster : MonoBehaviour
 		gameEnded = false;
 		clockEnabled = true;
 		SaveFileManager.Setup(contentBox, displayerPrefab);
+		GameObject.Find("VersionText").GetComponent<Text>().text = "V " + Application.version;
 	}
 
 	public static void UpdateControlButton()

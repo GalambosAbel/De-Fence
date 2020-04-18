@@ -61,6 +61,13 @@ public class InputReciever : MonoBehaviour
 		}
 	}
 
+	public void OnOnlineToggleClicked(bool online)
+	{
+		GameObject.Find("StartOffline").SetActive(!online);
+		GameObject.Find("StartOnline").SetActive(online);
+		GameObject.Find("OnlineMenu").SetActive(online);
+	}
+
 	public void GameEnded(int[] winners)
 	{
 		gameEndPanel.SetActive(true);

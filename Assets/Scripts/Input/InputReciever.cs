@@ -112,7 +112,13 @@ public class InputReciever : MonoBehaviour
 		Application.Quit();
 	}
 
-	public void NewGame(string _stateName, bool isJson = false)
+	public void NewGame(string _stateName)
+	{
+		stateName = _stateName;
+		nameIsJson = false;
+		SceneManager.LoadScene("GameScene");
+	}
+	public void NewGame(string _stateName, bool isJson)
 	{
 		stateName = _stateName;
 		nameIsJson = isJson;

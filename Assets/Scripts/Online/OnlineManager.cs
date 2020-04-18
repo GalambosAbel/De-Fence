@@ -74,15 +74,15 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 		{
 			if (saveFileName == "" || !File.Exists(SaveFileManager.SaveStatefolder + saveFileName))
 			{
-				photonView.RPC("StartGame", RpcTarget.All, "Startin_Default", false);
+				photonView.RPC("StartGame", RpcTarget.All, "Startin_Default", false, GameMaster.clockEnabled);
 			}
 			string json = File.ReadAllText(SaveFileManager.SaveStatefolder + saveFileName);
-			photonView.RPC("StartGame", RpcTarget.All, json, true);
+			photonView.RPC("StartGame", RpcTarget.All, json, true, true);
 		}
 	}
 
 	[PunRPC]
-	public void StartGame(string gameName, bool isJson, bool clockEnabled = true)
+	public void StartGame(string gameName, bool isJson, bool clockEnabled)
 	{
 		GetComponent<InputReciever>().NewGame(gameName, isJson);
 		if (!isJson) GameMaster.clock.StartStop(clockEnabled);

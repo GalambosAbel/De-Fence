@@ -37,6 +37,7 @@ MonoBehaviour:
   - DoInput
   - Fire
   - RespawnSpaceship
+  - StartGame
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

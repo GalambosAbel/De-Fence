@@ -2,6 +2,7 @@
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	[HideInInspector]
 	public int playernumber;
 
+	private string saveFileName = "";
 	private string roomName = "f";
 
 	public static OnlineManager instance;
@@ -26,6 +28,11 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	public void SetRoomName(string newName)
 	{
 		roomName = newName;
+	}
+
+	public void SetSaveFileName(string newName)
+	{
+		saveFileName = newName;
 	}
 
 	#region ConectingToNet
@@ -59,19 +66,26 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	public override void OnJoinedRoom()
 	{
 		GameObject.Find("StatusText").GetComponent<Text>().text = "Waiting for other player to join";
-		if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
-		{
-			GetComponent<InputReciever>().NewGame("Starting_Default");
-		}
 	}
 
 	public override void OnPlayerEnteredRoom(Player newPlayer)
 	{
 		if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
 		{
-			GetComponent<InputReciever>().NewGame("Starting_Default");
+			if (saveFileName == "" || !File.Exists(SaveFileManager.SaveStatefolder + saveFileName))
+			{
+				photonView.RPC("StartGame", RpcTarget.All, "Startin_Default", false);
+			}
+			string json = File.ReadAllText(SaveFileManager.SaveStatefolder + saveFileName);
+			photonView.RPC("StartGame", RpcTarget.All, json, true);
 		}
-		Debug.Log("Haliiiiiiiii");
+	}
+
+	[PunRPC]
+	public void StartGame(string gameName, bool isJson, bool clockEnabled = true)
+	{
+		GetComponent<InputReciever>().NewGame(gameName, isJson);
+		if (!isJson) GameMaster.clock.StartStop(clockEnabled);
 	}
 
 	public void Cancel()

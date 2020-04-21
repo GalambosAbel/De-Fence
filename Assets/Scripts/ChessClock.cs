@@ -5,63 +5,63 @@ using UnityEngine.UI;
 
 public class ChessClock : MonoBehaviour
 {
-	public bool isActive = true;
-	public int startingTime = 50;
-	public int[] timeLeft;
-	public Text[] texts;
-	public int timeToAdd = 8000;
+    public bool isActive = true;
+    public int startingTime = 50;
+    public int[] timeLeft;
+    public Text[] texts;
+    public int timeToAdd = 8000;
 
-	public void StartStop(bool start)
-	{
-		gameObject.SetActive(start);
-		isActive = start;
-		GameMaster.clockEnabled = start;
-		if (start) 
-		{
-			for (int i = 0; i < timeLeft.Length; i++)
-			{
-				timeLeft[i] = startingTime;
-				texts[i].text = ConvertTime(timeLeft[i]);
-			}
-		}
-	}
+    public void StartStop(bool start)
+    {
+        gameObject.SetActive(start);
+        isActive = start;
+        GameMaster.clockEnabled = start;
+        if (start) 
+        {
+            for (int i = 0; i < timeLeft.Length; i++)
+            {
+                timeLeft[i] = startingTime;
+                texts[i].text = ConvertTime(timeLeft[i]);
+            }
+        }
+    }
 
-	void Update()
-	{
-		if (!isActive) return;
-		if (GameMaster.paused) return;
-		int curPlayer = GameMaster.am.currentPlayer-1;
-		timeLeft[curPlayer] -= (int)(Time.deltaTime*1000);
-		for (int i = 0; i < timeLeft.Length; i++)
-		{
-			texts[i].text = ConvertTime(timeLeft[i]);
-		}
+    void Update()
+    {
+        if (!isActive) return;
+        if (GameMaster.paused) return;
+        int curPlayer = GameMaster.am.currentPlayer-1;
+        timeLeft[curPlayer] -= (int)(Time.deltaTime*1000);
+        for (int i = 0; i < timeLeft.Length; i++)
+        {
+            texts[i].text = ConvertTime(timeLeft[i]);
+        }
 
-		if (timeLeft[curPlayer] < 0)
-		{
-			List<int> winners = new List<int>();
-			for (int i = 0; i < GameMaster.am.playerAmount; i++)
-			{
-				winners.Add(i+1);
-			}
-			winners.Remove(curPlayer+1);
-			GameObject.Find("BoardGenerator").GetComponent<InputReciever>().GameEnded(winners.ToArray());
-		}
-	}
+        if (timeLeft[curPlayer] < 0)
+        {
+            List<int> winners = new List<int>();
+            for (int i = 0; i < GameMaster.am.playerAmount; i++)
+            {
+                winners.Add(i+1);
+            }
+            winners.Remove(curPlayer+1);
+            GameObject.Find("BoardGenerator").GetComponent<InputReciever>().GameEnded(winners.ToArray());
+        }
+    }
 
-	string ConvertTime(int ms)
-	{
-		int sec = ms / 1000;
-		int min = sec / 60;
-		sec %= 60;
-		if(sec > 9) return min + " : " + sec;
-	   else return min + " : 0" + sec;
-	}
+    string ConvertTime(int ms)
+    {
+        int sec = ms / 1000;
+        int min = sec / 60;
+        sec %= 60;
+        if(sec > 9) return min + " : " + sec;
+       else return min + " : 0" + sec;
+    }
 
-	public void AddTime()
-	{
-		int player = GameMaster.am.currentPlayer % GameMaster.am.playerAmount;
-		timeLeft[player] += timeToAdd;
-		texts[player].text = ConvertTime(timeLeft[player]);
-	}
+    public void AddTime()
+    {
+        int player = GameMaster.am.currentPlayer % GameMaster.am.playerAmount;
+        timeLeft[player] += timeToAdd;
+        texts[player].text = ConvertTime(timeLeft[player]);
+    }
 }

@@ -87,13 +87,18 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 		}
 	}
 
+	public override void OnPlayerLeftRoom(Player otherPlayer)
+	{
+		Disconnect();
+	}
+
 	[PunRPC]
 	public void StartGame(string gameName, bool isJson, bool clockEnabled)
 	{
 		GetComponent<InputReciever>().NewGame(gameName, isJson);
 	}
 
-	public void Cancel()
+	public void Disconnect()
 	{
 		PhotonNetwork.Disconnect();
 		isOnline = false;

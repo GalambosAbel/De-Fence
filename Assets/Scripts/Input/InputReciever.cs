@@ -105,6 +105,7 @@ public class InputReciever : MonoBehaviour
 	public void ReturnToMenu()
 	{
 		SceneManager.LoadScene("MenuScene");
+		GetComponent<OnlineManager>().Disconnect();
 	}
 
 	public void QuitGame()

@@ -75,6 +75,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 			if (saveFileName == "" || !File.Exists(SaveFileManager.SaveStatefolder + saveFileName))
 			{
 				photonView.RPC("StartGame", RpcTarget.All, "Starting_Default", false, GameMaster.clockEnabled);
+				return;
 			}
 			string json = File.ReadAllText(SaveFileManager.SaveStatefolder + saveFileName);
 			photonView.RPC("StartGame", RpcTarget.All, json, true, true);

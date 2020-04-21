@@ -95,6 +95,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	[PunRPC]
 	public void StartGame(string gameName, bool isJson, bool clockEnabled)
 	{
+		GameMaster.clockEnabled = clockEnabled;
 		GetComponent<InputReciever>().NewGame(gameName, isJson);
 	}
 

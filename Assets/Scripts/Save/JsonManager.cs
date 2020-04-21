@@ -69,7 +69,10 @@ public class JsonManager : MonoBehaviour
 		GameMaster.am.playerAmount = state.playerAmount;
 		GameMaster.am.currentPlayer = state.currentPlayer;
 		GameMaster.am.lastPassed = state.lastPassed;
-		if (!protectedStates.Contains(Path.GetFileName(inputFileName))) GameMaster.clock.StartStop(state.clockEnabled);
+		if (!isJson)
+		{
+			if (!protectedStates.Contains(Path.GetFileName(inputFileName))) GameMaster.clock.StartStop(state.clockEnabled);
+		}
 		GameMaster.clock.timeLeft = state.timesLeft.ToArray();
 
 		for (int i = 0; i < state.tiles.Count; i++)

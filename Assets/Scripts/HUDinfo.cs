@@ -9,13 +9,14 @@ public class HUDinfo : MonoBehaviour
 	public Text currentPlayerText;
 	public Text playersText;
 	string[] playerTexts = new string[]
-		{
-			"<color=red> Player 1 </color>",
-			"<color=blue> Player 2 </color>",
-		};
-
-	void Start()
 	{
+		"<color=red> Player 1 </color>",
+		"<color=blue> Player 2 </color>"
+	};
+
+	void Update()
+	{
+		currentPlayerText.text = "Current player is " + playerTexts[GameMaster.am.currentPlayer-1];
 		if (!OnlineManager.instance.isOnline)
 		{
 			string player1Text = "<color=red>Player 1's color is red</color>, ";
@@ -24,12 +25,7 @@ public class HUDinfo : MonoBehaviour
 		}
 		else
 		{
-			playersText.text = "You are " + playerTexts[OnlineManager.instance.playerNumber-1];
+			playersText.text = "You are " + playerTexts[OnlineManager.instance.playerNumber - 1];
 		}
-	}
-
-	void Update()
-	{
-		currentPlayerText.text = "Current player is " + playerTexts[GameMaster.am.currentPlayer-1];
 	}
 }

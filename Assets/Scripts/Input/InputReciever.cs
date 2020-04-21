@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class InputReciever : MonoBehaviour
 {
@@ -104,6 +105,7 @@ public class InputReciever : MonoBehaviour
 
 	public void ReturnToMenu()
 	{
+		Destroy(gameObject.GetComponent<PhotonView>());
 		SceneManager.LoadScene("MenuScene");
 		GetComponent<OnlineManager>().Disconnect();
 	}

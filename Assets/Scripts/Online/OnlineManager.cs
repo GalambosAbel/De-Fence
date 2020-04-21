@@ -104,6 +104,17 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 		isOnline = false;
 	}
 
+	public void LoadedGame()
+	{
+		if (PhotonNetwork.IsMasterClient) photonView.RPC("SetChessClock", RpcTarget.All, GameMaster.clockEnabled);
+	}
+
+	[PunRPC]
+	public void SetChessClock(bool clockEnabled)
+	{
+		GameMaster.clock.StartStop(clockEnabled);
+	}
+
 	#endregion
 
 	#region Inputs

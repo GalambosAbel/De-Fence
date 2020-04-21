@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class InputReciever : MonoBehaviour
 {
-    public string stateName;
+	public string stateName;
 	public bool nameIsJson;
 
 	public GameObject gameEndPanel;
@@ -78,7 +78,7 @@ public class InputReciever : MonoBehaviour
 
 		if (winners.Length == 1)
 		{
-            int winner = winners[0];
+			int winner = winners[0];
 			GameObject.Find("VictoryText").GetComponent<Text>().text = "Player " + winner + " won!";
 			GameObject.Find("VictoryText").GetComponent<Text>().color = GameMaster.playerColors[winner];
 		}
@@ -140,10 +140,10 @@ public class InputReciever : MonoBehaviour
 		GameMaster.clockEnabled = chessClockenabled;
 	}
 
-    public void Tutorial()
-    {
-        SceneManager.LoadScene("TutorialScene");
-    }
+	public void Tutorial()
+	{
+		SceneManager.LoadScene("TutorialScene");
+	}
 
 	public void LoadedScene(Scene scene, LoadSceneMode mode)
 	{
@@ -182,5 +182,6 @@ public class InputReciever : MonoBehaviour
 		GameMaster.gameEnded = false;
 
 		GameMaster.UpdateControlButton();
+		OnlineManager.instance.LoadedGame();
 	}
 }

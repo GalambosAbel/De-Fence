@@ -735,8 +735,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1557362389}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1557362392}
+        m_TargetAssemblyTypeName: OnlineManager, Assembly-CSharp
         m_MethodName: Rematch
         m_Mode: 1
         m_Arguments:

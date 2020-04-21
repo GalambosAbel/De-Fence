@@ -18,7 +18,12 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
 	public static OnlineManager instance;
 
-	public void Start()
+	void Awake()
+	{
+		if (instance == this) Destroy(gameObject.GetComponent<PhotonView>());
+	}
+
+	void Start()
 	{
 		isOnline = false;
 		playernumber = 0;
@@ -98,9 +103,15 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
 	#region Inputs
 
+	public void Rematch() => photonView.RPC("RematchRPC", RpcTarget.All);
+
+	[PunRPC]
+	public void RematchRPC() => GetComponent<InputReciever>().NewGame("Starting_Default", false);
+
 	public void Pause() => InputRecived(PlayerAction.Pause);
 
 	public void Resume() => InputRecived(PlayerAction.Resume);
+
 	public void CtrlButton() => InputRecived(PlayerAction.ControllButtonPressed);
 
 	public void InputRecived(PlayerAction action, int tileId = 0)

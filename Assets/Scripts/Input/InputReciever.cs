@@ -125,11 +125,6 @@ public class InputReciever : MonoBehaviour
 		SceneManager.LoadScene("GameScene");
 	}
 
-	public void Rematch()
-	{
-		NewGame("Starting_" + GameMaster.currentMap);
-	}
-
 	public void SaveAs()
 	{
 		string saveName = GameObject.Find("SaveName").GetComponent<InputField>().text;

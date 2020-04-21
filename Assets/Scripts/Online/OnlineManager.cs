@@ -86,7 +86,6 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	public void StartGame(string gameName, bool isJson, bool clockEnabled)
 	{
 		GetComponent<InputReciever>().NewGame(gameName, isJson);
-		if (!isJson) GameMaster.clock.StartStop(clockEnabled);
 	}
 
 	public void Cancel()

@@ -11,7 +11,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	[HideInInspector]
 	public bool isOnline = false;
 	[HideInInspector]
-	public int playernumber;
+	public int playerNumber;
 
 	private string saveFileName = "";
 	private string roomName = "f";
@@ -26,7 +26,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	void Start()
 	{
 		isOnline = false;
-		playernumber = 0;
+		playerNumber = 0;
 		instance = this;
 	}
 
@@ -57,14 +57,14 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
 	public void CreateRoom()
 	{
-		playernumber = 1;
+		playerNumber = 1;
 		RoomOptions options = new RoomOptions() { IsVisible = false, MaxPlayers = 2 };
 		PhotonNetwork.CreateRoom(roomName, options);
 	}
 
 	public override void OnCreateRoomFailed(short returnCode, string message)
 	{
-		playernumber = 2;
+		playerNumber = 2;
 		PhotonNetwork.JoinRoom(roomName);
 	}
 
@@ -122,7 +122,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
 	public void InputRecived(PlayerAction action, int tileId = 0)
 	{
-		if (isOnline && playernumber != GameMaster.am.currentPlayer) return;
+		if (isOnline && playerNumber != GameMaster.am.currentPlayer) return;
 		if (isOnline)
 		{
 			photonView.RPC("DoInput", RpcTarget.All, action, tileId);

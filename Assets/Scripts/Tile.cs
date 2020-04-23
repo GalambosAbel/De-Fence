@@ -35,6 +35,11 @@ public class Tile : MonoBehaviour
 		transform.GetChild(0).gameObject.SetActive(GameMaster.am.board.tiles[ID].hasFigure);
     }
 
+	void OnDestroy()
+	{
+		inputs.Dispose();
+	}
+
 	void OnMouseEnter()
 	{
 		inputs.Enable();

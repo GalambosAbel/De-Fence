@@ -123,7 +123,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
 	public void PauseUpdate()
 	{
-		if (playerNumber == GameMaster.am.currentPlayer)
+		if (isOnline && playerNumber == GameMaster.am.currentPlayer)
 		{
 			if(GameObject.Find("PauseMenu") != null)
 			{

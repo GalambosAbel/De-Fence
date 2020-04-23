@@ -120,6 +120,22 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
 	public void CtrlButton() => InputRecived(PlayerAction.ControllButtonPressed);
 
+
+	public void PauseUpdate()
+	{
+		if (playerNumber == GameMaster.am.currentPlayer)
+		{
+			if(GameObject.Find("PauseMenu") != null)
+			{
+				photonView.RPC("DoInput", RpcTarget.All, PlayerAction.Pause, 0);
+			}
+			else
+			{
+				photonView.RPC("DoInput", RpcTarget.All, PlayerAction.Resume, 0);
+			}
+		}
+	}
+
 	public void InputRecived(PlayerAction action, int tileId = 0)
 	{
 		if (isOnline)
@@ -153,7 +169,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 				GameMaster.am.TakeStep();
 				GameMaster.UpdateControlButton();
 				GameMaster.clock.AddTime();
-				GameMaster.PauseUpdate();
+				PauseUpdate();
 				break;
 			case PlayerAction.Pause:
 				GetComponent<InputReciever>().PauseResume(true);

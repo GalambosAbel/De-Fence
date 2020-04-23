@@ -109,7 +109,11 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
 	#region Inputs
 
-	public void Rematch() => photonView.RPC("RematchRPC", RpcTarget.All);
+	public void Rematch()
+	{
+		if (isOnline) photonView.RPC("RematchRPC", RpcTarget.All);
+		else RematchRPC();
+	}
 
 	[PunRPC]
 	public void RematchRPC() => GetComponent<InputReciever>().NewGame("Starting_Default", false);

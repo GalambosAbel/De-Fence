@@ -153,6 +153,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 				GameMaster.am.TakeStep();
 				GameMaster.UpdateControlButton();
 				GameMaster.clock.AddTime();
+				GameMaster.PauseUpdate();
 				break;
 			case PlayerAction.Pause:
 				GetComponent<InputReciever>().PauseResume(true);

@@ -71,6 +71,14 @@ public class GameMaster : MonoBehaviour
 		controlButton.GetComponent<Image>().color = playerColors[am.currentPlayer];
 	}
 
+	public static void PauseUpdate()
+	{
+		if(OnlineManager.instance.playerNumber == am.currentPlayer)
+		{
+			OnlineManager.instance.GetComponent<InputReciever>().PauseResume(GameObject.Find("PauseMenu") != null);
+		}
+	}
+
 	public static void GameEnded(GameEndArgs e)
 	{
 		gameEnded = true;

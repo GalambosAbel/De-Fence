@@ -144,7 +144,7 @@ public class InputReciever : MonoBehaviour
 
     public void Tutorial()
     {
-        SceneManager.LoadScene("TutorialScene");
+        SceneManager.LoadScene("Szabalykonyv");
     }
 
 	public void LoadedScene(Scene scene, LoadSceneMode mode)

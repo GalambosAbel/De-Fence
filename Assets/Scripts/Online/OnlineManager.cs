@@ -122,9 +122,16 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
 	public void InputRecived(PlayerAction action, int tileId = 0)
 	{
-		if (isOnline && playerNumber != GameMaster.am.currentPlayer) return;
 		if (isOnline)
 		{
+			if (playerNumber != GameMaster.am.currentPlayer)
+			{
+				if(action == PlayerAction.Pause || action == PlayerAction.Resume)
+				{
+					GetComponent<InputReciever>().PauseResume(action == PlayerAction.Pause, false);
+				}
+				return;
+			}
 			photonView.RPC("DoInput", RpcTarget.All, action, tileId);
 		}
 		else

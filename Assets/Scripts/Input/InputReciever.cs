@@ -44,9 +44,9 @@ public class InputReciever : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 	}
 
-	public void PauseResume(bool pause)
+	public void PauseResume(bool pause, bool isCurrentPlayer = true)
 	{
-		GameMaster.paused = pause;
+		if(isCurrentPlayer) GameMaster.paused = pause;
 		GameObject temp = GameObject.Find("SavePanel");
 		if (temp != null) temp.SetActive(false);
 		pauseMenu.SetActive(pause);

@@ -41,7 +41,7 @@ public class GameMaster : MonoBehaviour
 		wallPrefab = _wallPrefab;
 
 		gameEnded = false;
-		clockEnabled = true;
+		clockEnabled = false;
 		SaveFileManager.Setup(contentBox, displayerPrefab);
 		GameObject.Find("VersionText").GetComponent<Text>().text = "V " + Application.version;
 	}

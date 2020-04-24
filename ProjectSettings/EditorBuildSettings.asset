@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TutorialScene.unity
     guid: 816fcddfe3ede4c40b42411babf648e6
+  - enabled: 1
+    path: Assets/Scenes/Szabalykonyv.unity
+    guid: d631c18b5d9ca9b458175d7f2ad4010b
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4e9829491079a4447a6e89734b683ad0,
       type: 2}

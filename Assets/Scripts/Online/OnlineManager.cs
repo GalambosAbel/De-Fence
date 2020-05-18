@@ -118,40 +118,12 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	[PunRPC]
 	public void RematchRPC() => GetComponent<InputReciever>().NewGame("Starting_Default", false);
 
-	public void Pause() => InputRecived(PlayerAction.Pause);
-
-	public void Resume() => InputRecived(PlayerAction.Resume);
-
 	public void CtrlButton() => InputRecived(PlayerAction.ControllButtonPressed);
-
-
-	public void PauseUpdate()
-	{
-		if (isOnline && playerNumber == GameMaster.am.currentPlayer)
-		{
-			if(GameObject.Find("PauseMenu") != null)
-			{
-				photonView.RPC("DoInput", RpcTarget.All, PlayerAction.Pause, 0);
-			}
-			else
-			{
-				photonView.RPC("DoInput", RpcTarget.All, PlayerAction.Resume, 0);
-			}
-		}
-	}
 
 	public void InputRecived(PlayerAction action, int tileId = 0)
 	{
 		if (isOnline)
 		{
-			if (playerNumber != GameMaster.am.currentPlayer)
-			{
-				if(action == PlayerAction.Pause || action == PlayerAction.Resume)
-				{
-					GetComponent<InputReciever>().PauseResume(action == PlayerAction.Pause, false);
-				}
-				return;
-			}
 			photonView.RPC("DoInput", RpcTarget.All, action, tileId);
 		}
 		else
@@ -173,15 +145,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 				GameMaster.am.TakeStep();
 				GameMaster.UpdateControlButton();
 				GameMaster.clock.AddTime();
-				PauseUpdate();
 				break;
-			case PlayerAction.Pause:
-				GetComponent<InputReciever>().PauseResume(true);
-				break;
-			case PlayerAction.Resume:
-				GetComponent<InputReciever>().PauseResume(false);
-				break;
-
 			default:
 				break;
 		}
@@ -192,5 +156,5 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 
 public enum PlayerAction
 {
-	TileClicked, ControllButtonPressed, Pause, Resume
+	TileClicked, ControllButtonPressed
 }

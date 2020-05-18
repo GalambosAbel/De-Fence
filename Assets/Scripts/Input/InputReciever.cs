@@ -35,18 +35,20 @@ public class InputReciever : MonoBehaviour
 
 		inputs.Gameplay.ConfirmTurn.performed += ctx => GameMaster.controlButton.onClick.Invoke();
 		inputs.Gameplay.QuickSave.performed += ctx => JsonManager.SaveState("Quicksave");
-		inputs.Gameplay.Pause.performed += ctx => OnlineManager.instance.Pause();
+		inputs.Gameplay.Pause.performed += ctx => Pause();
 
-		inputs.Menu.Resume.performed += ctx => OnlineManager.instance.Resume();
+		inputs.Menu.Resume.performed += ctx => Resume();
 
 		SceneManager.sceneLoaded += LoadedScene;
 
 		DontDestroyOnLoad(gameObject);
 	}
 
-	public void PauseResume(bool pause, bool isCurrentPlayer = true)
+	public void Pause() => PauseResume(true);
+	public void Resume() => PauseResume(false);
+
+	public void PauseResume(bool pause) //if true then stops the game
 	{
-		if(isCurrentPlayer) GameMaster.paused = pause;
 		GameObject temp = GameObject.Find("SavePanel");
 		if (temp != null) temp.SetActive(false);
 		pauseMenu.SetActive(pause);
@@ -161,8 +163,8 @@ public class InputReciever : MonoBehaviour
 		pauseMenu = GameObject.Find("PauseMenu");
 		GameMaster.clock = GameObject.Find("ChessClock").GetComponent<ChessClock>();
 
-		GameObject.Find("ResumeButton").GetComponent<Button>().onClick.AddListener(OnlineManager.instance.Resume);
-		GameObject.Find("PauseButton").GetComponent<Button>().onClick.AddListener(OnlineManager.instance.Pause);
+		GameObject.Find("ResumeButton").GetComponent<Button>().onClick.AddListener(Resume);
+		GameObject.Find("PauseButton").GetComponent<Button>().onClick.AddListener(Pause);
 		GameObject.Find("MenuButton").GetComponent<Button>().onClick.AddListener(ReturnToMenu);
 		GameObject.Find("SaveButton").GetComponent<Button>().onClick.AddListener(SaveAs);
 

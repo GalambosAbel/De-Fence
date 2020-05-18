@@ -29,7 +29,6 @@ public class ChessClock : MonoBehaviour
     void Update()
     {
         if (!isActive) return;
-        if (GameMaster.paused) return;
         int curPlayer = GameMaster.am.currentPlayer-1;
         timeLeft[curPlayer] -= (int)(Time.deltaTime*1000);
         for (int i = 0; i < timeLeft.Length; i++)

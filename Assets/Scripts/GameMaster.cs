@@ -12,7 +12,6 @@ public class GameMaster : MonoBehaviour
 
 	public static Color[] playerColors = new Color[] { Color.white, Color.red, Color.blue, Color.green, Color.black };
 	public static bool gameEnded;
-	public static bool paused;
 	public static bool clockEnabled;
 
 	public static Button controlButton;
@@ -82,7 +81,6 @@ public class GameMaster : MonoBehaviour
 	public static void GameEnded(GameEndArgs e)
 	{
 		gameEnded = true;
-		paused = true;
 		GameObject.Find("BoardGenerator").GetComponent<InputReciever>().GameEnded(am.LeadingPlayer);
 	}
 }

@@ -31,7 +31,6 @@ public class ChessClock : MonoBehaviour
 		if (!isActive) return;
 		int curPlayer = GameMaster.am.currentPlayer-1;
 		timeLeft[curPlayer] -= Time.deltaTime*1000;
-		Debug.Log(Time.deltaTime);
 		for (int i = 0; i < timeLeft.Length; i++)
 		{
 			texts[i].text = ConvertTime(timeLeft[i]);

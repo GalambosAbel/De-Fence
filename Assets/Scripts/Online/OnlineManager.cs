@@ -123,6 +123,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	public void InputRecived(PlayerAction action, int tileId = 0)
 	{
 		if (isOnline)
+		if (isOnline && playerNumber == GameMaster.am.currentPlayer)
 		{
 			photonView.RPC("DoInput", RpcTarget.All, action, tileId);
 		}

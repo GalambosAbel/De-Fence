@@ -52,6 +52,7 @@ public class InputReciever : MonoBehaviour
 		GameObject temp = GameObject.Find("SavePanel");
 		if (temp != null) temp.SetActive(false);
 		pauseMenu.SetActive(pause);
+		GameMaster.paused = pause;
 		GameObject.Find("PauseButton").GetComponent<Button>().interactable = !pause;
 		if (pause)
 		{

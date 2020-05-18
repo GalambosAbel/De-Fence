@@ -183,7 +183,7 @@ public struct State
 	public int currentPlayer;
 	public bool lastPassed;
 	public bool clockEnabled;
-	public List<int> timesLeft;
+	public List<float> timesLeft;
 	public List<StateTile> tiles;
 	public List<StateWall> walls;
 

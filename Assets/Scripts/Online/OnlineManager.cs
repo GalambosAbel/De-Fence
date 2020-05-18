@@ -127,7 +127,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 		{
 			photonView.RPC("DoInput", RpcTarget.All, action, tileId);
 		}
-		else
+		else if(!isOnline)
 		{
 			DoInput(action, tileId);
 		}

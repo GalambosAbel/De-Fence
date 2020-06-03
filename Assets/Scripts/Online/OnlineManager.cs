@@ -13,7 +13,6 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	[HideInInspector]
 	public int playerNumber;
 
-	private string saveFileName = "";
 	private string roomName = "f";
 
 	public static OnlineManager instance;
@@ -33,11 +32,6 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	public void SetRoomName(string newName)
 	{
 		roomName = newName;
-	}
-
-	public void SetSaveFileName(string newName)
-	{
-		saveFileName = newName;
 	}
 
 	#region ConectingToNet
@@ -77,12 +71,12 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	{
 		if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
 		{
-			if (saveFileName == "" || !File.Exists(SaveFileManager.SaveStatefolder + saveFileName))
+			if (InputReciever.instance.stateName == "" || !File.Exists(SaveFileManager.SaveStatefolder + InputReciever.instance.stateName))
 			{
 				photonView.RPC("StartGame", RpcTarget.All, "Starting_Default", false, GameMaster.clockEnabled);
 				return;
 			}
-			string json = File.ReadAllText(SaveFileManager.SaveStatefolder + saveFileName);
+			string json = File.ReadAllText(SaveFileManager.SaveStatefolder + InputReciever.instance.stateName);
 			photonView.RPC("StartGame", RpcTarget.All, json, true, true);
 		}
 	}

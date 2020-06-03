@@ -37,6 +37,15 @@ public class SaveFileManager : MonoBehaviour
 
         foreach (string n in Directory.GetFiles(SaveStatefolder))
         {
+            if (Path.GetFileName(n) != "Starting_Default") continue;
+            DateTime d = File.GetCreationTime(n);
+            GameObject go = Instantiate(displayerPrefab, contentBox.transform);
+            go.GetComponent<SaveFileDisplayer>().Create(Path.GetFileName(n), d);
+        }
+
+        foreach (string n in Directory.GetFiles(SaveStatefolder))
+        {
+            if (Path.GetFileName(n) == "Starting_Default") continue;
             DateTime d = File.GetCreationTime(n);
             GameObject go = Instantiate(displayerPrefab, contentBox.transform);
             go.GetComponent<SaveFileDisplayer>().Create(Path.GetFileName(n), d);

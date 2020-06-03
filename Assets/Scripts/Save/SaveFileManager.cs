@@ -32,11 +32,14 @@ public class SaveFileManager : MonoBehaviour
             Directory.CreateDirectory(SaveMapfolder);
         }
 
+        SaveFileDisplayer.allSaves = new List<SaveFileDisplayer>();
+        SaveFileDisplayer.currentSave = null;
+
         foreach (string n in Directory.GetFiles(SaveStatefolder))
         {
-            if (n == SaveStatefolder + "Starting_Default") continue;
             DateTime d = File.GetCreationTime(n);
-            Instantiate(displayerPrefab, contentBox.transform).GetComponent<SaveFileDisplayer>().Create(Path.GetFileName(n), d);
+            GameObject go = Instantiate(displayerPrefab, contentBox.transform);
+            go.GetComponent<SaveFileDisplayer>().Create(Path.GetFileName(n), d);
         }
 
     }

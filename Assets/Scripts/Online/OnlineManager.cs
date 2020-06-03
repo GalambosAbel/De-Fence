@@ -96,7 +96,8 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	public void StartGame(string gameName, bool isJson, bool clockEnabled)
 	{
 		GameMaster.clockEnabled = clockEnabled;
-		GetComponent<InputReciever>().NewGame(gameName, isJson);
+		InputReciever.instance.stateName = gameName;
+		GetComponent<InputReciever>().NewGame(isJson);
 	}
 
 	public void Disconnect()
@@ -116,7 +117,11 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	}
 
 	[PunRPC]
-	public void RematchRPC() => GetComponent<InputReciever>().NewGame("Starting_Default", false);
+	public void RematchRPC() 
+	{
+		InputReciever.instance.stateName = "Starting_Default";
+		GetComponent<InputReciever>().NewGame(false); 
+	}
 
 	public void CtrlButton() => InputRecived(PlayerAction.ControllButtonPressed);
 

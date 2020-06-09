@@ -143,11 +143,6 @@ public class InputReciever : MonoBehaviour
 		GameMaster.clockEnabled = chessClockenabled;
 	}
 
-    public void Tutorial()
-    {
-        SceneManager.LoadScene("Szabalykonyv");
-    }
-
 	public void LoadedScene(Scene scene, LoadSceneMode mode)
 	{
 		if (this == null) return;

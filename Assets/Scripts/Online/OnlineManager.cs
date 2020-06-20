@@ -71,7 +71,7 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	{
 		if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
 		{
-			if (InputReciever.instance.stateName == "" || !File.Exists(SaveFileManager.SaveStatefolder + InputReciever.instance.stateName))
+			if (InputReciever.instance.stateName == "Starting_Default")
 			{
 				photonView.RPC("StartGame", RpcTarget.All, "Starting_Default", false, GameMaster.clockEnabled);
 				return;

@@ -232,15 +232,14 @@ namespace DeFenceAbstract
 			return (friendStrength > enemy.Strength);
 		}
 
-		public int IsValidStep()
+		public bool IsValidStep()
 		{
-			if (tilesClicked.Count == 0) return 0;
+			if (tilesClicked.Count == 0) return true; //pass
+			if (CanPlace()) return true; //place
+			if (CanGroup()) return true; //group
+			if (CanAttack()) return true; //attack
 
-			if (CanPlace()) return 1;
-			if (CanGroup()) return 3;
-			if (CanAttack()) return 8;
-
-			return -1;
+			return false; //reset
 		}
 
 		// info loging

@@ -141,9 +141,13 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 				GameMaster.UpdateControlButton();
 				break;
 			case PlayerAction.ControllButtonPressed:
+				if (GameMaster.am.IsValidStep())
+				{ 
+					GameMaster.StepTaken();
+					GameMaster.clock.AddTime();
+				}
 				GameMaster.am.TakeStep();
 				GameMaster.UpdateControlButton();
-				GameMaster.clock.AddTime();
 				break;
 			default:
 				break;

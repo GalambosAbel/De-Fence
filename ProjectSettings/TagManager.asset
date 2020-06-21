@@ -44,6 +44,9 @@ TagManager:
   - name: Tile
     uniqueID: 392904835
     locked: 0
+  - name: Foreground
+    uniqueID: 3846732041
+    locked: 0
   - name: Wall
     uniqueID: 1743899757
     locked: 0

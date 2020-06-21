@@ -30,6 +30,8 @@ public class GameMaster : MonoBehaviour
 	public static Transform tileParent;
 	public static Transform wallParent;
 
+	public static List<int> tilesInLastStep;
+
 	public GameObject contentBox;
 	public GameObject displayerPrefab;
 
@@ -69,6 +71,15 @@ public class GameMaster : MonoBehaviour
 			controlButton.GetComponentInChildren<Text>().text = "ResetTurn";
 		}
 		controlButton.GetComponent<Image>().color = playerColors[am.currentPlayer];
+	}
+
+	public static void StepTaken()
+	{
+		tilesInLastStep = new List<int>();
+		foreach (AbstractTile t in am.tilesClicked)
+		{
+			tilesInLastStep.Add(t.ID);
+		}
 	}
 
 	public static void PauseUpdate()

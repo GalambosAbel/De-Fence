@@ -33,6 +33,12 @@ public class SaveFileDisplayer : MonoBehaviour
     {
         if (fileName != "Starting_Default") return;
         if (transform.childCount > 2) Destroy(transform.GetChild(2).gameObject);
+        if (transform.childCount > 1) Destroy(transform.GetChild(1).gameObject);
+        if (transform.childCount > 0) 
+        {
+            transform.GetChild(0).GetComponent<RectTransform>().anchorMax = new Vector2(1f, 1f);
+            transform.GetChild(0).GetComponent<RectTransform>().offsetMax = new Vector2(0f, 0f);
+        } 
         transform.GetChild(0).GetComponent<Text>().text = "New Game";
         Select();
     }

@@ -181,6 +181,5 @@ public class InputReciever : MonoBehaviour
 		GameMaster.gameEnded = false;
 
 		GameMaster.UpdateControlButton();
-		GameMaster.StepTaken();
 	}
 }

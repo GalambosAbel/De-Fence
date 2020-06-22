@@ -177,6 +177,9 @@ public struct Options
 	public bool showScore;
 	public bool displayLastStep;
 
+	public Color p1Color;
+	public Color p2Color;
+
 	public Options(bool json)
 	{
 		isJson = json;
@@ -187,6 +190,8 @@ public struct Options
 		timeToAdd = ChessClock.secToAdd;
 		showScore = GameMaster.showScores;
 		displayLastStep = GameMaster.displayLastStep;
+		p1Color = GameMaster.playerColors[1];
+		p2Color = GameMaster.playerColors[2];
 	}
 
 	public void ApplyOptions()
@@ -197,5 +202,7 @@ public struct Options
 		ChessClock.secToAdd = timeToAdd;
 		GameMaster.showScores = showScore;
 		GameMaster.displayLastStep = displayLastStep;
+		GameMaster.playerColors[1] = p1Color;
+		GameMaster.playerColors[2] = p2Color;
 	}
 }

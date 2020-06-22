@@ -10,7 +10,7 @@ public class GameMaster : MonoBehaviour
 
 	public static string currentMap;
 
-	public static Color[] playerColors = new Color[] { Color.white, Color.red, Color.blue, Color.green, Color.black };
+	public static Color[] playerColors = new Color[] { Color.white, Color.red, Color.blue};
 	public static bool gameEnded;
 	public static bool paused;
 
@@ -51,6 +51,9 @@ public class GameMaster : MonoBehaviour
 		ChessClock.startingMin = 30;
 		ChessClock.startingSec = 0;
 		ChessClock.secToAdd = 8;
+
+		playerColors[1] = Color.red;
+		playerColors[2] = Color.blue;
 
 		showScores = true;
 		displayLastStep = true;

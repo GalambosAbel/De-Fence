@@ -73,11 +73,11 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 		{
 			if (InputReciever.instance.stateName == "Starting_Default")
 			{
-				photonView.RPC("StartGame", RpcTarget.All, "Starting_Default", false, GameMaster.clockEnabled);
+				photonView.RPC("StartGame", RpcTarget.All, "Starting_Default", new Options (false));
 				return;
 			}
 			string json = File.ReadAllText(SaveFileManager.SaveStatefolder + InputReciever.instance.stateName);
-			photonView.RPC("StartGame", RpcTarget.All, json, true, true);
+			photonView.RPC("StartGame", RpcTarget.All, json, new Options(true));
 		}
 	}
 
@@ -87,11 +87,11 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	}
 
 	[PunRPC]
-	public void StartGame(string gameName, bool isJson, bool clockEnabled)
+	public void StartGame(string gameName, Options options)
 	{
-		GameMaster.clockEnabled = clockEnabled;
 		InputReciever.instance.stateName = gameName;
-		GetComponent<InputReciever>().NewGame(isJson);
+		options.ApplyOptions();
+		GetComponent<InputReciever>().NewGame(options.isJson);
 	}
 
 	public void Disconnect()
@@ -160,4 +160,39 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 public enum PlayerAction
 {
 	TileClicked, ControllButtonPressed
+}
+
+public struct Options
+{
+	public bool isJson;
+	
+	public bool clockEnabled;
+	public int startingMin;
+	public int startingSec;
+	public int timeToAdd;
+
+	public bool showScore;
+	public bool displayLastStep;
+
+	public Options(bool json)
+	{
+		isJson = json;
+
+		clockEnabled = GameMaster.clockEnabled;
+		startingMin = ChessClock.startingMin;
+		startingSec = ChessClock.startingSec;
+		timeToAdd = ChessClock.secToAdd;
+		showScore = GameMaster.showScores;
+		displayLastStep = GameMaster.displayLastStep;
+	}
+
+	public void ApplyOptions()
+	{
+		GameMaster.clockEnabled = clockEnabled;
+		ChessClock.startingMin = startingMin;
+		ChessClock.startingSec = startingSec;
+		ChessClock.secToAdd = timeToAdd;
+		GameMaster.showScores = showScore;
+		GameMaster.displayLastStep = displayLastStep;
+	}
 }

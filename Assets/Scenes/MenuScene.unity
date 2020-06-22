@@ -3220,7 +3220,7 @@ MonoBehaviour:
     host will be the player, who clicks the ''Start Game'' button first.
 
     The
-    loaded savefile will be the one, that the host selected.'
+    loaded savefile/options will be the ones, that the host selected.'
 --- !u!222 &783331680
 CanvasRenderer:
   m_ObjectHideFlags: 0

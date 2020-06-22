@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -73,11 +74,11 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 		{
 			if (InputReciever.instance.stateName == "Starting_Default")
 			{
-				photonView.RPC("StartGame", RpcTarget.All, "Starting_Default", new Options (false));
+				photonView.RPC("StartGame", RpcTarget.All, "Starting_Default", JsonUtility.ToJson(new Options(false)));
 				return;
 			}
 			string json = File.ReadAllText(SaveFileManager.SaveStatefolder + InputReciever.instance.stateName);
-			photonView.RPC("StartGame", RpcTarget.All, json, new Options(true));
+			photonView.RPC("StartGame", RpcTarget.All, json, JsonUtility.ToJson(new Options(true)));
 		}
 	}
 
@@ -87,11 +88,12 @@ public class OnlineManager : MonoBehaviourPunCallbacks
 	}
 
 	[PunRPC]
-	public void StartGame(string gameName, Options options)
+	public void StartGame(string gameName, string options)
 	{
 		InputReciever.instance.stateName = gameName;
-		options.ApplyOptions();
-		GetComponent<InputReciever>().NewGame(options.isJson);
+		Options o = JsonUtility.FromJson<Options>(options);
+		o.ApplyOptions();
+		GetComponent<InputReciever>().NewGame(o.isJson);
 	}
 
 	public void Disconnect()
@@ -162,6 +164,7 @@ public enum PlayerAction
 	TileClicked, ControllButtonPressed
 }
 
+[Serializable]
 public struct Options
 {
 	public bool isJson;

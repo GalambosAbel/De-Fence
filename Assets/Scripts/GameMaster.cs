@@ -46,7 +46,12 @@ public class GameMaster : MonoBehaviour
 		wallPrefab = _wallPrefab;
 
 		gameEnded = false;
+
 		clockEnabled = false;
+		ChessClock.startingMin = 30;
+		ChessClock.startingSec = 0;
+		ChessClock.secToAdd = 8;
+
 		SaveFileManager.Setup(contentBox, displayerPrefab);
 		GameObject.Find("VersionText").GetComponent<Text>().text = "V " + Application.version;
 	}

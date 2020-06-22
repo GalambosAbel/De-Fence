@@ -142,6 +142,18 @@ public class InputReciever : MonoBehaviour
 	{
 		GameMaster.clockEnabled = chessClockenabled;
 	}
+	public void SetStartMin(string minutes)
+	{
+		ChessClock.startingMin = int.Parse(minutes);
+	}
+	public void SetStartSec(string seconds)
+	{
+		ChessClock.startingSec = int.Parse(seconds);
+	}
+	public void SetExtratTime(string seconds)
+	{
+		ChessClock.secToAdd = int.Parse(seconds);
+	}
 
 	public void LoadedScene(Scene scene, LoadSceneMode mode)
 	{
@@ -167,7 +179,7 @@ public class InputReciever : MonoBehaviour
 		GameMaster.controlButton = GameObject.Find("ControlButton").GetComponent<Button>();
 		GameMaster.controlButton.onClick.RemoveAllListeners();
 		GameMaster.controlButton.onClick.AddListener(OnlineManager.instance.CtrlButton);
-		GameMaster.clock.timeLeft = new float[] { 18000, 18000 };
+		GameMaster.clock.timeLeft = new float[2];
 
 		if (!JsonManager.LoadState(stateName, nameIsJson))
 		{

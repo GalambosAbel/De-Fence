@@ -5,18 +5,26 @@ using UnityEngine.UI;
 
 public class ChessClock : MonoBehaviour
 {
+	public static int startingMin;
+	public static int startingSec;
+	public static int secToAdd;
+
 	public bool isActive = true;
-	public int startingTime = 50;
-	public int timeToAdd = 8000;
+	public int startingTime;
+	public int timeToAdd;
 
 	public float[] timeLeft;
 	public Text[] texts;
 
 	public void StartStop(bool start)
 	{
+		startingTime = (startingMin * 60 + startingSec) * 1000;
+		timeToAdd = secToAdd * 1000;
+
 		gameObject.SetActive(start);
 		isActive = start;
 		GameMaster.clockEnabled = start;
+
 		if (start) 
 		{
 			for (int i = 0; i < timeLeft.Length; i++)

@@ -33,7 +33,7 @@ public class Tile : MonoBehaviour
 		}
 		gameObject.GetComponent<SpriteRenderer>().color = c;
 		transform.GetChild(0).gameObject.SetActive(GameMaster.am.board.tiles[ID].hasFigure);
-		transform.GetChild(1).gameObject.SetActive(GameMaster.tilesInLastStep != null && GameMaster.tilesInLastStep.Contains(ID));
+		transform.GetChild(1).gameObject.SetActive(GameMaster.tilesInLastStep != null && GameMaster.tilesInLastStep.Contains(ID) && GameMaster.displayLastStep);
     }
 
 	void OnDestroy()

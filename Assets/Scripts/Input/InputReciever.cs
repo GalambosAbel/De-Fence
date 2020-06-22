@@ -155,6 +155,15 @@ public class InputReciever : MonoBehaviour
 		ChessClock.secToAdd = int.Parse(seconds);
 	}
 
+	public void SetDisplayScore(bool displayScore)
+	{
+		GameMaster.showScores = displayScore;
+	}
+	public void SetDisplayLastStep(bool displayLastStep)
+	{
+		GameMaster.displayLastStep = displayLastStep;
+	}
+
 	public void LoadedScene(Scene scene, LoadSceneMode mode)
 	{
 		if (this == null) return;

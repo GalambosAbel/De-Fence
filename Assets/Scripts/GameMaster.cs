@@ -52,6 +52,9 @@ public class GameMaster : MonoBehaviour
 		ChessClock.startingSec = 0;
 		ChessClock.secToAdd = 8;
 
+		showScores = true;
+		displayLastStep = true;
+
 		SaveFileManager.Setup(contentBox, displayerPrefab);
 		GameObject.Find("VersionText").GetComponent<Text>().text = "V " + Application.version;
 	}

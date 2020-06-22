@@ -168,8 +168,6 @@ public class InputReciever : MonoBehaviour
 		GameMaster.controlButton.onClick.RemoveAllListeners();
 		GameMaster.controlButton.onClick.AddListener(OnlineManager.instance.CtrlButton);
 		GameMaster.clock.timeLeft = new float[] { 18000, 18000 };
-		GameMaster.clock.StartStop(GameMaster.clockEnabled);
-
 
 		if (!JsonManager.LoadState(stateName, nameIsJson))
 		{

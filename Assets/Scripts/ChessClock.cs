@@ -7,9 +7,10 @@ public class ChessClock : MonoBehaviour
 {
 	public bool isActive = true;
 	public int startingTime = 50;
+	public int timeToAdd = 8000;
+
 	public float[] timeLeft;
 	public Text[] texts;
-	public int timeToAdd = 8000;
 
 	public void StartStop(bool start)
 	{

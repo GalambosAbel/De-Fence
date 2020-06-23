@@ -16,6 +16,13 @@ public class ColorPicker : MonoBehaviour
     public Text gT;
     public Text bT;
 
+    void Start()
+    {
+        if (player == 1) r = 255f;
+        if (player == 2) b = 255f;
+        ChangeColor();
+    }
+
     public void SetR(float _r)
     {
         r = _r;

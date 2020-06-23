@@ -46,7 +46,7 @@ public class JsonManager : MonoBehaviour
 			if (!File.Exists(inputFileName))
 			{
 				Debug.Log("Couldn't load file: " + inputFileName);
-				return false;
+				return LoadState("Starting_Default", false);
 			}
 
 			json = File.ReadAllText(inputFileName);

@@ -11,7 +11,7 @@ public class HUDinfo : MonoBehaviour
 	public Text playersText;
 	string[] playerTexts;
 
-	private void Awake()
+	void Start()
 	{
 		playerTexts = new string[]
 		{

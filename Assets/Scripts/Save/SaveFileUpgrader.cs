@@ -10,9 +10,11 @@ public class StateUpgrader
     {
         UpgradeTo0,
         UpgradeTo1,
-        UpgradeTo2
+        UpgradeTo2,
+        UpgradeTo3,
+        UpgradeTo4
     };
-    public static int Version { get; } = 2;
+    public static int Version { get; } = 4;
 
 
     public static bool CanUpgrade(State state)
@@ -41,7 +43,25 @@ public class StateUpgrader
     private static State UpgradeTo2(State state)
     {
         state.clockEnabled = true;
+
         state.version = 2;
+        return state;
+    }
+    private static State UpgradeTo3(State state)
+    {
+        state.timeToAdd = 8000;
+        state.showScores = true;
+        state.displayLastStep = true;
+        state.colors = new List<Color>() { Color.white, Color.red, Color.blue };
+
+        state.version = 3;   
+        return state;
+    }
+    private static State UpgradeTo4(State state)
+    {
+        state.lastTiles = new List<int>();
+
+        state.version = 4;
         return state;
     }
 

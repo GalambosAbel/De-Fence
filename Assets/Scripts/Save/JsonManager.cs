@@ -69,16 +69,23 @@ public class JsonManager : MonoBehaviour
 		GameMaster.am.playerAmount = state.playerAmount;
 		GameMaster.am.currentPlayer = state.currentPlayer;
 		GameMaster.am.lastPassed = state.lastPassed;
+		// extra options-------------------------------------------------------------------------------------
 		if (!isJson && protectedStates.Contains(Path.GetFileName(inputFileName)))
 		{
-				GameMaster.clock.StartStop(GameMaster.clockEnabled);
+			GameMaster.clock.StartStop(GameMaster.clockEnabled);
+			GameMaster.tilesInLastStep = new List<int>();
 		}
 		else
 		{
 			GameMaster.clock.StartStop(state.clockEnabled);
 			GameMaster.clock.timeLeft = state.timesLeft.ToArray();
+			GameMaster.clock.timeToAdd = state.timeToAdd;
+			GameMaster.showScores = state.showScores;
+			GameMaster.displayLastStep = state.displayLastStep;
+			GameMaster.tilesInLastStep = state.lastTiles;
+			GameMaster.playerColors = state.colors.ToArray();
 		}
-
+		// extra options end---------------------------------------------------------------------------------
 		for (int i = 0; i < state.tiles.Count; i++)
 		{
 			GameMaster.am.board.tiles[i].owner = state.tiles[i].owner;
@@ -188,6 +195,11 @@ public struct State
 	public bool lastPassed;
 	public bool clockEnabled;
 	public List<float> timesLeft;
+	public int timeToAdd;
+	public bool showScores;
+	public bool displayLastStep;
+	public List<int> lastTiles;
+	public List<Color> colors;
 	public List<StateTile> tiles;
 	public List<StateWall> walls;
 
@@ -201,6 +213,12 @@ public struct State
 
 		clockEnabled = clock.isActive;
 		timesLeft = clock.timeLeft.ToList();
+		timeToAdd = clock.timeToAdd;
+		showScores = GameMaster.showScores;
+		displayLastStep = GameMaster.displayLastStep;
+		lastTiles = GameMaster.tilesInLastStep;
+		colors = GameMaster.playerColors.ToList();
+
 		tiles = new List<StateTile>();
 		foreach (AbstractTile t in am.board.tiles)
 		{
